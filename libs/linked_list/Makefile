@@ -1,0 +1,77 @@
+##
+## EPITECH PROJECT, 2022
+## dragusheen linked_list-library
+## File description:
+## makefile of the library
+##
+
+SRC	=	src/dl_apply.c		\
+		src/dl_clear.c		\
+		src/dl_empty.c		\
+		src/dl_erase.c		\
+		src/dl_extract.c	\
+		src/dl_find.c		\
+		src/dl_insert.c		\
+		src/dl_length.c		\
+		src/dl_pop.c		\
+		src/dl_push.c		\
+
+OBJ	=	$(SRC:%.c=%.o)
+
+BIN	=	liblinked_list.a
+
+ifeq ($(COLOR), yes)
+	RESET		= "\033[0m"
+	BLUE		= "\033[34m"
+	BOLD		= "\033[1m"
+	FBLUE		= "\033[94m"
+	FGREEN		= "\033[92m"
+	FRED		= "\033[91m"
+	FYELLOW		= "\033[93m"
+	GREEN		= "\033[32m"
+	PURPLE		= "\033[35m"
+	RED			= "\033[31m"
+	YELLOW		= "\033[33m"
+else
+	RESET		= ""
+	BLUE		= ""
+	BOLD		= ""
+	FBLUE		= ""
+	FGREEN		= ""
+	FRED		= ""
+	FYELLOW		= ""
+	GREEN		= ""
+	PURPLE		= ""
+	RED			= ""
+	YELLOW		= ""
+endif
+
+FLAGS	=	-I./include	\
+			-Wall		\
+			-Wextra		\
+			-g3
+
+COMP	=	gcc
+
+all:	$(BIN)
+
+$(BIN):	$(OBJ)
+	@ar rc $(BIN) $(OBJ)
+
+clean:
+	@rm -f $(OBJ)
+
+fclean: clean
+	@rm -f $(BIN)
+
+re: fclean all
+
+%.o: %.c
+	@echo $(GREEN)">> Compiling C object $@"$(RESET)
+	@$(COMP) $(FLAGS) -c -o $@ $<
+
+.PHONY: all clean fclean re
+
+test: re
+	@rm -rf test
+	$(COMP) $(FLAGS) -o test main.c $(SRC) -L. -ldlist
