@@ -22,7 +22,6 @@ void destroy_server(void)
 
     if (server->info)
         destroy_connection(server->info);
-    free(server);
 }
 
 void destroy_server_exit(int exit_code)
