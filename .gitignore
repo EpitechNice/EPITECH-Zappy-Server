@@ -1,0 +1,9 @@
+.vscode/
+.idea/
+*.a
+*.o
+compiled_object/
+*.so
+zappy_server
+zappy_gui
+zappy_ai
