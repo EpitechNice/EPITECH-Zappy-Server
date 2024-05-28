@@ -13,10 +13,18 @@
     #include "includes.h"
     #include "parsing.h"
     #include "utils.h"
+    #include "clients.h"
 
 /* ---------MACROS--------- */
 
     #define MAX_CLIENTS 1024
+
+    enum direction {
+        UP,
+        RIGHT,
+        DOWN,
+        LEFT
+    };
 
 /* ---------TYPEDEFS--------- */
 
@@ -34,6 +42,8 @@
         fd_set write_fds;
         fd_set error_fds;
         connect_t *info;
+        lnode_t *clients;
+        client_t *current_client;
     } server_t;
 
 /* ---------PROTOTYPES--------- */
@@ -42,7 +52,6 @@ server_t *get_server(void);
 connect_t *init_connection(parsing_t *p);
 void destroy_server_exit(int);
 void destroy_server(void);
-void sig_handler(int);
 void run(server_t *server);
 
 #endif /* !ZAPPY_SERVER_H_ */

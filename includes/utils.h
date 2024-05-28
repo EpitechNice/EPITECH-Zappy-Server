@@ -44,4 +44,11 @@ void read_file(char *filepath);
 */
 char *get_file_content(char *filepath);
 
+/**
+ * @brief Signal handler
+ *
+ * @param int the signal status
+*/
+void sig_handler(int);
+
 #endif /* !UTILS_H_ */
