@@ -14,9 +14,9 @@ int main(int argc, char **argv)
 
     is_parsing_ok(p);
     server->info = init_connection(p);
+    destroy_parsing(p);
     signal(SIGINT, &sig_handler);
     run(server);
-    destroy_parsing(p);
     destroy_server();
     return 0;
 }
