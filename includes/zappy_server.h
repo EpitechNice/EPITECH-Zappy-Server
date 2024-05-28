@@ -39,5 +39,4 @@ void destroy_server_exit(int);
 void destroy_server(void);
 void sig_handler(int);
 
-
 #endif /* !ZAPPY_SERVER_H_ */

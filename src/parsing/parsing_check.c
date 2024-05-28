@@ -85,3 +85,16 @@ parsing_t *parsing_check(parsing_t *p)
     parse_check_freq(p);
     return p;
 }
+
+void is_parsing_ok(parsing_t *p)
+{
+    if (p->help) {
+        destroy_parsing(p);
+        destroy_server_exit(0);
+    }
+    if (!p->ok) {
+        destroy_parsing(p);
+        fprintf(stderr, ">> Have a look at the -help.\n");
+        destroy_server_exit(84);
+    }
+}

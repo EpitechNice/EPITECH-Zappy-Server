@@ -7,24 +7,6 @@
 
 #include "zappy_server.h"
 
-void print_data(void *data)
-{
-    printf("\t - %s\n", (char *)data);
-}
-
-void is_parsing_ok(parsing_t *p)
-{
-    if (p->help) {
-        destroy_parsing(p);
-        destroy_server_exit(0);
-    }
-    if (!p->ok) {
-        destroy_parsing(p);
-        fprintf(stderr, ">> Have a look at the -help.\n");
-        destroy_server_exit(84);
-    }
-}
-
 int main(int argc, char **argv)
 {
     parsing_t *p = parse(argc, argv);
