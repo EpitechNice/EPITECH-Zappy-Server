@@ -10,6 +10,7 @@ SRC		=   $(wildcard src/*.c)			\
 			$(wildcard src/parsing/*.c)	\
 			$(wildcard src/server/*.c)	\
 			$(wildcard src/server/init/*.c)	\
+			$(wildcard src/server/running/*.c)	\
 			$(wildcard src/utils/*.c)	\
 
 OBJ 	= 	$(patsubst src/%.c,compiled_object/%.o,$(SRC))

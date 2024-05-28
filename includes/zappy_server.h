@@ -28,6 +28,11 @@
 
     typedef struct all_server_infos_s {
         bool initialized;
+        bool running;
+        int fd_max;
+        fd_set read_fds;
+        fd_set write_fds;
+        fd_set error_fds;
         connect_t *info;
     } server_t;
 
@@ -38,5 +43,6 @@ connect_t *init_connection(parsing_t *p);
 void destroy_server_exit(int);
 void destroy_server(void);
 void sig_handler(int);
+void run(server_t *server);
 
 #endif /* !ZAPPY_SERVER_H_ */
