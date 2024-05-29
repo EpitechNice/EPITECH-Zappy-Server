@@ -1,24 +1,15 @@
 ##
-## EPITECH PROJECT, 2022
-## dragusheen linked_list-library
+## EPITECH PROJECT, 2024
+## FO smart allocations lib
 ## File description:
-## makefile of the library
+## makefile
 ##
 
-SRC	=	src/dl_apply.c		\
-		src/dl_clear.c		\
-		src/dl_empty.c		\
-		src/dl_erase.c		\
-		src/dl_extract.c	\
-		src/dl_find.c		\
-		src/dl_insert.c		\
-		src/dl_length.c		\
-		src/dl_pop.c		\
-		src/dl_push.c		\
+SRC	=	$(wildcard src/*.c)
 
 OBJ	=	$(SRC:%.c=%.o)
 
-BIN	=	liblinked_list.a
+BIN	=	libheap.a
 
 ifeq ($(COLOR), yes)
 	RESET		= "\033[0m"
@@ -46,12 +37,11 @@ else
 	YELLOW		= ""
 endif
 
-FLAGS	=	-I./include	\
+CFLAGS	=	-I./includes/	\
 			-Wall		\
-			-Wextra		\
-			-g3
+			-Wextra
 
-COMP	=	gcc
+CC	=	gcc
 
 all:	$(BIN)
 
@@ -68,10 +58,6 @@ re: fclean all
 
 %.o: %.c
 	@echo $(GREEN)">> Compiling C object $@"$(RESET)
-	@$(COMP) $(FLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 .PHONY: all clean fclean re
-
-test: re
-	@rm -rf test
-	$(COMP) $(FLAGS) -o test main.c $(SRC) -L. -ldlist

@@ -9,14 +9,14 @@
 
 static char *buffer;
 
-static void init_buffer()
+static void init_buffer(void)
 {
     if (buffer)
         free(buffer);
     buffer = (char *)malloc(MAX_COMMAND_SIZE + 1);
 }
 
-void display_buffer()
+void display_buffer(void)
 {
     printf("\r> %s", buffer);
     fflush(stdout);

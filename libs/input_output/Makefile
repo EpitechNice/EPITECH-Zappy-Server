@@ -1,15 +1,15 @@
 ##
 ## EPITECH PROJECT, 2022
-## dragusheen linked_list-library
+## IO lib
 ## File description:
-## makefile of the library
+## makefile
 ##
 
 SRC	=	src/log.c
 
 OBJ	=	$(SRC:%.c=%.o)
 
-BIN	=	libdisplay.a
+BIN	=	libinput_output.a
 
 ifeq ($(COLOR), yes)
 	RESET		= "\033[0m"
@@ -37,7 +37,8 @@ else
 	YELLOW		= ""
 endif
 
-FLAGS	=	-I./include	\
+FLAGS	=	-I./includes/	\
+			-I./../linked_list/includes/	\
 			-Wall		\
 			-Wextra		\
 			-L./../linked_list	\
@@ -64,7 +65,3 @@ re: fclean all
 	@$(COMP) $(FLAGS) -c -o $@ $<
 
 .PHONY: all clean fclean re
-
-test: re
-	@rm -rf test
-	$(COMP) $(FLAGS) -o test main.c $(SRC) -L. -ldlist
