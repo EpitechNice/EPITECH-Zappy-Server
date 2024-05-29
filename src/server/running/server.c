@@ -9,19 +9,24 @@
 
 static void manage(server_t *server)
 {
-    lnode_t *cl = server->clients;
+    lnode_t *cli = server->clients;
 
-    if (FD_ISSET(server->info->socket, &server->read_fds))
+    if (FD_ISSET(server->info->socket, &server->read_fds)) {
+        accept_new_connection(server);
         return;
-    for (; cl; cl = cl->next) {
-        server->current_client = (client_t *)(cl->data);
-        if (FD_ISSET(((client_t *)(cl->data))->fd, &server->error_fds)) {
-            dl_erase(&server->clients, (void *)cl, &is_client, &delete_client);
+    }
+    for (; cli ; cli = cli->next) {
+        server->current_client = (client_t *)(cli->data);
+        if (FD_ISSET(((client_t *)(cli->data))->fd, &server->error_fds)) {
+            dl_erase(&server->clients, (void *)cli, &is_client, &delete_client);
             return;
         }
-        if (FD_ISSET(((client_t *)(cl->data))->fd, &server->read_fds))
+        if (FD_ISSET(((client_t *)(cli->data))->fd, &server->read_fds)) {
+            // handle_client(((client_t *)(cli->data)));
             break;
-        if (FD_ISSET(((client_t *)(cl->data))->fd, &server->write_fds)) {
+        }
+        if (FD_ISSET(((client_t *)(cli->data))->fd, &server->write_fds)) {
+            // write_command(((client_t *)(cli->data)));
         }
     }
 }
