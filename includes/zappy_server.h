@@ -19,32 +19,32 @@
 
     #define MAX_CLIENTS 1024
 
-    enum direction {
-        UP,
-        RIGHT,
-        DOWN,
-        LEFT
-    };
+enum direction {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
+};
 
 /* ---------TYPEDEFS--------- */
 
-    typedef struct connection_information {
-        int port;
-        int socket;
-        struct sockaddr_in *address;
-    } connect_t;
+typedef struct connection_information {
+    int port;
+    int socket;
+    struct sockaddr_in *address;
+} connect_t;
 
-    typedef struct all_server_infos_s {
-        bool initialized;
-        bool running;
-        int fd_max;
-        fd_set read_fds;
-        fd_set write_fds;
-        fd_set error_fds;
-        connect_t *info;
-        lnode_t *clients;
-        client_t *current_client;
-    } server_t;
+typedef struct all_server_infos_s {
+    bool initialized;
+    bool running;
+    int fd_max;
+    fd_set read_fds;
+    fd_set write_fds;
+    fd_set error_fds;
+    connect_t *info;
+    lnode_t *clients;
+    client_t *current_client;
+} server_t;
 
 /* ---------PROTOTYPES--------- */
 

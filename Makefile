@@ -59,6 +59,7 @@ INCLUDES	=	-I./libs/includes	\
 
 LIBS	=	-L./libs		\
 			-llinked_list	\
+			-ldisplay		\
 
 COMP	=	gcc
 
@@ -100,11 +101,13 @@ compiled_object/%.o: src/%.c
 	@$(COMP) $(FLAGS) $(INCLUDES) $(LIBS) -g3 -c -o $@ $<
 	@echo $(GREEN)">> compiling $<"$(RESET)
 
+cs:	fclean
+	./tests/run_coding_style.sh
 
 ascii:
 	@echo $(BOLD)$(PURPLE)
-	@echo "\t       ┃ $(BIN) compilation is done ✿"
-	@echo "\t /\_/\ ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@echo "\t       | $(BIN) compilation is done ✿"
+	@echo "\t /\_/\ +-----------------------------------"
 	@echo "\t( o.o )"
 	@echo "\t > ^ <"
 	@echo $(RESET)

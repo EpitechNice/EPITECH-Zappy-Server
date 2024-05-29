@@ -90,6 +90,7 @@ static int parse_freq(parsing_t *p, int argc, char **argv, int i)
 static int parse_names(parsing_t *p, int argc, char **argv, int i)
 {
     int j = i + 1;
+
     if (i + 1 >= argc) {
         p->ok = false;
         fprintf(stderr, "Invalid argument for \"-n\". Expect a value.\n");

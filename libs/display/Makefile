@@ -5,20 +5,11 @@
 ## makefile of the library
 ##
 
-SRC	=	src/dl_apply.c		\
-		src/dl_clear.c		\
-		src/dl_empty.c		\
-		src/dl_erase.c		\
-		src/dl_extract.c	\
-		src/dl_find.c		\
-		src/dl_insert.c		\
-		src/dl_length.c		\
-		src/dl_pop.c		\
-		src/dl_push.c		\
+SRC	=	src/log.c
 
 OBJ	=	$(SRC:%.c=%.o)
 
-BIN	=	liblinked_list.a
+BIN	=	libdisplay.a
 
 ifeq ($(COLOR), yes)
 	RESET		= "\033[0m"
@@ -49,6 +40,8 @@ endif
 FLAGS	=	-I./include	\
 			-Wall		\
 			-Wextra		\
+			-L./../linked_list	\
+			-llinked_list	\
 			-g3
 
 COMP	=	gcc

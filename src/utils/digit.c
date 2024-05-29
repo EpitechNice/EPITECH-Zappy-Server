@@ -17,6 +17,7 @@ bool is_digit(char c)
 bool is_digits(char *str)
 {
     int i = 0;
+
     if (str[i] == '-')
         i++;
     for (; str[i] != '\0'; i++)

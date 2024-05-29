@@ -13,15 +13,15 @@
 
 /* ---------STRUCTS--------- */
 
-    typedef struct client_structure_infos {
-        int fd;
-        int x;
-        int y;
-        int level;
-        int direction;
-        int inventory[7];
-        lnode_t *to_send;
-    } client_t;
+typedef struct client_structure_infos {
+    int fd;
+    int x;
+    int y;
+    int level;
+    int direction;
+    int inventory[7];
+    lnode_t *to_send;
+} client_t;
 
 /* ---------PROTOTYPES--------- */
 
