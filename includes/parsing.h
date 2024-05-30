@@ -9,13 +9,13 @@
     #define PARSING_H_
 
     #include "includes.h"
-    #include "linked_list.h"
+    #include "mlist.h"
 
 typedef struct parsing_structure {
     int port;
     int width;
     int height;
-    lnode_t *names;
+    mlist_t names;
     int clients_nb;
     int freq;
     bool ok;

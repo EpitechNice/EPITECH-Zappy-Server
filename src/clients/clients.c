@@ -13,13 +13,13 @@ void free_clients(void *data)
 
     close(clients->fd);
     if (clients->to_send != NULL)
-        dl_clear(&clients->to_send, free);
-    free(clients);
+        m_list_destroy(&clients->to_send, free);
+    ffree(clients);
 }
 
 client_t *init_clients(int fd)
 {
-    client_t *clients = malloc(sizeof(client_t));
+    client_t *clients = (client_t *)fmalloc(sizeof(client_t));
 
     clients->fd = fd;
     clients->to_send = NULL;
@@ -39,5 +39,5 @@ void delete_client(void *data)
     client_t *clients = (client_t *)data;
 
     if (clients->to_send != NULL)
-        dl_clear(&clients->to_send, free);
+        m_list_destroy(&clients->to_send, ffree);
 }

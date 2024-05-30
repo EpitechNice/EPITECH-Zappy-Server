@@ -42,12 +42,13 @@ typedef struct all_server_infos_s {
     fd_set write_fds;
     fd_set error_fds;
     connect_t *info;
-    lnode_t *clients;
+    mlist_t clients;
     client_t *current_client;
 } server_t;
 
 /* ---------PROTOTYPES--------- */
 
+void accept_new_connection(server_t *);
 server_t *get_server(void);
 connect_t *init_connection(parsing_t *p);
 void destroy_server_exit(int);

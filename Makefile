@@ -58,8 +58,9 @@ INCLUDES	=	-I./libs/includes	\
 				-I./includes		\
 
 LIBS	=	-L./libs		\
-			-llinked_list	\
-			-ldisplay		\
+			-lheap	\
+			-lmlist	\
+			-linput_output		\
 
 COMP	=	gcc
 

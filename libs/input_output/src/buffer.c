@@ -5,15 +5,15 @@
 ** buffer
 */
 
-#include "display.h"
+#include "input_output.h"
 
 static char *buffer;
 
 static void init_buffer(void)
 {
     if (buffer)
-        free(buffer);
-    buffer = (char *)malloc(MAX_COMMAND_SIZE + 1);
+        ffree(buffer);
+    buffer = (char *)fmalloc(MAX_COMMAND_SIZE + 1);
 }
 
 void display_buffer(void)

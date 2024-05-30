@@ -34,8 +34,8 @@ typedef _garbage_list_t *garbage_list_t;
   * @brief Function used to clear out all allocated chunck of data
   *
   * @tip
-  * If you are not using GNU (like using gcc), this function will NOT be called
-  * when program exit.
+  * If you are not using GNU (like using gcc), this function will **NOT** be
+  * called when program exit.
   * But, if you are, you don't need to do anything for this function to be
   * executed just before your program exit (after main).
 */
@@ -81,8 +81,8 @@ garbage_list_t fget_trash(void *ptr);
   *
   * @note
   * This also take care of any error that could occure (double free, invalid
-  * free...)
-  * The cost is that the more you allocate, the longer ffree will take.
+  * free...). The cost is that the more you allocate, the longer ffree will
+  * take.
 */
 void ffree(void *ptr);
 
@@ -93,7 +93,7 @@ void ffree(void *ptr);
   *
   * @brief Free pointed pointer. Used for FREE macro
   *
-  * This function will attempt to dereference a pointer ("*(void**)") and
+  * This function will attempt to dereference a pointer ("\*(void\*\*)") and
   * free it.
   *
   * @danger

@@ -42,14 +42,14 @@ static void parse_check_names(parsing_t *p)
 {
     bool same = false;
 
-    if (dl_empty(p->names)) {
+    if (!m_list_size(&p->names)) {
         fprintf(stderr, "Invalid names value. %s\n",
             "Expect at least one team.");
         p->ok = false;
         return;
     }
-    for (lnode_t *tmp = p->names; tmp != NULL; tmp = tmp->next)
-        for (lnode_t *tmp2 = tmp->next; tmp2 != NULL; tmp2 = tmp2->next)
+    for (mlist_t tmp = p->names; tmp; tmp = tmp->next)
+        for (mlist_t tmp2 = tmp->next; tmp2; tmp2 = tmp2->next)
             same = check_name((char *)tmp->data, (char *)tmp2->data, same);
     if (same) {
         fprintf(stderr, "2 teams cannot have the same name.\n");

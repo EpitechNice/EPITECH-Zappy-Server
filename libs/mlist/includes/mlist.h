@@ -144,7 +144,7 @@ mlist_t m_list_smart_find(mlist_t *ref, void *data,
 /**
   * @ingroup mlist
   *
-  * @brief Get the value at a given position (it's operator[] (; ))
+  * @brief Get the value at a given position (it's operator[] :wink:))
   *
   * @param ref The list to be used
   * @param pos The index to get the value

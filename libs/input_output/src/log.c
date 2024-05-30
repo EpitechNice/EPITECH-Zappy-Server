@@ -37,15 +37,15 @@ void log_data(log_level_t level, const char *message, call_infos_t *infos)
     char llevel[20];
 
     if (level == LOG_LEVEL_DEBUG)
-        strcpy("      DEBUG     ", llevel);
+        strcpy(llevel, "      DEBUG     ");
     if (level == LOG_LEVEL_INFO)
-        strcpy("      INFO      ", llevel);
+        strcpy(llevel, "      INFO      ");
     if (level == LOG_LEVEL_WARNING)
-        strcpy("     WARNING    ", llevel);
+        strcpy(llevel, "     WARNING    ");
     if (level == LOG_LEVEL_ERROR)
-        strcpy("      ERROR     ", llevel);
+        strcpy(llevel, "      ERROR     ");
     if (level == LOG_LEVEL_CRITICAL)
-        strcpy("/!\\ CRITICAL /!\\", llevel);
+        strcpy(llevel, "/!\\ CRITICAL /!\\");
     sprintf(out, "[%s] %s:%lu (in %s) - %s", llevel, infos->file, infos->line,
         infos->func, message);
     m_list_add_at_pos(logs, m_list_new(out), MLIST_POS_LAST);

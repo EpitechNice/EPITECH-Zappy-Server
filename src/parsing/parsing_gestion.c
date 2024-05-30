@@ -9,13 +9,13 @@
 
 void destroy_parsing(parsing_t *p)
 {
-    dl_clear(&p->names, free);
-    free(p);
+    m_list_destroy(&p->names, ffree);
+    ffree(p);
 }
 
 parsing_t *init_parsing(void)
 {
-    parsing_t *p = malloc(sizeof(parsing_t));
+    parsing_t *p = (parsing_t *)fmalloc(sizeof(parsing_t));
 
     p->port = -1;
     p->width = -1;

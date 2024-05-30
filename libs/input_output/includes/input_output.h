@@ -71,7 +71,6 @@ void set_log_level(log_level_t level);
   *
   * @return The current logging level
   *
-  * @info
   * The logging have 5 levels:
   * - DEBUG - basicly any dev-axed infos
   * - INFO - normal information for the user
@@ -106,8 +105,11 @@ void log_data(log_level_t level, const char *message, call_infos_t *infos);
 /**
   * @ingroup io
   *
-  * @brief Display the buffer (usefull when displaying something else at the
-  * same time)
+  * @brief Display the buffer.
+  *
+  * @note
+  * This function is usefull when displaying other infos at the same time
+  * (like logs :thumbsup:)
 */
 void display_buffer(void);
 

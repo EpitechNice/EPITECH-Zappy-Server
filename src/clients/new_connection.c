@@ -17,6 +17,6 @@ void accept_new_connection(server_t *server)
     if (fd == -1)
         perror("Accept failed\n");
     client = init_clients(fd);
-    dl_push_back(&server->clients, (void *)client);
-    return 0;
+    m_list_add_at_pos(&server->clients, m_list_new(client), MLIST_POS_LAST);
+    return;
 }

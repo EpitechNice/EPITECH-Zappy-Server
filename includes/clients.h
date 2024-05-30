@@ -20,29 +20,28 @@ typedef struct client_structure_infos {
     int level;
     int direction;
     int inventory[7];
-    lnode_t *to_send;
+    mlist_t to_send;
 } client_t;
 
-    typedef struct client_ai_infos {
-        int fd;
-        int x;
-        int y;
-        int level;
-        int direction;
-        int inventory[7];
-        lnode_t *to_send;
-    } ai_t;
+typedef struct client_ai_infos {
+    int fd;
+    int x;
+    int y;
+    int level;
+    int direction;
+    int inventory[7];
+    mlist_t to_send;
+} ai_t;
 
-    typedef struct client_gui_infos {
-        int fd;
-        lnode_t *to_send;
-    } gui_t;
+typedef struct client_gui_infos {
+    int fd;
+    mlist_t to_send;
+} gui_t;
 
 /* ---------PROTOTYPES--------- */
 
 void free_clients(void *);
 void delete_client(void *);
-void accept_new_connection(server_t *);
 bool is_client(void *, void *);
 client_t *init_clients(int);
 

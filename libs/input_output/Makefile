@@ -38,11 +38,12 @@ else
 endif
 
 FLAGS	=	-I./includes/	\
-			-I./../linked_list/includes/	\
+			-I./../mlist/includes/	\
+			-I./../heap/includes/	\
 			-Wall		\
 			-Wextra		\
-			-L./../linked_list	\
-			-llinked_list	\
+			-L./../mlist	\
+			-lmlist	\
 			-g3
 
 COMP	=	gcc

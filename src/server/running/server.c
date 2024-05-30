@@ -9,16 +9,16 @@
 
 static void manage(server_t *server)
 {
-    lnode_t *cli = server->clients;
+    mlist_t cli = server->clients;
 
     if (FD_ISSET(server->info->socket, &server->read_fds)) {
         accept_new_connection(server);
         return;
     }
-    for (; cli ; cli = cli->next) {
+    for (; cli; cli = cli->next) {
         server->current_client = (client_t *)(cli->data);
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->error_fds)) {
-            dl_erase(&server->clients, (void *)cli, &is_client, &delete_client);
+            m_list_pop(m_list_find(&server->clients, cli->data));
             return;
         }
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->read_fds)) {
@@ -33,7 +33,7 @@ static void manage(server_t *server)
 
 static void clear_server(server_t *server)
 {
-    lnode_t *clients = get_server()->clients;
+    mlist_t clients = get_server()->clients;
 
     FD_ZERO(&server->read_fds);
     FD_ZERO(&server->write_fds);

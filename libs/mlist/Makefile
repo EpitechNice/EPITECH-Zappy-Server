@@ -38,6 +38,7 @@ else
 endif
 
 CFLAGS	=	-I./includes	\
+			-I./../heap/includes/	\
 			-Wall		\
 			-Wextra
 
@@ -57,7 +58,7 @@ fclean: clean
 re: fclean all
 
 %.o: %.c
-	@echo $(GREEN)">> CCiling C object $@"$(RESET)
+	@echo $(GREEN)">> Compiling C object $@"$(RESET)
 	@$(CC) $(CFLAGS) -c -o $@ $<
 
 .PHONY: all clean fclean re

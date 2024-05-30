@@ -12,8 +12,8 @@ void destroy_connection(connect_t *connect)
     if (connect->socket != -1)
         close(connect->socket);
     if (connect->address != NULL)
-        free(connect->address);
-    free(connect);
+        ffree(connect->address);
+    ffree(connect);
 }
 
 void destroy_server(void)
