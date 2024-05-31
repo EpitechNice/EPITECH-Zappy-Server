@@ -40,9 +40,7 @@ typedef struct client_gui_infos {
 
 /* ---------PROTOTYPES--------- */
 
-void free_clients(void *);
-void delete_client(void *);
-bool is_client(void *, void *);
 client_t *init_clients(int);
+void handle_client(client_t *);
 
 #endif /* !CLIENTS_H_ */

@@ -7,16 +7,6 @@
 
 #include "zappy_server.h"
 
-void free_clients(void *data)
-{
-    client_t *clients = (client_t *) data;
-
-    close(clients->fd);
-    if (clients->to_send != NULL)
-        m_list_destroy(&clients->to_send, free);
-    ffree(clients);
-}
-
 client_t *init_clients(int fd)
 {
     client_t *clients = (client_t *)fmalloc(sizeof(client_t));
@@ -26,18 +16,37 @@ client_t *init_clients(int fd)
     return (clients);
 }
 
-bool is_client(void *ref, void *data)
+static void handle_commands(client_t *client, char *buffer)
 {
-    client_t *client_ref = (client_t *)ref;
-    client_t *client = (client_t *)data;
-
-    return client_ref->fd == client->fd;
+    if (strcmp(buffer, "GUI") == 0) {
+        printf("GUI\n");
+    } else if (strcmp(buffer, "AI") == 0) {
+        printf("AI\n");
+    }
 }
 
-void delete_client(void *data)
+static char *read_client(client_t *client)
 {
-    client_t *clients = (client_t *)data;
+    server_t *server = get_server();
+    char *buffer = NULL;
+    int value = -1;
 
-    if (clients->to_send != NULL)
-        m_list_destroy(&clients->to_send, ffree);
+    buffer = fmalloc(sizeof(char) * LENGTH_COMMAND);
+    if (!buffer)
+        return NULL;
+    value = read(client->fd, buffer, LENGTH_COMMAND);
+    for (int i = 0; i < value; i++)
+        if (buffer[i] == '\r' || buffer[i] == '\n')
+            buffer[i] = '\0';
+    return buffer;
+}
+
+void handle_client(client_t *client)
+{
+    char *buffer = read_client(client);
+
+    if (buffer == NULL)
+        return;
+    handle_commands(client, buffer);
+    ffree(buffer);
 }

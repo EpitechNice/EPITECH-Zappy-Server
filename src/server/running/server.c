@@ -22,7 +22,7 @@ static void manage(server_t *server)
             return;
         }
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->read_fds)) {
-            // handle_client(((client_t *)(cli->data)));
+            handle_client(((client_t *)(cli->data)));
             break;
         }
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->write_fds)) {
