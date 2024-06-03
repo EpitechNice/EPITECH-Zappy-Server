@@ -58,6 +58,7 @@ INCLUDES	=	-I./libs/includes	\
 				-I./includes		\
 
 LIBS	=	-L./libs		\
+			-ldlist	\
 			-lheap	\
 			-lmlist	\
 			-linput_output		\

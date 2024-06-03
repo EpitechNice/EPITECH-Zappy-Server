@@ -14,7 +14,6 @@
     #include "parsing.h"
     #include "utils.h"
     #include "clients.h"
-    #include "mlist.h"
 
 /* ---------MACROS--------- */
 
@@ -37,7 +36,7 @@ typedef struct all_server_infos_s {
     fd_set write_fds;
     fd_set error_fds;
     connect_t *info;
-    mlist_t clients;
+    lnode_t *clients;
     client_t *current_client;
 } server_t;
 

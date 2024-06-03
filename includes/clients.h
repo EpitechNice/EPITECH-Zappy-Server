@@ -46,13 +46,15 @@ typedef struct client_structure_infos {
     int inventory[7];
     char *team_name;
     enum status _status;
-    mlist_t to_send;
+    lnode_t *to_send;
 } client_t;
 
 /* ---------PROTOTYPES--------- */
 
-client_t *init_clients(int);
+client_t *init_client(int);
 void handle_client(client_t *);
 void write_command(client_t *);
+void free_client(void *);
+bool is_client(void *, void *);
 
 #endif /* !CLIENTS_H_ */

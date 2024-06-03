@@ -17,7 +17,7 @@ char *get_file_content(char *filepath)
 
     stat(filepath, &file);
     size = file.st_size + 1;
-    str = (char *)fmalloc(size);
+    str = (char *)malloc(size);
     for (int i = 0; i < size; i++)
         str[i] = '\0';
     fd = open(filepath, O_RDONLY);
@@ -35,5 +35,5 @@ void read_file(char *filepath)
     if (!buffer)
         return;
     printf("%s\n", buffer);
-    ffree(buffer);
+    free(buffer);
 }
