@@ -9,5 +9,5 @@
 
 void handle_new_ai(client_t *client)
 {
-    
+    return;
 }

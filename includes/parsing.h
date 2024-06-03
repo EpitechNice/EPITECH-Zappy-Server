@@ -57,9 +57,9 @@ parsing_t *parse(int argc, char **argv);
 
 /**
  * @brief Check if the argument passed in the program are ok
- * 
+ *
  * @param p The structure parsing_t
- * 
+ *
  * @return exiting if not ok
 */
 void is_parsing_ok(parsing_t *p);

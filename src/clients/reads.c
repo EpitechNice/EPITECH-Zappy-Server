@@ -27,15 +27,14 @@ static void handle_commands(client_t *client, char *buffer)
             client->status = GUI;
             client->team_name = "GUI";
             dl_push_back(&client->to_send, (char *)"cc GUI");
-        } else if (strcmp(buffer, "AI") == 0) {
-            handle_new_ai(client);
         }
+        if (strcmp(buffer, "AI") == 0)
+            handle_new_ai(client);
     }
 }
 
 static char *read_client(client_t *client)
 {
-    server_t *server = get_server();
     char *buffer = NULL;
     int value = -1;
 
