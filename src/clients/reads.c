@@ -7,16 +7,29 @@
 
 #include "zappy_server.h"
 
+void accept_new_connection(server_t *server)
+{
+    struct sockaddr_in info;
+    socklen_t len = sizeof(struct sockaddr_in);
+    int fd = accept(server->info->socket, (struct sockaddr *) &info, &len);
+
+    if (fd == -1)
+        perror("Accept failed\n");
+    dl_push_back(&server->clients, (void *)init_client(fd));
+    dprintf(fd, "WELCOME\n");
+    return;
+}
+
 static void handle_commands(client_t *client, char *buffer)
 {
-    char *data = "TG JESUS\n";
-
-    if (strcmp(buffer, "GUI") == 0) {
-        client->_status = GUI;
-        client->team_name = "GUI";
-        dl_push_back(&client->to_send, (char *)strdup(data));
-    } else if (strcmp(buffer, "AI") == 0) {
-        printf("AI\n");
+    if (client->status == WAITING) {
+        if (strcmp(buffer, "GUI") == 0) {
+            client->status = GUI;
+            client->team_name = "GUI";
+            dl_push_back(&client->to_send, (char *)"cc GUI");
+        } else if (strcmp(buffer, "AI") == 0) {
+            handle_new_ai(client);
+        }
     }
 }
 

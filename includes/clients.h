@@ -45,7 +45,7 @@ typedef struct client_structure_infos {
     int direction;
     int inventory[7];
     char *team_name;
-    enum status _status;
+    enum status status;
     lnode_t *to_send;
 } client_t;
 
@@ -56,5 +56,6 @@ void handle_client(client_t *);
 void write_command(client_t *);
 void free_client(void *);
 bool is_client(void *, void *);
+void handle_new_ai(client_t *);
 
 #endif /* !CLIENTS_H_ */
