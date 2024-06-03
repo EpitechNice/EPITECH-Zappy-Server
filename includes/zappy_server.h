@@ -20,13 +20,6 @@
     #define MAX_CLIENTS 1024
     #define LENGTH_COMMAND 4096
 
-enum direction {
-    UP,
-    RIGHT,
-    DOWN,
-    LEFT
-};
-
 /* ---------TYPEDEFS--------- */
 
 typedef struct connection_information {

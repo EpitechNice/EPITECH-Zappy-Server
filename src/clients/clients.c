@@ -19,7 +19,8 @@ client_t *init_clients(int fd)
 static void handle_commands(client_t *client, char *buffer)
 {
     if (strcmp(buffer, "GUI") == 0) {
-        printf("GUI\n");
+        client->_status = GUI;
+        client->team_name = "GUI";
     } else if (strcmp(buffer, "AI") == 0) {
         printf("AI\n");
     }
