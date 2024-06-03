@@ -8,6 +8,7 @@
 LIBS	=	heap	\
 			mlist	\
 			input_output	\
+			dlist	\
 
 all:
 	@make --no-print-directory makeAll
