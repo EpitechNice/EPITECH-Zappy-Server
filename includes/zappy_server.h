@@ -14,6 +14,7 @@
     #include "parsing.h"
     #include "utils.h"
     #include "clients.h"
+    #include "mlist.h"
 
 /* ---------MACROS--------- */
 

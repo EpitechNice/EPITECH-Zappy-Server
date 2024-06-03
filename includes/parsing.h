@@ -9,13 +9,13 @@
     #define PARSING_H_
 
     #include "includes.h"
-    #include "mlist.h"
+    #include "dlist.h"
 
 typedef struct parsing_structure {
     int port;
     int width;
     int height;
-    mlist_t names;
+    lnode_t *names;
     int clients_nb;
     int freq;
     bool ok;
@@ -57,9 +57,9 @@ parsing_t *parse(int argc, char **argv);
 
 /**
  * @brief Check if the argument passed in the program are ok
- *
+ * 
  * @param p The structure parsing_t
- *
+ * 
  * @return exiting if not ok
 */
 void is_parsing_ok(parsing_t *p);
