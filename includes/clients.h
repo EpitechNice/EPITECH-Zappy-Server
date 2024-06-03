@@ -53,5 +53,6 @@ typedef struct client_structure_infos {
 
 client_t *init_clients(int);
 void handle_client(client_t *);
+void write_command(client_t *);
 
 #endif /* !CLIENTS_H_ */
