@@ -52,16 +52,14 @@ FLAGS	=	-Wall 				\
 			-Wshadow			\
 			-Wlogical-op		\
 			-Wredundant-decls	\
-			-O2
+			-O2					\
+			-D __GNU_SOURCE		\
 
 INCLUDES	=	-I./libs/includes	\
 				-I./includes		\
 
 LIBS	=	-L./libs		\
 			-ldlist	\
-			-lheap	\
-			-lmlist	\
-			-linput_output		\
 
 COMP	=	gcc
 

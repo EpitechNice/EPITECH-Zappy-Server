@@ -20,28 +20,40 @@ void accept_new_connection(server_t *server)
     return;
 }
 
+static void waiting_client_command(client_t *client, char *buffer)
+{
+    if (strcmp(buffer, "GUI") == 0) {
+        client->status = GUI;
+        client->team_name = "GUI";
+        dl_push_back(&client->to_send, (char *)strdup("GUI init"));
+    } else
+        handle_new_ai(client, buffer);
+}
+
 static void handle_commands(client_t *client, char *buffer)
 {
-    if (client->status == WAITING) {
-        if (strcmp(buffer, "GUI") == 0) {
-            client->status = GUI;
-            client->team_name = "GUI";
-            dl_push_back(&client->to_send, (char *)"cc GUI");
-        }
-        if (strcmp(buffer, "AI") == 0)
-            handle_new_ai(client);
-    }
+    if (client->status == WAITING)
+        return waiting_client_command(client, buffer);
+    if (client->status == IA)
+        printf("IA\n");
+    if (client->status == GUI)
+        printf("GUI\n");
 }
 
 static char *read_client(client_t *client)
 {
     char *buffer = NULL;
     int value = -1;
+    server_t *server = get_server();
 
     buffer = malloc(sizeof(char) * LENGTH_COMMAND);
     if (!buffer)
         return NULL;
     value = read(client->fd, buffer, LENGTH_COMMAND);
+    if (value <= 0) {
+        dl_erase(&server->clients, (void *)client, &is_client, &free_client);
+        return NULL;
+    }
     for (int i = 0; i < value; i++)
         if (buffer[i] == '\r' || buffer[i] == '\n')
             buffer[i] = '\0';

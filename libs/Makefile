@@ -5,10 +5,7 @@
 ## library
 ##
 
-LIBS	=	heap	\
-			mlist	\
-			input_output	\
-			dlist	\
+LIBS	=	dlist	\
 
 all:
 	@make --no-print-directory makeAll

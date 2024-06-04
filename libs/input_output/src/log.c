@@ -8,7 +8,7 @@
 #include "input_output.h"
 
 static log_level_t log_level;
-static mlist_t *logs;
+static dlist *logs;
 
 call_infos_t *call_infos(const char *file, size_t line, const char *func)
 {

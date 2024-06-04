@@ -56,6 +56,6 @@ void handle_client(client_t *);
 void write_command(client_t *);
 void free_client(void *);
 bool is_client(void *, void *);
-void handle_new_ai(client_t *);
+void handle_new_ai(client_t *, char *);
 
 #endif /* !CLIENTS_H_ */

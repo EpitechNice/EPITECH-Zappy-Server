@@ -23,7 +23,8 @@ NAME	=	libdlist.a
 FLAGS	=	-I./includes	\
 			-Wall		\
 			-Wextra		\
-			-g3
+			-g3			\
+			-D__GNU_SOURCE
 
 COMP	=	gcc
 

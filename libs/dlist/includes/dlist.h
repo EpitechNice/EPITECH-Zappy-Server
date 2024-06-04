@@ -26,6 +26,7 @@ typedef struct linked_list_node {
     /*  ---- FUNCTION ----*/
 
 /**
+ * @ingroup dlist
  * @brief Iterates through the linked list and applies the given function to
  * the data of each element. Do nothing if the list is empty or if the given
  * function is NULL.
@@ -40,6 +41,7 @@ typedef struct linked_list_node {
 void dl_apply_data(lnode_t *head, void func(void *));
 
 /**
+ * @ingroup dlist
  * @brief Iterates through the linked list and applies the given function to
  * the data of each element. Do nothing if the list is empty or if the given
  * function is NULL.
@@ -56,6 +58,7 @@ void dl_apply_data_param(lnode_t *head,
     void func(void *, void *), void *param);
 
 /**
+ * @ingroup dlist
  * @brief Iterates through the linked list and applies the given function to
  * the node. Do nothing if the list is empty or if the given function is NULL.
  *
@@ -69,6 +72,7 @@ void dl_apply_data_param(lnode_t *head,
 void dl_apply_node(lnode_t *head, void func(lnode_t *));
 
 /**
+ * @ingroup dlist
  * @brief Iterates through the linked list and applies the given function to
  * the node. Do nothing if the list is empty or if the given function is NULL.
  *
@@ -84,6 +88,7 @@ void dl_apply_node_param(lnode_t *head,
     void func(lnode_t *, void *), void *param);
 
 /**
+ * @ingroup dlist
  * @brief Clears the linked list and send the data of each element to the
  * given function.
  *
@@ -97,6 +102,7 @@ void dl_apply_node_param(lnode_t *head,
 void dl_clear(lnode_t **head, void free_func(void *));
 
 /**
+ * @ingroup dlist
  * @brief Checks if the linked list is empty.
  *
  * @param head A pointer to the head of the linked list.
@@ -109,6 +115,7 @@ void dl_clear(lnode_t **head, void free_func(void *));
 bool dl_empty(lnode_t *head);
 
 /**
+ * @ingroup dlist
  * @brief Erases an element from the linked list.
  *
  * @param head A pointer to the head of the linked list.
@@ -126,6 +133,7 @@ void dl_erase(lnode_t **head, void *ref,
     bool cmp(void *, void *), void del(void *));
 
 /**
+ * @ingroup dlist
  * @brief Extracts an element from the linked list.
  *
  * @param head A pointer to the head of the linked list.
@@ -143,6 +151,7 @@ void dl_erase(lnode_t **head, void *ref,
 void *dl_extract(lnode_t **head, void *ref, bool cmp(void *, void *));
 
 /**
+ * @ingroup dlist
  * @brief Finds the data of an element in the linked list.
  *
  * @param head A pointer to the head of the linked list.
@@ -160,6 +169,7 @@ void *dl_extract(lnode_t **head, void *ref, bool cmp(void *, void *));
 void *dl_find_data(lnode_t *head, void *ref, bool cmp(void *, void *));
 
 /**
+ * @ingroup dlist
  * @brief Finds an element in the linked list.
  *
  * @param head A pointer to the head of the linked list.
@@ -177,6 +187,7 @@ void *dl_find_data(lnode_t *head, void *ref, bool cmp(void *, void *));
 lnode_t *dl_find_node(lnode_t *head, void *ref, bool cmp(void *, void *));
 
 /**
+ * @ingroup dlist
  * @brief Inserts a new element in the linked list.
  *
  * @param head A pointer to the head of the linked list.
@@ -191,6 +202,7 @@ lnode_t *dl_find_node(lnode_t *head, void *ref, bool cmp(void *, void *));
 void dl_insert(lnode_t **head, void *data, bool cmp(void *, void *));
 
 /**
+ * @ingroup dlist
  * @brief Returns the length of the linked list.
  *
  * @param head A pointer to the head of the linked list.
@@ -204,6 +216,7 @@ void dl_insert(lnode_t **head, void *data, bool cmp(void *, void *));
 int dl_length(lnode_t *head);
 
 /**
+ * @ingroup dlist
  * @brief Removes the last element of the linked list and returns its data.
  *
  * @param head A pointer to the head of the linked list.
@@ -217,6 +230,7 @@ int dl_length(lnode_t *head);
 void *dl_pop_back(lnode_t **head);
 
 /**
+ * @ingroup dlist
  * @brief Removes the first element of the linked list and returns its data.
  *
  * @param head A pointer to the head of the linked list.
@@ -230,6 +244,7 @@ void *dl_pop_back(lnode_t **head);
 void *dl_pop_front(lnode_t **head);
 
 /**
+ * @ingroup dlist
  * @brief Adds a new element at the end of the linked list.
  *
  * @param head A pointer to the head of the linked list.
@@ -241,6 +256,7 @@ void *dl_pop_front(lnode_t **head);
 void dl_push_back(lnode_t **head, void *data);
 
 /**
+ * @ingroup dlist
  * @brief Adds a new element at the beginning of the linked list.
  *
  * @param head A pointer to the head of the linked list.
