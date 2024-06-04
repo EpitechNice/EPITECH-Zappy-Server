@@ -38,13 +38,13 @@ else
 endif
 
 FLAGS	=	-I./includes/	\
-			-I./../mlist/includes/	\
-			-I./../heap/includes/	\
+			-I./../dlist/includes/	\
 			-Wall		\
 			-Wextra		\
-			-L./../mlist	\
-			-lmlist	\
-			-g3
+			-L./../dlist	\
+			-ldlist	\
+			-g3	\
+			-D__GNU_SOURCE
 
 COMP	=	gcc
 

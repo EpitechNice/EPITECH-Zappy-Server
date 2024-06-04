@@ -12,8 +12,14 @@ void destroy_connection(connect_t *connect)
     if (connect->socket != -1)
         close(connect->socket);
     if (connect->address != NULL)
-        ffree(connect->address);
-    ffree(connect);
+        free(connect->address);
+    free(connect);
+}
+
+static void destroy_game(game_t *game)
+{
+    dl_clear(&game->teams, &free);
+    free(game);
 }
 
 void destroy_server(void)
@@ -22,6 +28,10 @@ void destroy_server(void)
 
     if (server->info)
         destroy_connection(server->info);
+    dl_clear(&server->clients, &free_client);
+    if (server->game)
+        destroy_game(server->game);
+    server->initialized = false;
 }
 
 void destroy_server_exit(int exit_code)

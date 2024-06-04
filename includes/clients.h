@@ -13,6 +13,30 @@
 
 /* ---------STRUCTS--------- */
 
+
+enum direction {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
+};
+
+enum items {
+    FOOD,
+    LINEMATE,
+    DERAUMERE,
+    SIBUR,
+    MENDIANE,
+    PHIRAS,
+    THYSTAME
+};
+
+enum status {
+    WAITING,
+    IA,
+    GUI
+};
+
 typedef struct client_structure_infos {
     int fd;
     int x;
@@ -20,29 +44,18 @@ typedef struct client_structure_infos {
     int level;
     int direction;
     int inventory[7];
-    mlist_t to_send;
+    char *team_name;
+    enum status status;
+    lnode_t *to_send;
 } client_t;
-
-typedef struct client_ai_infos {
-    int fd;
-    int x;
-    int y;
-    int level;
-    int direction;
-    int inventory[7];
-    mlist_t to_send;
-} ai_t;
-
-typedef struct client_gui_infos {
-    int fd;
-    mlist_t to_send;
-} gui_t;
 
 /* ---------PROTOTYPES--------- */
 
-void free_clients(void *);
-void delete_client(void *);
+client_t *init_client(int);
+void handle_client(client_t *);
+void write_command(client_t *);
+void free_client(void *);
 bool is_client(void *, void *);
-client_t *init_clients(int);
+void handle_new_ai(client_t *, char *);
 
 #endif /* !CLIENTS_H_ */

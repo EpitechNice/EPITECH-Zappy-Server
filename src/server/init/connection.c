@@ -23,7 +23,7 @@ static void create_socket(connect_t *connect)
 
 static void bind_socket(connect_t *connect)
 {
-    connect->address = fmalloc(sizeof(struct sockaddr_in));
+    connect->address = malloc(sizeof(struct sockaddr_in));
     connect->address->sin_family = AF_INET;
     connect->address->sin_addr.s_addr = INADDR_ANY;
     connect->address->sin_port = htons(connect->port);
@@ -59,7 +59,7 @@ static void listen_socket(connect_t *connect)
 
 connect_t *init_connection(parsing_t *p)
 {
-    connect_t *connect = (connect_t *)fmalloc(sizeof(connect_t));
+    connect_t *connect = (connect_t *)malloc(sizeof(connect_t));
 
     connect->port = p->port;
     connect->socket = -1;

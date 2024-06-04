@@ -7,23 +7,15 @@
 
 #include "zappy_server.h"
 
-void free_clients(void *data)
+void free_client(void *data)
 {
-    client_t *clients = (client_t *) data;
+    client_t *client = (client_t *)data;
 
-    close(clients->fd);
-    if (clients->to_send != NULL)
-        m_list_destroy(&clients->to_send, free);
-    ffree(clients);
-}
-
-client_t *init_clients(int fd)
-{
-    client_t *clients = (client_t *)fmalloc(sizeof(client_t));
-
-    clients->fd = fd;
-    clients->to_send = NULL;
-    return (clients);
+    close(client->fd);
+    if (client->to_send != NULL)
+        dl_clear(&client->to_send, free);
+    if (client->team_name != NULL)
+        free(client->team_name);
 }
 
 bool is_client(void *ref, void *data)
@@ -34,10 +26,16 @@ bool is_client(void *ref, void *data)
     return client_ref->fd == client->fd;
 }
 
-void delete_client(void *data)
+client_t *init_client(int fd)
 {
-    client_t *clients = (client_t *)data;
+    client_t *clients = (client_t *)malloc(sizeof(client_t));
 
-    if (clients->to_send != NULL)
-        m_list_destroy(&clients->to_send, ffree);
+    clients->fd = fd;
+    clients->x = 0;
+    clients->y = 0;
+    clients->level = 1;
+    clients->direction = UP;
+    clients->status = WAITING;
+    clients->to_send = NULL;
+    return (clients);
 }

@@ -97,8 +97,7 @@ static int parse_names(parsing_t *p, int argc, char **argv, int i)
         return -1;
     }
     for (; argv[j] != NULL && argv[j][0] != '-'; j++)
-        m_list_add_at_pos(&p->names, m_list_new(strdup(argv[j])),
-            MLIST_POS_LAST);
+        dl_push_back(&p->names, argv[j]);
     if (j == i) {
         p->ok = false;
         fprintf(stderr, "Invalid argument for \"-n\". %s\n",
