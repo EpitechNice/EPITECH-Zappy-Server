@@ -28,6 +28,18 @@ typedef struct connection_information {
     struct sockaddr_in *address;
 } connect_t;
 
+typedef struct all_teams_infos_s {
+    char *name;
+    int clients_nb;
+} team_t;
+
+typedef struct all_game_infos_s {
+    int width;
+    int height;
+    int freq;
+    lnode_t *teams;
+} game_t;
+
 typedef struct all_server_infos_s {
     bool initialized;
     bool running;
@@ -35,18 +47,19 @@ typedef struct all_server_infos_s {
     fd_set read_fds;
     fd_set write_fds;
     fd_set error_fds;
-    connect_t *info;
     lnode_t *clients;
-    client_t *current_client;
+    connect_t *info;
+    game_t *game;
 } server_t;
 
 /* ---------PROTOTYPES--------- */
 
 void accept_new_connection(server_t *);
 server_t *get_server(void);
-connect_t *init_connection(parsing_t *p);
+connect_t *init_connection(parsing_t *);
+game_t *init_game(parsing_t *);
 void destroy_server_exit(int);
 void destroy_server(void);
-void run(server_t *server);
+void run(server_t *);
 
 #endif /* !ZAPPY_SERVER_H_ */
