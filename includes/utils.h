@@ -51,4 +51,30 @@ char *get_file_content(char *filepath);
 */
 void sig_handler(int);
 
+/**
+ * @brief Free a tab
+ *
+ * @param tab the tab to free
+*/
+void free_tab(char **);
+
+/**
+ * @brief str to word array
+ *
+ * @param str the string
+ * @param sub the substring
+ *
+ * @return the word array
+*/
+char **stowa(const char *, const char *);
+
+/**
+ * @brief Get the length of a tab
+ *
+ * @param tab the tab
+ *
+ * @return the length of the tab
+*/
+int tab_len(char **);
+
 #endif /* !UTILS_H_ */

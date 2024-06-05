@@ -17,6 +17,7 @@
 
 /* ---------STRUCTS--------- */
 
+typedef char *(*command_func_t) (char **);
 
 enum direction {
     UP,
@@ -63,5 +64,6 @@ bool is_client(void *, void *);
 void handle_new_ai(client_t *, const char *);
 void handle_new_gui(client_t *);
 void handle_gui_command(client_t *, const char *);
+char *command_msz(char **);
 
 #endif /* !CLIENTS_H_ */
