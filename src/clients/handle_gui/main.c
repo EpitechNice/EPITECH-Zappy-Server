@@ -7,7 +7,15 @@
 
 #include "zappy_server.h"
 
-
-void handle_new_gui(UNUSED client_t *client, UNUSED char *buffer)
+void handle_gui_command(UNUSED client_t *client, UNUSED const char *buffer)
 {
+    
+    return;
+}
+
+void handle_new_gui(client_t *client)
+{
+    client->status = GUI;
+    client->team_name = strdup("GUI");
+    return;
 }

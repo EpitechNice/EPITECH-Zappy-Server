@@ -11,6 +11,10 @@
     #include "includes.h"
     #include "zappy_server.h"
 
+/* ---------MACROS--------- */
+
+#define GUI_CONNECT "GRAPHIC"
+
 /* ---------STRUCTS--------- */
 
 
@@ -57,5 +61,7 @@ void write_command(client_t *);
 void free_client(void *);
 bool is_client(void *, void *);
 void handle_new_ai(client_t *, const char *);
+void handle_new_gui(client_t *);
+void handle_gui_command(client_t *, const char *);
 
 #endif /* !CLIENTS_H_ */

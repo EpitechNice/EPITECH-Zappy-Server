@@ -22,11 +22,9 @@ void accept_new_connection(server_t *server)
 
 static void waiting_client_command(client_t *client, char *buffer)
 {
-    if (strcmp(buffer, "GUI") == 0) {
-        client->status = GUI;
-        client->team_name = strdup("GUI");
-        dl_push_back(&client->to_send, (char *)strdup("GUI init"));
-    } else
+    if (strcmp(buffer, GUI_CONNECT) == 0)
+        handle_new_gui(client);
+    else
         handle_new_ai(client, buffer);
 }
 
@@ -37,7 +35,7 @@ static void handle_commands(client_t *client, char *buffer)
     if (client->status == AI)
         LOG(LOG_LEVEL_DEBUG, "IA");
     if (client->status == GUI)
-        LOG(LOG_LEVEL_DEBUG, "GUI");
+        return handle_gui_command(client, buffer);
 }
 
 static char *read_client(client_t *client, char *buffer)
