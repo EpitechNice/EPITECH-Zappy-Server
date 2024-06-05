@@ -22,8 +22,11 @@ char *get_file_content(char *filepath)
         str[i] = '\0';
     fd = open(filepath, O_RDONLY);
     readed = read(fd, str, size);
-    if (readed == 0)
-        fprintf(stderr, "Reading file error...");
+    if (readed == 0) {
+        toggle_log_on_stderr(true);
+        LOG(LOG_LEVEL_ERROR, "Error while reading file %s", filepath);
+        toggle_log_on_stderr(false);
+    }
     close(fd);
     return str;
 }

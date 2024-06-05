@@ -34,10 +34,10 @@ static void handle_commands(client_t *client, char *buffer)
 {
     if (client->status == WAITING)
         return waiting_client_command(client, buffer);
-    if (client->status == IA)
-        printf("IA\n");
+    if (client->status == AI)
+        LOG(LOG_LEVEL_DEBUG, "IA");
     if (client->status == GUI)
-        printf("GUI\n");
+        LOG(LOG_LEVEL_DEBUG, "GUI");
 }
 
 static char *read_client(client_t *client)

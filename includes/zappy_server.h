@@ -62,4 +62,13 @@ void destroy_server_exit(int);
 void destroy_server(void);
 void run(server_t *);
 
+/**
+  * @ingroup server
+  *
+  * @brief Initiate all pre-run things.
+  *
+  * @return 0, just to be able to call at the beggining of main
+*/
+char init(void);
+
 #endif /* !ZAPPY_SERVER_H_ */

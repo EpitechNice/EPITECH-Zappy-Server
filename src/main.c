@@ -9,6 +9,7 @@
 
 int main(int argc, char **argv)
 {
+    UNUSED char _ = init();
     parsing_t *p = parse(argc, argv);
     server_t *server = get_server();
 
@@ -16,8 +17,6 @@ int main(int argc, char **argv)
     server->info = init_connection(p);
     server->game = init_game(p);
     destroy_parsing(p);
-    signal(SIGINT, &sig_handler);
     run(server);
-    destroy_server();
     return 0;
 }

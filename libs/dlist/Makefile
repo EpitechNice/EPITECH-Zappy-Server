@@ -5,28 +5,18 @@
 ## makefile of the library
 ##
 
-SRC	=	src/dl_apply.c		\
-		src/dl_clear.c		\
-		src/dl_empty.c		\
-		src/dl_erase.c		\
-		src/dl_extract.c	\
-		src/dl_find.c		\
-		src/dl_insert.c		\
-		src/dl_length.c		\
-		src/dl_pop.c		\
-		src/dl_push.c		\
+SRC	=	$(wildcard src/*.c)
 
 OBJ	=	$(SRC:%.c=%.o)
 
 NAME	=	libdlist.a
 
-FLAGS	=	-I./includes	\
+CFLAGS	=	-I./includes	\
 			-Wall		\
 			-Wextra		\
-			-g3			\
-			-D__GNU_SOURCE
+			-g3
 
-COMP	=	gcc
+CC	=	gcc
 
 all:	$(NAME)
 
@@ -40,8 +30,5 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
-
-%.o: %.c
-	$(COMP) $(FLAGS) -c -o $@ $<
 
 .PHONY: all clean fclean re

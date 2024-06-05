@@ -12,6 +12,8 @@ SRC		=   $(wildcard src/*.c)			\
 			$(wildcard src/server/init/*.c)	\
 			$(wildcard src/server/running/*.c)	\
 			$(wildcard src/clients/*.c)	\
+			$(wildcard src/clients/handle_ai/*.c)	\
+			$(wildcard src/clients/handle_gui/*.c)	\
 			$(wildcard src/utils/*.c)	\
 
 OBJ 	= 	$(patsubst src/%.c,compiled_object/%.o,$(SRC))
@@ -46,20 +48,21 @@ BIN	=	"zappy_server"
 
 FLAGS	=	-Wall 				\
 			-Wextra				\
+			-Werror				\
 			-Wfloat-equal 		\
 			-Wundef 			\
 			-Wcast-align		\
 			-Wshadow			\
 			-Wlogical-op		\
 			-Wredundant-decls	\
-			-O2					\
-			-D __GNU_SOURCE		\
+			-O2
 
 INCLUDES	=	-I./libs/includes	\
 				-I./includes		\
 
 LIBS	=	-L./libs		\
 			-ldlist	\
+			-linput_output	\
 
 COMP	=	gcc
 

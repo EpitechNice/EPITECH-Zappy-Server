@@ -5,7 +5,8 @@
 ## makefile
 ##
 
-SRC	=	src/log.c
+SRC	=	$(wildcard src/input/*.c)	\
+		$(wildcard src/log/*.c)
 
 OBJ	=	$(SRC:%.c=%.o)
 
@@ -37,16 +38,15 @@ else
 	YELLOW		= ""
 endif
 
-FLAGS	=	-I./includes/	\
+CFLAGS	=	-I./includes/	\
 			-I./../dlist/includes/	\
 			-Wall		\
 			-Wextra		\
 			-L./../dlist	\
 			-ldlist	\
-			-g3	\
-			-D__GNU_SOURCE
+			-g3
 
-COMP	=	gcc
+CC	=	gcc
 
 all:	$(BIN)
 
@@ -60,9 +60,5 @@ fclean: clean
 	@rm -f $(BIN)
 
 re: fclean all
-
-%.o: %.c
-	@echo $(GREEN)">> Compiling C object $@"$(RESET)
-	@$(COMP) $(FLAGS) -c -o $@ $<
 
 .PHONY: all clean fclean re

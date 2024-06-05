@@ -5,12 +5,7 @@
 ** signal
 */
 
-// #include "zappy_server.h"
-
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <stdio.h>
+#include "zappy_server.h"
 
 static size_t get_nb_subs(const char *str, const char *sub)
 {
@@ -68,22 +63,11 @@ char **stowa(const char *str, const char *sub)
         return NULL;
     map = (char **)malloc(sizeof(char *) * (nb_sub + 1));
     map[nb_sub] = NULL;
-    for (int i = 0; i < nb_sub; i++) {
-        pos = find_pos_not_of(&str[pos], sub);
+    for (size_t i = 0; i < nb_sub; i++) {
+        pos += find_pos_not_of(&str[pos], sub);
         size = find_pos_of(&str[pos], sub);
         map[i] = m_strndup(&str[pos], size);
         pos += size;
-        printf("%i\n", pos);
     }
     return map;
-}
-
-int main()
-{
-    char **test = stowa("this is a test", " ");
-    for (int i = 0; test[i]; ++i) {
-        printf("%s\n", test[i]);
-        free(test[i]);
-    }
-    free(test);
 }

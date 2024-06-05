@@ -1,10 +1,12 @@
-USAGE
-    ./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq
-
-DESCRIPTION
-    p    port number
-    x    width of the world
-    y    height of the world
-    n    name of the team
-    c    number of authorized clients per team
-    f    reciprocal of time unit for execution of actions
++---------------------------------------------------------------------------------------+
+| USAGE                                                                                 |
+|     ./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq |
+|                                                                                       |
+| DESCRIPTION                                                                           |
+|     p    port number                                                                  |
+|     x    width of the world                                                           |
+|     y    height of the world                                                          |
+|     n    name of the team                                                             |
+|     c    number of authorized clients per team                                        |
+|     f    reciprocal of time unit for execution of actions                             |
++---------------------------------------------------------------------------------------+
