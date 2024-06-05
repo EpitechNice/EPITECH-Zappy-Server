@@ -24,7 +24,7 @@ static void waiting_client_command(client_t *client, char *buffer)
 {
     if (strcmp(buffer, "GUI") == 0) {
         client->status = GUI;
-        client->team_name = "GUI";
+        client->team_name = strdup("GUI");
         dl_push_back(&client->to_send, (char *)strdup("GUI init"));
     } else
         handle_new_ai(client, buffer);
@@ -40,15 +40,11 @@ static void handle_commands(client_t *client, char *buffer)
         LOG(LOG_LEVEL_DEBUG, "GUI");
 }
 
-static char *read_client(client_t *client)
+static char *read_client(client_t *client, char *buffer)
 {
-    char *buffer = NULL;
     int value = -1;
     server_t *server = get_server();
 
-    buffer = malloc(sizeof(char) * LENGTH_COMMAND);
-    if (!buffer)
-        return NULL;
     value = read(client->fd, buffer, LENGTH_COMMAND);
     if (value <= 0) {
         dl_erase(&server->clients, (void *)client, &is_client, &free_client);
@@ -62,10 +58,13 @@ static char *read_client(client_t *client)
 
 void handle_client(client_t *client)
 {
-    char *buffer = read_client(client);
+    char *buffer = malloc(sizeof(char) * LENGTH_COMMAND);
+    buffer = read_client(client, buffer);
 
-    if (buffer == NULL)
+    if (buffer == NULL) {
+        free(buffer);
         return;
+    }
     handle_commands(client, buffer);
     free(buffer);
 }

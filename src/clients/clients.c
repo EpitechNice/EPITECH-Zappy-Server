@@ -14,8 +14,9 @@ void free_client(void *data)
     close(client->fd);
     if (client->to_send != NULL)
         dl_clear(&client->to_send, free);
-    if (client->team_name != NULL)
+    if (client->status != WAITING)
         free(client->team_name);
+    free(client);
 }
 
 bool is_client(void *ref, void *data)

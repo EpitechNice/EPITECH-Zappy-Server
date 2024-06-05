@@ -20,6 +20,16 @@
     #define MAX_CLIENTS 1024
     #define LENGTH_COMMAND 4096
 
+enum density {
+    FOOD_DENSITY = 50,
+    LINEMATE_DENSITY = 30,
+    DERAUMERE_DENSITY = 15,
+    SIBUR_DENSITY = 10,
+    MENDIANE_DENSITY = 10,
+    PHIRAS_DENSITY = 8,
+    THYSTAME_DENSITY = 5
+};
+
 /* ---------TYPEDEFS--------- */
 
 typedef struct connection_information {
@@ -33,10 +43,22 @@ typedef struct all_teams_infos_s {
     int clients_nb;
 } team_t;
 
+typedef struct all_map_infos_s {
+    int players;
+    int food;
+    int linemate;
+    int deraumere;
+    int sibur;
+    int mendiane;
+    int phiras;
+    int thystame;
+} map_t;
+
 typedef struct all_game_infos_s {
     int width;
     int height;
     int freq;
+    map_t **map;
     lnode_t *teams;
 } game_t;
 
