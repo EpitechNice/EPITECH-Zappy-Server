@@ -18,7 +18,10 @@ void destroy_connection(connect_t *connect)
 
 static void destroy_game(game_t *game)
 {
-    dl_clear(&game->teams, &free);
+    dl_clear(&game->teams, free);
+    for (int i = 0; i < game->height; i++)
+        free(game->map[i]);
+    free(game->map);
     free(game);
 }
 
