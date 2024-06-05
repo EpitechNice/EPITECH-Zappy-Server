@@ -66,5 +66,6 @@ void handle_new_gui(client_t *);
 void handle_gui_command(client_t *, const char *);
 char *command_msz(char **);
 char *command_bct(char **);
+char *command_mct(char **);
 
 #endif /* !CLIENTS_H_ */
