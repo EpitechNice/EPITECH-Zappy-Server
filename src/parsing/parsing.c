@@ -135,13 +135,11 @@ parsing_t *parse(int argc, char **argv)
 {
     parsing_t *p = init_parsing();
 
-    toggle_log_on_stderr(true);
     for (int i = 1; i < argc; i++) {
         if (!p->ok || p->help)
             break;
         i = parse_loop(argc, argv, i, p);
     }
-    p = (p->ok && !p->help) ? parsing_check(p) : p;
-    toggle_log_on_stderr(false);
+    p = (p->ok) ? parsing_check(p) : p;
     return p;
 }
