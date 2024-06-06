@@ -11,7 +11,7 @@ static team_t *make_teams(lnode_t *p, int clients_nb)
 {
     team_t *team = malloc(sizeof(team_t));
 
-    team->name = p->data;
+    team->name = strdup(p->data);
     team->clients_nb = clients_nb;
     return team;
 }

@@ -13,7 +13,7 @@
 
 /* ---------MACROS--------- */
 
-#define GUI_CONNECT "GRAPHIC"
+    #define GUI_CONNECT "GRAPHIC"
 
 /* ---------STRUCTS--------- */
 
@@ -67,5 +67,6 @@ void handle_gui_command(client_t *, const char *);
 void command_msz(char **, client_t *);
 void command_bct(char **, client_t *);
 void command_mct(char **, client_t *);
+void command_tna(char **, client_t *);
 
 #endif /* !CLIENTS_H_ */

@@ -10,7 +10,8 @@
 static void parse_check_port(parsing_t *p)
 {
     if (p->port == -1) {
-        LOG(LOG_LEVEL_ERROR, "Invalid height value. Expect a positive integer.");
+        LOG(LOG_LEVEL_ERROR,
+            "Invalid height value. Expect a positive integer.");
         p->ok = false;
     }
 }
@@ -18,7 +19,8 @@ static void parse_check_port(parsing_t *p)
 static void parse_check_width(parsing_t *p)
 {
     if (p->width == -1) {
-        LOG(LOG_LEVEL_ERROR, "Invalid height value. Expect a positive integer.");
+        LOG(LOG_LEVEL_ERROR,
+            "Invalid height value. Expect a positive integer.");
         p->ok = false;
     }
 }
@@ -26,7 +28,8 @@ static void parse_check_width(parsing_t *p)
 static void parse_check_height(parsing_t *p)
 {
     if (p->height == -1) {
-        LOG(LOG_LEVEL_ERROR, "Invalid height value. Expect a positive integer.");
+        LOG(LOG_LEVEL_ERROR,
+            "Invalid height value. Expect a positive integer.");
         p->ok = false;
     }
 }

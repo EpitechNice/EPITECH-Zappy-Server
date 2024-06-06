@@ -16,7 +16,7 @@ static int parse_port(parsing_t *p, int argc, char **argv, int i)
     }
     if (!is_digits(argv[i + 1])) {
         p->ok = false;
-        LOG(LOG_LEVEL_ERROR, "Invalid argument for \"-p\". Expect an integer.");
+        LOG(LOG_LEVEL_ERROR, "Invalid argument for \"-p\". Expect an integer");
         return -1;
     }
     p->port = atoi(argv[i + 1]);
@@ -32,7 +32,7 @@ static int parse_width(parsing_t *p, int argc, char **argv, int i)
     }
     if (!is_digits(argv[i + 1])) {
         p->ok = false;
-        LOG(LOG_LEVEL_ERROR, "Invalid argument for \"-x\". Expect an integer.");
+        LOG(LOG_LEVEL_ERROR, "Invalid argument for \"-x\". Expect an integer");
         return -1;
     }
     p->width = atoi(argv[i + 1]);
@@ -48,7 +48,7 @@ static int parse_height(parsing_t *p, int argc, char **argv, int i)
     }
     if (!is_digits(argv[i + 1])) {
         p->ok = false;
-        LOG(LOG_LEVEL_ERROR, "Invalid argument for \"-y\". Expect an integer.");
+        LOG(LOG_LEVEL_ERROR, "Invalid argument for \"-y\". Expect an integer");
         return -1;
     }
     p->height = atoi(argv[i + 1]);
@@ -64,7 +64,7 @@ static int parse_clients_nb(parsing_t *p, int argc, char **argv, int i)
     }
     if (!is_digits(argv[i + 1])) {
         p->ok = false;
-        LOG(LOG_LEVEL_ERROR, "Invalid argument for \"-c\". Expect an integer.");
+        LOG(LOG_LEVEL_ERROR, "Invalid argument for \"-c\". Expect an integer");
         return -1;
     }
     p->clients_nb = atoi(argv[i + 1]);
@@ -80,7 +80,7 @@ static int parse_freq(parsing_t *p, int argc, char **argv, int i)
     }
     if (!is_digits(argv[i + 1])) {
         p->ok = false;
-        LOG(LOG_LEVEL_ERROR, "Invalid argument for \"-f\". Expect an integer.");
+        LOG(LOG_LEVEL_ERROR, "Invalid argument for \"-f\". Expect an integer");
         return -1;
     }
     p->freq = atoi(argv[i + 1]);
