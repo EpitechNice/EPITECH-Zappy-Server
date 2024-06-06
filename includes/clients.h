@@ -17,8 +17,6 @@
 
 /* ---------STRUCTS--------- */
 
-typedef char *(*command_func_t) (char **);
-
 enum direction {
     UP,
     RIGHT,
@@ -54,6 +52,8 @@ typedef struct client_structure_infos {
     lnode_t *to_send;
 } client_t;
 
+typedef void(*command_func_t) (char **, client_t *);
+
 /* ---------PROTOTYPES--------- */
 
 client_t *init_client(int);
@@ -64,7 +64,8 @@ bool is_client(void *, void *);
 void handle_new_ai(client_t *, const char *);
 void handle_new_gui(client_t *);
 void handle_gui_command(client_t *, const char *);
-char *command_msz(char **);
-char *command_bct(char **);
+void command_msz(char **, client_t *);
+void command_bct(char **, client_t *);
+void command_mct(char **, client_t *);
 
 #endif /* !CLIENTS_H_ */

@@ -7,13 +7,15 @@
 
 #include "zappy_server.h"
 
-char *command_msz(char **args)
+void command_msz(char **args, client_t *client)
 {
     char *response = NULL;
 
-    if (tab_len(args) != 1)
-        return strdup("sbp");
+    if (tab_len(args) != 1) {
+        dl_push_back(&client->to_send, strdup("sbp"));
+        return;
+    }
     asprintf(&response, "msz %d %d", get_server()->game->width,
     get_server()->game->height);
-    return response;
+    dl_push_back(&client->to_send, response);
 }
