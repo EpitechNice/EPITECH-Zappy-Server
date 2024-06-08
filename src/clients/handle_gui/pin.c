@@ -7,7 +7,7 @@
 
 #include "zappy_server.h"
 
-void send_pin(client_t *client, client_t *tmp)
+static void send_pin(client_t *client, client_t *tmp)
 {
     char *str = NULL;
 
