@@ -69,5 +69,9 @@ void command_bct(char **, client_t *);
 void command_mct(char **, client_t *);
 void command_tna(char **, client_t *);
 void command_ppo(char **, client_t *);
+void command_plv(char **, client_t *);
+// void command_pin(char **, client_t *);
+// void command_sgt(char **, client_t *);
+// void command_sst(char **, client_t *);
 
 #endif /* !CLIENTS_H_ */
