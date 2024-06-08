@@ -68,6 +68,8 @@ void command_pnw(const char *);
 void command_pdi(int);
 void command_pex(int);
 void command_pfk(int);
+void command_pdr(int, int);
+void command_pgt(int, int);
 void command_msz(char **, client_t *);
 void command_bct(char **, client_t *);
 void command_mct(char **, client_t *);
