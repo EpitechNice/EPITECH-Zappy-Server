@@ -68,5 +68,6 @@ void command_msz(char **, client_t *);
 void command_bct(char **, client_t *);
 void command_mct(char **, client_t *);
 void command_tna(char **, client_t *);
+void command_ppo(char **, client_t *);
 
 #endif /* !CLIENTS_H_ */
