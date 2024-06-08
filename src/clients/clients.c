@@ -38,5 +38,8 @@ client_t *init_client(int fd)
     clients->direction = UP;
     clients->status = WAITING;
     clients->to_send = NULL;
+    clients->team_name = NULL;
+    for (int i = 0; i < 7; i++)
+        clients->inventory[i] = 0;
     return (clients);
 }
