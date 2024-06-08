@@ -65,6 +65,7 @@ void handle_new_ai(client_t *, const char *);
 void handle_new_gui(client_t *);
 void handle_gui_command(client_t *, const char *);
 void command_pnw(const char *);
+void command_seg(const char *);
 void command_pdi(int);
 void command_pex(int);
 void command_pfk(int);
