@@ -9,8 +9,7 @@
 
 void command_pie(int x, int y, bool success)
 {
-    server_t *server = get_server();
-    lnode_t *clients = server->clients;
+    lnode_t *clients = get_server()->clients;
     client_t *tmp;
     char *buffer = NULL;
 

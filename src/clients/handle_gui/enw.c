@@ -2,18 +2,19 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** pdi
+** enw
 */
 
 #include "zappy_server.h"
 
-void command_pdi(int ai_id)
+void command_enw(int egg, client_t *client)
 {
     lnode_t *clients = get_server()->clients;
     client_t *tmp;
     char *buffer = NULL;
 
-    asprintf(&buffer, "pdi %i", ai_id);
+    asprintf(&buffer, "enw %i %i %i %i",
+    egg, client->fd, client->x, client->y);
     for (; clients; clients = clients->next) {
         tmp = (client_t *)clients->data;
         if (tmp->status == GUI)
