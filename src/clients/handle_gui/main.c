@@ -30,6 +30,7 @@ void handle_gui_command(client_t *client, const char *buffer)
             free_tab(args);
             return;
         }
+    command_suc(client);
     free_tab(args);
     return;
 }

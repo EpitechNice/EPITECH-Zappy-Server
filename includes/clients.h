@@ -71,7 +71,9 @@ void command_pex(int);
 void command_pfk(int);
 void command_pdr(int, int);
 void command_pgt(int, int);
+void command_pie(int, int, bool);
 void command_pbc(int, const char *);
+void command_smg(char **);
 void command_msz(char **, client_t *);
 void command_bct(char **, client_t *);
 void command_mct(char **, client_t *);
@@ -81,5 +83,6 @@ void command_plv(char **, client_t *);
 void command_pin(char **, client_t *);
 void command_sgt(char **, client_t *);
 void command_sst(char **, client_t *);
+void command_suc(client_t *);
 
 #endif /* !CLIENTS_H_ */
