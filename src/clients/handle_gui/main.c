@@ -8,15 +8,15 @@
 #include "zappy_server.h"
 
 const char *cmd[] = {
-    "msz", "bct", "mct"//, "tna",
-    // "ppo", "plv", "pin", "sgt",
-    // "sst"
+    "msz", "bct", "mct", "tna",
+    "ppo", "plv", "pin", "sgt",
+    "sst"
 };
 
 command_func_t _func[] = {
-    command_msz, command_bct, command_mct//, command_tna,
-    //command_ppo, command_plv, command_pin, command_sgt,
-    //command_sst
+    command_msz, command_bct, command_mct, command_tna,
+    command_ppo, command_plv, command_pin, command_sgt,
+    command_sst
 };
 
 void handle_gui_command(client_t *client, const char *buffer)
@@ -30,6 +30,7 @@ void handle_gui_command(client_t *client, const char *buffer)
             free_tab(args);
             return;
         }
+    command_suc(client);
     free_tab(args);
     return;
 }

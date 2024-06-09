@@ -33,6 +33,7 @@ static char *m_strndup(const char *str, size_t size)
     len = ((len < size) ? len : size);
     out = (char *)malloc(len + 1);
     strncpy(out, str, len);
+    out[len] = '\0';
     return out;
 }
 

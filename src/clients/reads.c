@@ -57,8 +57,8 @@ static char *read_client(client_t *client, char *buffer)
 void handle_client(client_t *client)
 {
     char *buffer = malloc(sizeof(char) * LENGTH_COMMAND);
-    buffer = read_client(client, buffer);
 
+    buffer = read_client(client, buffer);
     if (buffer == NULL) {
         free(buffer);
         return;

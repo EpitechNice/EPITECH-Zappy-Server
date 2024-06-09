@@ -13,7 +13,7 @@
 
 /* ---------MACROS--------- */
 
-#define GUI_CONNECT "GRAPHIC"
+    #define GUI_CONNECT "GRAPHIC"
 
 /* ---------STRUCTS--------- */
 
@@ -64,8 +64,28 @@ bool is_client(void *, void *);
 void handle_new_ai(client_t *, const char *);
 void handle_new_gui(client_t *);
 void handle_gui_command(client_t *, const char *);
+void command_smg(char **);
+void command_pnw(const char *);
+void command_seg(const char *);
+void command_pdi(int);
+void command_pex(int);
+void command_pfk(int);
+void command_ebo(int);
+void command_edi(int);
+void command_pdr(int, int);
+void command_pgt(int, int);
+void command_pie(int, int, bool);
+void command_pbc(int, const char *);
+void command_enw(int, client_t *);
 void command_msz(char **, client_t *);
 void command_bct(char **, client_t *);
 void command_mct(char **, client_t *);
+void command_tna(char **, client_t *);
+void command_ppo(char **, client_t *);
+void command_plv(char **, client_t *);
+void command_pin(char **, client_t *);
+void command_sgt(char **, client_t *);
+void command_sst(char **, client_t *);
+void command_suc(client_t *);
 
 #endif /* !CLIENTS_H_ */

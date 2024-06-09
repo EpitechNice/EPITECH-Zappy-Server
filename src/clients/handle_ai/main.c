@@ -38,6 +38,7 @@ void handle_new_ai(client_t *client, const char *buffer)
     game_t *game = get_server()->game;
     lnode_t *teams = game->teams;
     team_t *tmp;
+    char *out = NULL;
 
     for (; teams; teams = teams->next) {
         tmp = (team_t *)teams->data;
@@ -46,6 +47,10 @@ void handle_new_ai(client_t *client, const char *buffer)
         send_infos(client, tmp->clients_nb, game->height, game->width);
         tmp->clients_nb--;
         client->team_name = strdup(tmp->name);
+        asprintf(&out, "pnw %i %i %i %i %i %s", client->fd, client->x,
+            client->y, client->direction, client->level, client->team_name);
+        command_pnw(out);
+        free(out);
         return;
     }
     delete_client(client, buffer);

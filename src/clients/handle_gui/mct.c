@@ -21,12 +21,9 @@ void command_mct(char **args, client_t *client)
         for (int j = 0; j < game->width; j++) {
             asprintf(&response, "bct %d %d %d %d %d %d %d %d %d",
             i, j, map[i][j].food,
-            map[i][j].linemate,
-            map[i][j].deraumere,
-            map[i][j].sibur,
-            map[i][j].mendiane,
-            map[i][j].phiras,
-            map[i][j].thystame);
+            map[i][j].linemate, map[i][j].deraumere,
+            map[i][j].sibur, map[i][j].mendiane,
+            map[i][j].phiras, map[i][j].thystame);
             dl_push_back(&client->to_send, strdup(response));
             free(response);
             response = NULL;
