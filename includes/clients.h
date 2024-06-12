@@ -14,45 +14,50 @@
 /* ---------MACROS--------- */
 
     #define GUI_CONNECT "GRAPHIC"
+    #define ABS(alpha) ((alpha) >= 0 ? (alpha) : -(alpha))
 
 /* ---------STRUCTS--------- */
 
-enum direction {
+typedef enum {
     UP,
     RIGHT,
     DOWN,
     LEFT
-};
+} direction_t;
 
-enum items {
-    FOOD,
-    LINEMATE,
-    DERAUMERE,
-    SIBUR,
-    MENDIANE,
-    PHIRAS,
-    THYSTAME
-};
+typedef enum {
+    FOOD = 0,
+    LINEMATE = 1,
+    DERAUMERE = 2,
+    SIBUR = 3,
+    MENDIANE = 4,
+    PHIRAS = 5,
+    THYSTAME = 6
+} items_t;
 
-enum status {
+typedef enum {
     WAITING,
     AI,
     GUI
-};
+} status_t;
 
 typedef struct client_structure_infos {
+    bool started_an_incantation;
+    short ttl;
+    int time_before_action;
     int fd;
     int x;
     int y;
     int level;
     int direction;
     int inventory[7];
+    char *buffer;
     char *team_name;
-    enum status status;
+    status_t status;
     lnode_t *to_send;
 } client_t;
 
-typedef void(*command_func_t) (char **, client_t *);
+typedef void(*command_func_t) (const char **, client_t *);
 
 /* ---------PROTOTYPES--------- */
 
@@ -64,28 +69,22 @@ bool is_client(void *, void *);
 void handle_new_ai(client_t *, const char *);
 void handle_new_gui(client_t *);
 void handle_gui_command(client_t *, const char *);
-void command_smg(char **);
-void command_pnw(const char *);
-void command_seg(const char *);
-void command_pdi(int);
-void command_pex(int);
-void command_pfk(int);
-void command_ebo(int);
-void command_edi(int);
-void command_pdr(int, int);
-void command_pgt(int, int);
-void command_pie(int, int, bool);
-void command_pbc(int, const char *);
-void command_enw(int, client_t *);
-void command_msz(char **, client_t *);
-void command_bct(char **, client_t *);
-void command_mct(char **, client_t *);
-void command_tna(char **, client_t *);
-void command_ppo(char **, client_t *);
-void command_plv(char **, client_t *);
-void command_pin(char **, client_t *);
-void command_sgt(char **, client_t *);
-void command_sst(char **, client_t *);
-void command_suc(client_t *);
+void command_msz(const char **, client_t *);
+void command_bct(const char **, client_t *);
+void command_mct(const char **, client_t *);
+void command_tna(const char **, client_t *);
+
+void command_forward(const char **args, client_t *client);
+void command_right(const char **args, client_t *client);
+void command_left(const char **args, client_t *client);
+void command_look(const char **args, client_t *client);
+void command_inventory(const char **args, client_t *client);
+void command_broadcast(const char **args, client_t *client);
+void command_co_nbr(const char **args, client_t *client);
+void command_fork(const char **args, client_t *client);
+void command_eject(const char **args, client_t *client);
+void command_take(const char **args, client_t *client);
+void command_set(const char **args, client_t *client);
+void command_incantation(const char **args, client_t *client);
 
 #endif /* !CLIENTS_H_ */

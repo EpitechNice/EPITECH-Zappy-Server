@@ -44,14 +44,9 @@ typedef struct all_teams_infos_s {
 } team_t;
 
 typedef struct all_map_infos_s {
-    int players;
-    int food;
-    int linemate;
-    int deraumere;
-    int sibur;
-    int mendiane;
-    int phiras;
-    int thystame;
+    lnode_t *players;
+    lnode_t *eggs;
+    int ressources[7];
 } map_t;
 
 typedef struct all_game_infos_s {
@@ -60,6 +55,7 @@ typedef struct all_game_infos_s {
     int freq;
     map_t **map;
     lnode_t *teams;
+    lnode_t *eggs;
 } game_t;
 
 typedef struct all_server_infos_s {
@@ -73,6 +69,13 @@ typedef struct all_server_infos_s {
     connect_t *info;
     game_t *game;
 } server_t;
+
+typedef struct {
+    char *message;
+    client_t *source;
+} yell_infos_t;
+
+typedef unsigned char uchar;
 
 /* ---------PROTOTYPES--------- */
 
@@ -92,5 +95,36 @@ void run(server_t *);
   * @return 0, just to be able to call at the beggining of main
 */
 char init(void);
+
+/**
+  * @ingroup server
+  *
+  * @brief Append data to origin, by re allocating
+  *
+  * @param origin Origin data, can be NULL, and might get changed
+  * @param data Data to be written, can be NULL, and will NOT be changed
+  *
+  * @warning
+  * Please take care when using this function, it should not be harmfull, but
+  * read how it works first
+*/
+void str_append(char *origin, const char *data);
+
+/**
+  * @ingroup server
+  *
+  * @brief Convert item into it's name
+  *
+  * @param index The ressource to be changed
+  * @param out Starting position where to write the name. need to be 10 long
+*/
+void ressource_from_index(items_t index, char *out);
+
+/**
+  * @ingroup server
+  *
+  * @brief Make x and y valid coordinates
+*/
+void round_world(int *x, int *y);
 
 #endif /* !ZAPPY_SERVER_H_ */
