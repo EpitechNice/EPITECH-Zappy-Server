@@ -31,7 +31,7 @@ static map_t **make_map(int width, int height)
     for (int i = 0; i < height; i++) {
         map[i] = malloc(sizeof(map_t) * width);
         for (int j = 0; j < width; j++)
-            map[i][j] = (map_t){0, 0, 0, 0, 0, 0, 0, 0};
+            map[i][j] = (map_t){0, 0, {0, 0, 0, 0, 0, 0, 0}};
     }
     return map;
 }

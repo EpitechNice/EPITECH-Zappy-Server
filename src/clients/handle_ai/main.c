@@ -7,52 +7,46 @@
 
 #include "zappy_server.h"
 
-static void delete_client(client_t *client, const char *buffer)
-{
-    server_t *server = get_server();
+const char *ai_cmd[] = {
+    "forward", "right", "left", "look", "inventory", "broadcast",
+    "connect_nbr", "fork", "eject", "take", "set", "incantation"
+};
 
-    dl_erase(&server->clients, client, is_client, free_client);
-    LOG(LOG_LEVEL_WARNING, "Player in team %s left", buffer);
+const command_func_t ai_func[] = {
+    command_forward, command_right, command_left, command_look,
+    command_inventory, command_broadcast, command_co_nbr,
+    command_fork, command_eject, command_take, command_set,
+    command_incantation
+};
+
+const uchar ai_nb_func = 12;
+
+static inline void to_lower(char *arg)
+{
+    for (unsigned i = 0; arg[i]; ++i)
+        arg[i] = (arg[i] > 0x40 && arg[i] < 0x5b) ? (arg[i] - 0x20) : (arg[i]);
 }
 
-static void send_infos(client_t *client, int nb_clients, int height, int width)
+void handle_ai_command(client_t *client, const char *buffer)
 {
-    char *out = NULL;
+    char **args = NULL;
+    uchar i = 0;
 
-    if (asprintf(&out, "%i", nb_clients) <= 0) {
-        LOG(LOG_LEVEL_CRITICAL, "Error running asprintf (allocation)");
+    str_append(client->buffer, buffer);
+    if (buffer[strlen(buffer) - 1] != '\n')
         return;
+    args = stowa(client->buffer, " \t\n");
+    free(client->buffer);
+    client->buffer = NULL;
+    to_lower(args[0]);
+    for (; i < ai_nb_func; ++i) {
+        if (!strcmp(args[0], ai_cmd[i])) {
+            free(args[0]);
+            args[0] = strdup(buffer);
+            ai_func[i](args, client);
+            free_tab(args);
+            return;
+        }
     }
-    dl_push_back(&client->to_send, out);
-    out = NULL;
-    if (asprintf(&out, "%i %i", height, width) <= 0) {
-        LOG(LOG_LEVEL_CRITICAL, "Error running asprintf (allocation)");
-        return;
-    }
-    dl_push_back(&client->to_send, out);
-    client->status = AI;
-}
-
-void handle_new_ai(client_t *client, const char *buffer)
-{
-    game_t *game = get_server()->game;
-    lnode_t *teams = game->teams;
-    team_t *tmp;
-    char *out = NULL;
-
-    for (; teams; teams = teams->next) {
-        tmp = (team_t *)teams->data;
-        if (strcmp(tmp->name, buffer) || !tmp->clients_nb)
-            continue;
-        send_infos(client, tmp->clients_nb, game->height, game->width);
-        tmp->clients_nb--;
-        client->team_name = strdup(tmp->name);
-        asprintf(&out, "pnw %i %i %i %i %i %s", client->fd, client->x,
-            client->y, client->direction, client->level, client->team_name);
-        command_pnw(out);
-        free(out);
-        return;
-    }
-    delete_client(client, buffer);
-    return;
+    free_tab(args);
 }
