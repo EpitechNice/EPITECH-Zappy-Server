@@ -102,7 +102,7 @@ re: fclean all
 compiled_object/%.o: src/%.c
 	@mkdir -p $(@D)
 	@$(COMP) $(FLAGS) $(INCLUDES) $(LIBS) -g3 -c -o $@ $<
-	@echo $(GREEN)">> compiling $<"$(RESET)
+	@echo $(GREEN)">> compiling $@"$(RESET)
 
 cs:	fclean
 	./tests/run_coding_style.sh

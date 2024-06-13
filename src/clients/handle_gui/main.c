@@ -39,5 +39,4 @@ void handle_new_gui(client_t *client)
 {
     client->status = GUI;
     client->team_name = strdup("GUI");
-    return;
 }

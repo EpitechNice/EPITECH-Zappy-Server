@@ -10,8 +10,9 @@
 static void send_pin(client_t *client, client_t *tmp)
 {
     char *str = NULL;
+    UNUSED int _;
 
-    asprintf(&str, "pin %d %d %d %d %d %d %d %d %d %d",
+    _ = asprintf(&str, "pin %d %d %d %d %d %d %d %d %d %d",
     tmp->fd, tmp->x, tmp->y, tmp->inventory[0], tmp->inventory[1],
     tmp->inventory[2], tmp->inventory[3], tmp->inventory[4],
     tmp->inventory[5], tmp->inventory[6]);

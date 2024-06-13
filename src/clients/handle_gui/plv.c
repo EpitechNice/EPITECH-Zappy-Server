@@ -11,6 +11,7 @@ void command_plv(char **args, client_t *client)
 {
     char *str = NULL;
     lnode_t *tmp = get_server()->clients;
+    UNUSED int _;
 
     if (tab_len(args) != 2) {
         dl_push_back(&client->to_send, strdup("sbp"));
@@ -23,7 +24,7 @@ void command_plv(char **args, client_t *client)
         dl_push_back(&client->to_send, strdup("sbp"));
         return;
     }
-    asprintf(&str, "plv %d %d",
+    _ = asprintf(&str, "plv %d %d",
     ((client_t *)(tmp->data))->fd, ((client_t *)(tmp->data))->level);
     dl_push_back(&client->to_send, strdup(str));
     free(str);

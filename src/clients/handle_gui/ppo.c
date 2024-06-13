@@ -11,6 +11,7 @@ void command_ppo(char **args, client_t *client)
 {
     char *str = NULL;
     lnode_t *tmp = get_server()->clients;
+    UNUSED int _;
 
     if (tab_len(args) != 2) {
         dl_push_back(&client->to_send, strdup("sbp"));
@@ -23,7 +24,7 @@ void command_ppo(char **args, client_t *client)
         dl_push_back(&client->to_send, strdup("sbp"));
         return;
     }
-    asprintf(&str, "ppo %d %d %d %d",
+    _ = asprintf(&str, "ppo %d %d %d %d",
     ((client_t *)(tmp->data))->fd, ((client_t *)(tmp->data))->x,
     ((client_t *)(tmp->data))->y, ((client_t *)(tmp->data))->direction);
     dl_push_back(&client->to_send, strdup(str));

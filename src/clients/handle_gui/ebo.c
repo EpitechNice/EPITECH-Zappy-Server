@@ -12,8 +12,9 @@ void command_ebo(int egg)
     lnode_t *clients = get_server()->clients;
     client_t *tmp;
     char *buffer = NULL;
+    UNUSED int _;
 
-    asprintf(&buffer, "ebo %i", egg);
+    _ = asprintf(&buffer, "ebo %i", egg);
     for (; clients; clients = clients->next) {
         tmp = (client_t *)clients->data;
         if (tmp->status == GUI)

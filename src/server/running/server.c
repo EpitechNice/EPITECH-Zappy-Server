@@ -55,7 +55,7 @@ static void loop(server_t *server)
     if (select(MAX_CLIENTS, &server->read_fds,
     &server->write_fds, &server->error_fds, &tv) < 0) {
         perror("Select failed\n");
-        destroy_server_exit(84);
+        exit(84);
     }
     manage(server);
 }

@@ -12,8 +12,9 @@ void command_smg(char **args)
     lnode_t *clients = get_server()->clients;
     client_t *tmp;
     char *buffer = NULL;
+    UNUSED int _;
 
-    asprintf(&buffer, "smg %s", args[1]);
+    _ = asprintf(&buffer, "smg %s", args[1]);
     for (; clients; clients = clients->next) {
         tmp = (client_t *)clients->data;
         if (tmp->status == GUI)
