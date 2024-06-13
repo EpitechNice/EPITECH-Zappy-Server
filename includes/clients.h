@@ -114,5 +114,6 @@ void command_eject(char **args, client_t *client);
 void command_take(char **args, client_t *client);
 void command_set(char **args, client_t *client);
 void command_incantation(char **args, client_t *client);
+void handle_ai_command(client_t *client, const char *buffer);
 
 #endif /* !CLIENTS_H_ */

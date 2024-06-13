@@ -16,8 +16,8 @@ static void manage(server_t *server)
         return;
     }
     for (; cli; cli = cli->next) {
-        if (((client_t *)(cli->data))->status == GUI)
-            send_to_gui(((client_t *)(cli->data)));
+        // if (((client_t *)(cli->data))->status == GUI)
+        //     send_to_gui(((client_t *)(cli->data)));
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->error_fds)) {
             dl_erase(&server->clients, (void *)cli, &is_client, &free_client);
             return;

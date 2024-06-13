@@ -41,7 +41,7 @@ static void handle_commands(client_t *client, char *buffer)
     if (client->status == WAITING)
         return waiting_client_command(client, buffer);
     if (client->status == AI)
-        LOG(LOG_LEVEL_DEBUG, "IA");
+        return handle_ai_command(client, buffer);
     if (client->status == GUI)
         return handle_gui_command(client, buffer);
 }
