@@ -37,6 +37,20 @@ void handle_gui_command(client_t *client, const char *buffer)
 
 void handle_new_gui(client_t *client)
 {
+    char *out = NULL;
+
     client->status = GUI;
     client->team_name = strdup("GUI");
+    for (lnode_t *tmp = get_server()->clients; tmp; tmp = tmp->next) {
+        if (((client_t *)tmp->data)->status == AI) {
+            asprintf(&out, "pnw %i %i %i %i %i %s",
+            ((client_t *)tmp->data)->fd, ((client_t *)tmp->data)->x,
+            ((client_t *)tmp->data)->y, ((client_t *)tmp->data)->direction,
+            ((client_t *)tmp->data)->level, ((client_t *)tmp->data)->team_name);
+            command_pnw(out);
+            free(out);
+            out = NULL;
+        }
+    }
+    return;
 }

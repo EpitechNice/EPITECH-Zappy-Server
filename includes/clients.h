@@ -89,6 +89,7 @@ void command_pgt(int, int);
 void command_pie(int, int, bool);
 void command_pbc(int, const char *);
 void command_enw(int, client_t *);
+void command_pic(client_t *, int *, int);
 void command_msz(char **, client_t *);
 void command_bct(char **, client_t *);
 void command_mct(char **, client_t *);
@@ -99,6 +100,7 @@ void command_pin(char **, client_t *);
 void command_sgt(char **, client_t *);
 void command_sst(char **, client_t *);
 void command_suc(client_t *);
+void send_to_gui(client_t *client);
 
 void command_forward(char **args, client_t *client);
 void command_right(char **args, client_t *client);
