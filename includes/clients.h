@@ -88,5 +88,6 @@ void command_pin(char **, client_t *);
 void command_sgt(char **, client_t *);
 void command_sst(char **, client_t *);
 void command_suc(client_t *);
+void send_to_gui(client_t *client);
 
 #endif /* !CLIENTS_H_ */
