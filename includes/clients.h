@@ -62,8 +62,6 @@ typedef struct {
     client_t *source;
 } yell_infos_t;
 
-typedef unsigned char uchar;
-
 typedef void(*command_func_t) (char **, client_t *);
 
 /* ---------PROTOTYPES--------- */
