@@ -7,19 +7,21 @@
 
 #include "zappy_server.h"
 
-static void add_tile(char *out, UNUSED int x, UNUSED int y)
+static void add_tile(char **out, int x, int y)
 {
-    map_t *tile = &(get_server()->game->map[y][y]);
+    map_t *tile = &(get_server()->game->map[y][x]);
+    char ressource[11];
 
+    str_append(out, ",");
     if (!dl_empty(tile->players))
         str_append(out, " player");
     if (!dl_empty(tile->eggs))
         str_append(out, " eggs");
     for (int i = 0; i < 7; ++i) {
         if (tile->ressources[i]) {
-            out = realloc(out, strlen(out) + 12);
-            out = strcat(out, " ");
-            ressource_from_index(i, &out[strlen(out)]);
+            ressource_from_index(i, ressource);
+            str_append(out, ressource);
+            str_append(out, " ");
         }
     }
 }
@@ -46,9 +48,10 @@ static void new_line(int *x, int *y, client_t *client)
         default:
             break;
     }
+    round_world(x, y);
 }
 
-static void next(int *x, int *y, client_t *client)
+static void next_pos(int *x, int *y, client_t *client)
 {
     switch (client->direction) {
         case UP:
@@ -66,6 +69,7 @@ static void next(int *x, int *y, client_t *client)
         default:
             break;
     }
+    round_world(x, y);
 }
 
 void command_look(UNUSED char **args, UNUSED client_t *client)
@@ -80,11 +84,11 @@ void command_look(UNUSED char **args, UNUSED client_t *client)
     for (; level > 0; --level) {
         new_line(&x, &y, client);
         for (int i = 0; i < to_display; ++i) {
-            add_tile(out, x, y);
-            next(&x, &y, client);
-            round_world(&x, &y);
+            add_tile(&out, x, y);
+            next_pos(&x, &y, client);
         }
         to_display += 2;
     }
+    str_append(&out, "]");
     dl_push_back(&client->to_send, out);
 }

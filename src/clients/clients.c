@@ -12,7 +12,7 @@ void free_client(void *data)
     client_t *client = (client_t *)data;
 
     close(client->fd);
-    if (client->to_send != NULL)
+    if (!dl_empty(client->to_send))
         dl_clear(&client->to_send, free);
     if (client->status != WAITING)
         free(client->team_name);

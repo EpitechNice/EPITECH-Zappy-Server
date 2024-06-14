@@ -46,7 +46,7 @@ static void handle_commands(client_t *client, char *buffer)
         return handle_gui_command(client, buffer);
 }
 
-static char *read_client(client_t *client, char *buffer)
+static void read_client(client_t *client, char *buffer)
 {
     int value = -1;
     server_t *server = get_server();
@@ -54,25 +54,21 @@ static char *read_client(client_t *client, char *buffer)
     value = read(client->fd, buffer, LENGTH_COMMAND);
     if (value <= 0) {
         LOG(LOG_LEVEL_WARNING, "Invalid read on fd %i. Closing connection", client->fd);
-        close(client->fd);
         dl_erase(&server->clients, (void *)client, &is_client, &free_client);
-        return NULL;
+        return;
     }
     for (int i = 0; i < value; i++)
         if (buffer[i] == '\r' || buffer[i] == '\n')
             buffer[i] = '\0';
-    return buffer;
 }
 
 void handle_client(client_t *client)
 {
-    char *buffer = malloc(sizeof(char) * LENGTH_COMMAND);
+    char *buffer = malloc(LENGTH_COMMAND + 1);
 
-    buffer = read_client(client, buffer);
-    if (buffer == NULL) {
-        free(buffer);
+    if (!buffer)
         return;
-    }
+    read_client(client, buffer);
     handle_commands(client, buffer);
     free(buffer);
 }

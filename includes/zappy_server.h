@@ -93,14 +93,14 @@ char init(void);
   *
   * @brief Append data to origin, by re allocating
   *
-  * @param origin Origin data, can be NULL, and might get changed
+  * @param origin Adress of the origin data, might get changed by realloc
   * @param data Data to be written, can be NULL, and will NOT be changed
   *
   * @warning
   * Please take care when using this function, it should not be harmfull, but
   * read how it works first
 */
-void str_append(char *origin, const char *data);
+void str_append(char **origin, const char *data);
 
 /**
   * @ingroup server

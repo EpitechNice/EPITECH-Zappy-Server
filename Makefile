@@ -16,7 +16,7 @@ SRC		=   $(wildcard src/*.c)			\
 			$(wildcard src/clients/handle_gui/*.c)	\
 			$(wildcard src/utils/*.c)	\
 
-OBJ 	= 	$(patsubst src/%.c,compiled_object/%.o,$(SRC))
+OBJ 	= 	$(patsubst src/%.c,obj/%.o,$(SRC))
 
 ifeq ($(COLOR), yes)
 	RESET		= "\033[0m"
@@ -55,6 +55,7 @@ FLAGS	=	-Wall 				\
 			-Wshadow			\
 			-Wlogical-op		\
 			-Wredundant-decls	\
+			-g3\
 			-O2
 
 INCLUDES	=	-I./libs/includes	\
@@ -88,7 +89,7 @@ clean:
 	@if [ -n "$$(ls -A libs | grep -vE '(^includes$$|^Makefile$$)')" ]; then \
 		make --no-print-directory -C libs clean; \
 	fi
-	@rm -rf compiled_object
+	@rm -rf obj/
 	@rm -rf vgcore*
 
 fclean: clean
@@ -99,7 +100,7 @@ fclean: clean
 
 re: fclean all
 
-compiled_object/%.o: src/%.c
+obj/%.o: src/%.c
 	@mkdir -p $(@D)
 	@$(COMP) $(FLAGS) $(INCLUDES) $(LIBS) -g3 -c -o $@ $<
 	@echo $(GREEN)">> compiling $@"$(RESET)

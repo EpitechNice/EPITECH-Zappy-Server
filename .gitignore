@@ -2,7 +2,7 @@
 .idea/
 *.a
 *.o
-compiled_object/
+obj/
 *.so
 zappy_server
 zappy_gui

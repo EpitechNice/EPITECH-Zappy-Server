@@ -14,6 +14,7 @@ int main(int argc, char **argv)
     server_t *server = get_server();
 
     is_parsing_ok(p);
+    set_log_level(LOG_LEVEL_DEBUG); // tmp
     LOG(LOG_LEVEL_INFO, "Server has now started...");
     server->info = init_connection(p);
     server->game = init_game(p);

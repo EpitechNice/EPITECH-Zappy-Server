@@ -36,6 +36,7 @@ static void move_client(char *direction, client_t *client)
         default:
             break;
     }
+    round_world(&client->x, &client->y);
 }
 
 void command_forward(UNUSED char **args, client_t *client)
