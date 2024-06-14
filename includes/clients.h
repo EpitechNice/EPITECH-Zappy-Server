@@ -51,7 +51,6 @@ typedef struct {
     int level;
     int direction;
     int inventory[7];
-    char *buffer;
     char *team_name;
     status_t status;
     lnode_t *to_send;

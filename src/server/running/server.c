@@ -24,7 +24,7 @@ static void manage(server_t *server)
         }
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->read_fds)) {
             handle_client(((client_t *)(cli->data)));
-            continue;
+            break;
         }
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->write_fds))
             write_command(((client_t *)(cli->data)));
