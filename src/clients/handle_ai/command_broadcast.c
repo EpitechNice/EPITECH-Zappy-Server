@@ -54,32 +54,11 @@ static char get_direction(client_t *origin, client_t *recv)
 static char *build_message(char **args)
 {
     char *out = strdup(args[0]);
+    UNUSED int _;
 
-    for (int i = 1; args[i]; ++i) {
-        str_append(out, " ");
-        str_append(out, args[i]);
+    for (int i = 1; i < tab_len(args); ++i) {
+        _ = asprintf(&out, "%s %s ", out, args[i]);
     }
-    return out;
-}
-
-static int arr_length(char **array)
-{
-    int i = 0;
-
-    for (; array[i]; ++i);
-    return i;
-}
-
-static char **make_valid(char **args)
-{
-    int size = arr_length(args);
-    char **out = (char **)malloc(sizeof(char *) * ((size > 1) ? size : 2));
-    int i = 0;
-
-    for (; args[i]; ++i)
-        out[i] = strdup(args[i]);
-    if (size == 1)
-        out[1] = strdup(" ");
     return out;
 }
 
@@ -97,10 +76,9 @@ static void send_message(void *client, void *infos)
     dl_push_back(&mclient->to_send, message);
 }
 
-void command_broadcast(UNUSED char **args, client_t *client)
+void command_broadcast(char **args, client_t *client)
 {
-    char **argv = make_valid(args);
-    char *message = build_message(&argv[1]);
+    char *message = build_message(args);
     yell_infos_t *yell_infos = (yell_infos_t *)malloc(sizeof(yell_infos_t));
 
     yell_infos->message = message;
@@ -110,6 +88,5 @@ void command_broadcast(UNUSED char **args, client_t *client)
     LOG(LOG_LEVEL_INFO, "Client of team %s yelled: %s", client->team_name,
         message);
     free(message);
-    free_tab(argv);
     dl_push_back(&client->to_send, strdup("ok"));
 }
