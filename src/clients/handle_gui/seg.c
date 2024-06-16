@@ -5,7 +5,7 @@
 ** seg
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_seg(const char *team)
 {

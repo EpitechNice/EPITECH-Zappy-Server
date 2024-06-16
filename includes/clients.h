@@ -72,32 +72,14 @@ void free_client(void *);
 bool is_client(void *, void *);
 void handle_new_ai(client_t *, const char *);
 void handle_new_gui(client_t *);
-void handle_gui_command(client_t *, const char *);
-void command_smg(char **);
-void command_pnw(const char *);
-void command_seg(const char *);
-void command_pdi(int);
-void command_pex(int);
-void command_pfk(int);
-void command_ebo(int);
-void command_edi(int);
-void command_pdr(int, int);
-void command_pgt(int, int);
-void command_pie(int, int, bool);
-void command_pbc(int, const char *);
-void command_enw(int, client_t *);
-void command_pic(client_t *, int *, int);
-void command_msz(char **, client_t *);
-void command_bct(char **, client_t *);
-void command_mct(char **, client_t *);
-void command_tna(char **, client_t *);
-void command_ppo(char **, client_t *);
-void command_plv(char **, client_t *);
-void command_pin(char **, client_t *);
-void command_sgt(char **, client_t *);
-void command_sst(char **, client_t *);
-void command_suc(client_t *);
-void send_to_gui(client_t *client);
+
+/**
+  * @brief Entry point for the processing of GUI's commands
+  *
+  * @param client Client that sent the command
+  * @param buffer Command sent by the client
+*/
+void handle_gui_command(client_t *client, const char *buffer);
 
 void command_forward(char **args, client_t *client);
 void command_right(char **args, client_t *client);

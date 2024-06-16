@@ -5,7 +5,7 @@
 ** pie
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_pie(int x, int y, bool success)
 {

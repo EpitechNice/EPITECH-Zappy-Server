@@ -5,7 +5,7 @@
 ** pin
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 static void send_pin(client_t *client, client_t *tmp)
 {

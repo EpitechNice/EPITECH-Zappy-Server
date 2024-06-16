@@ -5,7 +5,7 @@
 ** sgt
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_sgt(UNUSED char **args, client_t *client)
 {

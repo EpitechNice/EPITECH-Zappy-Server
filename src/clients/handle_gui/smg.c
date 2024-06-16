@@ -5,7 +5,7 @@
 ** smg
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_smg(char **args)
 {

@@ -5,7 +5,7 @@
 ** pgt
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_pgt(int ai_id, int resource_id)
 {

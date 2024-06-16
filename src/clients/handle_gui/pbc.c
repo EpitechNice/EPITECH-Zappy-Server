@@ -5,7 +5,7 @@
 ** pbc
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_pbc(int ai_id, const char *message)
 {

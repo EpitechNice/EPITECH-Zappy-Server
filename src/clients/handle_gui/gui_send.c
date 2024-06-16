@@ -5,7 +5,7 @@
 ** gui_send
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void send_to_gui(client_t *client)
 {

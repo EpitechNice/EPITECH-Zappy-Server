@@ -5,7 +5,7 @@
 ** pdr
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_pdr(int ai_id, int resource_id)
 {

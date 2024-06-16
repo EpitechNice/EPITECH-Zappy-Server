@@ -5,7 +5,7 @@
 ** pic
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_pic(client_t *client, int *ai_fds, int size)
 {

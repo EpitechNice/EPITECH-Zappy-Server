@@ -5,7 +5,7 @@
 ** ebo
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_ebo(int egg)
 {

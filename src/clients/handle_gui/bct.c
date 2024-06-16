@@ -5,7 +5,7 @@
 ** bct
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_bct(char **args, client_t *client)
 {

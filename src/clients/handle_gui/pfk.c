@@ -5,7 +5,7 @@
 ** pfk
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_pfk(int ai_id)
 {

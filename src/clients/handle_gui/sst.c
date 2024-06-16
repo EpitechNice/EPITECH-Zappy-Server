@@ -5,7 +5,7 @@
 ** sst
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_sst(UNUSED char **args, client_t *client)
 {

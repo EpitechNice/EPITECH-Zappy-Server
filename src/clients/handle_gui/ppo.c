@@ -5,7 +5,7 @@
 ** ppo
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_ppo(char **args, client_t *client)
 {

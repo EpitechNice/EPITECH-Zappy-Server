@@ -5,7 +5,7 @@
 ** tna
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_tna(char **args, client_t *client)
 {

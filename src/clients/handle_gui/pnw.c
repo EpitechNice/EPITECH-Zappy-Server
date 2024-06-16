@@ -5,7 +5,7 @@
 ** pnw
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_pnw(const char *buffer)
 {

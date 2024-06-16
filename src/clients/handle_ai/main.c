@@ -6,6 +6,7 @@
 */
 
 #include "zappy_server.h"
+#include "gui.h"
 
 const char *ai_cmd[] = {
     "forward", "right", "left", "look", "inventory", "broadcast",

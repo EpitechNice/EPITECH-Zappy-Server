@@ -5,7 +5,7 @@
 ** mct
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_mct(char **args, client_t *client)
 {

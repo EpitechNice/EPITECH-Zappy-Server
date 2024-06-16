@@ -5,7 +5,7 @@
 ** handle_ai
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 const char *cmd[] = {
     "msz", "bct", "mct", "tna",

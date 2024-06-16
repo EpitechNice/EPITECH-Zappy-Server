@@ -5,7 +5,7 @@
 ** pex
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_pex(int ai_id)
 {

@@ -5,7 +5,7 @@
 ** pdi
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_pdi(int ai_id)
 {

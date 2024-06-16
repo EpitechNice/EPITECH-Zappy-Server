@@ -5,7 +5,7 @@
 ** plv
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_plv(char **args, client_t *client)
 {
