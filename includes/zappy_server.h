@@ -68,6 +68,8 @@ typedef struct all_server_infos_s {
     lnode_t *clients;
     connect_t *info;
     game_t *game;
+    struct timeval time_val;
+    unsigned long long global_time_stamp;
 } server_t;
 
 /* ---------PROTOTYPES--------- */

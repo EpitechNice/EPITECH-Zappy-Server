@@ -48,16 +48,14 @@ static void clear_server(server_t *server)
 
 static void loop(server_t *server)
 {
-    struct timeval tv;
-
     clear_server(server);
-    tv.tv_sec = 0;
-    tv.tv_usec = 0;
     if (select(MAX_CLIENTS, &server->read_fds,
-    &server->write_fds, &server->error_fds, &tv) < 0) {
-        perror("Select failed\n");
+    &server->write_fds, &server->error_fds, &get_server()->time_val) < 0) {
+        toggle_log_on_stderr(true);
+        LOG(LOG_LEVEL_CRITICAL, "Select failed");
         exit(84);
     }
+    server->global_time_stamp++;
     manage(server);
 }
 

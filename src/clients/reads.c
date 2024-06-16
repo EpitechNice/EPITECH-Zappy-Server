@@ -54,25 +54,24 @@ static int read_client(client_t *client, char *buffer)
     value = read(client->fd, buffer, LENGTH_COMMAND);
     if (value <= 0) {
         LOG(LOG_LEVEL_WARNING, "Invalid read on fd %i. Closing connection", client->fd);
+        dl_erase(&server->game->map[client->y][client->x].players,
+            (void *)client, &is_client, &free_client);
         dl_erase(&server->clients, (void *)client, &is_client, &free_client);
         return 1;
     }
-    for (int i = 0; i < value; i++)
-        if (buffer[i] == '\r' || buffer[i] == '\n')
+    for (int i = 0; i < value; i++) {
+        if (buffer[i] == '\r' || buffer[i] == '\n') {
             buffer[i] = '\0';
+            break;
+        }
+    }
     return 0;
 }
 
 void handle_client(client_t *client)
 {
-    char *buffer = malloc(LENGTH_COMMAND + 1);
+    char buffer[LENGTH_COMMAND + 1];
 
-    if (!buffer)
-        return;
-    if (read_client(client, buffer) == 1) {
-        free(buffer);
-        return;
-    }
-    handle_commands(client, buffer);
-    free(buffer);
+    if (!read_client(client, buffer))
+        handle_commands(client, buffer);
 }

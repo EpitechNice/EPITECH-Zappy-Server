@@ -61,6 +61,8 @@ connect_t *init_connection(parsing_t *p)
 {
     connect_t *connect = (connect_t *)malloc(sizeof(connect_t));
 
+    get_server()->time_val.tv_sec = 0;
+    get_server()->time_val.tv_usec = 1000 / p->freq;
     connect->port = p->port;
     connect->socket = -1;
     connect->address = NULL;

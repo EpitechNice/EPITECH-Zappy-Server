@@ -9,6 +9,7 @@
 
 static void init_server(server_t *server)
 {
+    memset(server, 0, sizeof(server_t));
     server->initialized = true;
 }
 
