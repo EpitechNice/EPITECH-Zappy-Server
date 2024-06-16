@@ -74,12 +74,62 @@ typedef struct all_server_infos_s {
 
 /* ---------PROTOTYPES--------- */
 
-void accept_new_connection(server_t *);
+/**
+ * @ingroup server
+ *
+ * @brief Accept a new connection on the server
+ *  and add it to the clients list
+ *
+ * @param server The server to accept the connection on
+*/
+void accept_new_connection(server_t *server);
+
+/**
+ * @ingroup server
+ *
+ * @brief Singleton function to get the server
+ *
+ * @return The server
+*/
 server_t *get_server(void);
-connect_t *init_connection(parsing_t *);
-game_t *init_game(parsing_t *);
+
+/**
+ * @ingroup server
+ *
+ * @brief Initialize the server
+ *
+ * @param p The parsing structure with all the informations
+ *
+ * @return The server connection informations
+*/
+connect_t *init_connection(parsing_t *p);
+
+/**
+ * @ingroup server
+ *
+ * @brief Initialize the game
+ *
+ * @param p The parsing structure with all the informations
+ *
+ * @return The game structure
+*/
+game_t *init_game(parsing_t *p);
+
+/**
+ * @ingroup server
+ *
+ * @brief Destroy the server
+*/
 void destroy_server(void);
-void run(server_t *);
+
+/**
+ * @ingroup server
+ *
+ * @brief run the server
+ *
+ * @param server The server to run
+*/
+void run(server_t *server);
 
 /**
   * @ingroup server
