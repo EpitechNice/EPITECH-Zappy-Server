@@ -24,16 +24,12 @@ void command_pin(char **args, client_t *client)
 {
     lnode_t *tmp = get_server()->clients;
 
-    if (tab_len(args) != 2) {
-        dl_push_back(&client->to_send, strdup("sbp"));
-        return;
-    }
+    if (tab_len(args) != 2)
+        return dl_push_back(&client->to_send, strdup("sbp"));
     for (; tmp != NULL; tmp = tmp->next)
         if (((client_t *)(tmp->data))->fd == atoi(args[1]))
             break;
-    if (tmp == NULL) {
-        dl_push_back(&client->to_send, strdup("sbp"));
-        return;
-    }
+    if (tmp == NULL)
+        return dl_push_back(&client->to_send, strdup("sbp"));
     send_pin(client, tmp->data);
 }

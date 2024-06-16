@@ -14,7 +14,8 @@ void command_pie(int x, int y, bool success)
     char *buffer = NULL;
     UNUSED int _;
 
-    _ = asprintf(&buffer, "pie %i %i %s", x, y, success ? "success" : "failure");
+    _ = asprintf(&buffer, "pie %i %i %s", x, y,
+    success ? "success" : "failure");
     for (; clients; clients = clients->next) {
         tmp = (client_t *)clients->data;
         if (tmp->status == GUI)

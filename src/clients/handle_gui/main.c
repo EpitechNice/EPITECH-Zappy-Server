@@ -47,7 +47,8 @@ void handle_new_gui(client_t *client)
             _ = asprintf(&out, "pnw %i %i %i %i %i %s",
             ((client_t *)tmp->data)->fd, ((client_t *)tmp->data)->x,
             ((client_t *)tmp->data)->y, ((client_t *)tmp->data)->direction,
-            ((client_t *)tmp->data)->level, ((client_t *)tmp->data)->team_name);
+            ((client_t *)tmp->data)->level,
+            ((client_t *)tmp->data)->team_name);
             command_pnw(out);
             free(out);
             out = NULL;

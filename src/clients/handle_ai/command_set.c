@@ -7,7 +7,7 @@
 
 #include "zappy_server.h"
 
-static inline void to_lower(char *arg)
+static void to_lower(char *arg)
 {
     for (unsigned i = 0; arg[i]; ++i)
         arg[i] = (arg[i] > 0x40 && arg[i] < 0x5b) ? (arg[i] - 0x20) : (arg[i]);

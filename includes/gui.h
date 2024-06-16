@@ -85,7 +85,7 @@ void command_pgt(int id, int ressource);
 
 /**
  * @brief Sends an end of incantation to the GUI
- * 
+ *
  * @param x X position of the incantation
  * @param y Y position of the incantation
  * @param success If the incantation was successful
@@ -94,7 +94,7 @@ void command_pie(int x, int y, bool success);
 
 /**
   * @brief Sends a new Broadcast to the GUI
-  * 
+  *
   * @param id ID of the player
   * @param message Message of the broadcast
 */

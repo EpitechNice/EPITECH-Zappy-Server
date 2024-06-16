@@ -91,5 +91,4 @@ void handle_new_ai(client_t *client, const char *buffer)
         return;
     }
     delete_client(client, buffer);
-    return;
 }

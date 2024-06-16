@@ -22,7 +22,8 @@ void accept_new_connection(server_t *server)
     if (fd == -1)
         perror("Accept failed\n");
     get_ip(ip, &info);
-    LOG(LOG_LEVEL_INFO, "Got connection from %s on port %u", ip, info.sin_port);
+    LOG(LOG_LEVEL_INFO, "Got connection from %s on port %u",
+    ip, info.sin_port);
     dl_push_back(&server->clients, (void *)init_client(fd));
     dprintf(fd, "WELCOME\n");
     return;
@@ -53,7 +54,8 @@ static int read_client(client_t *client, char *buffer)
 
     value = read(client->fd, buffer, LENGTH_COMMAND);
     if (value <= 0) {
-        LOG(LOG_LEVEL_WARNING, "Invalid read on fd %i. Closing connection", client->fd);
+        LOG(LOG_LEVEL_WARNING, "Invalid read on fd %i. Closing connection",
+        client->fd);
         dl_erase(&server->game->map[client->y][client->x].players,
             (void *)client, &is_client, &free_client);
         dl_erase(&server->clients, (void *)client, &is_client, &free_client);

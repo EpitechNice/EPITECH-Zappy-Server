@@ -107,7 +107,8 @@ void command_eject(UNUSED char **args, client_t *client)
 {
     dl_apply_data_param(get_server()->game->map[client->y][client->x].players,
         &move_him, client);
-    dl_apply_data(get_server()->game->map[client->y][client->x].eggs, delete_eggs);
+    dl_apply_data(get_server()->game->map[client->y][client->x].eggs,
+    delete_eggs);
     LOG(LOG_LEVEL_INFO, "Client of team %s pushed everyone in direction %i",
         client->team_name, client->direction);
 }

@@ -14,10 +14,8 @@ void command_mct(char **args, client_t *client)
     game_t *game = get_server()->game;
     UNUSED int _;
 
-    if (tab_len(args) != 1) {
-        dl_push_back(&client->to_send, strdup("sbp"));
-        return;
-    }
+    if (tab_len(args) != 1)
+        return dl_push_back(&client->to_send, strdup("sbp"));
     for (int i = 0; i < game->height; i++) {
         for (int j = 0; j < game->width; j++) {
             _ = asprintf(&response, "bct %d %d %d %d %d %d %d %d %d",
