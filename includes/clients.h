@@ -65,13 +65,59 @@ typedef void(*command_func_t) (char **, client_t *);
 
 /* ---------PROTOTYPES--------- */
 
-client_t *init_client(int);
-void handle_client(client_t *);
-void write_command(client_t *);
-void free_client(void *);
-bool is_client(void *, void *);
-void handle_new_ai(client_t *, const char *);
-void handle_new_gui(client_t *);
+/**
+ * @brief Initialize a new client
+ *
+ * @param fd File descriptor of the client
+ *
+ * @return client_t* The new client
+*/
+client_t *init_client(int fd);
+
+/**
+ * @brief Entry point were the clients inputs are handled
+ *
+ * @param client Client that sent the command
+*/
+void handle_client(client_t *client);
+
+/**
+ * @brief Sends the messages in client buffer
+ *
+ * @param client Client whom messages are sent
+*/
+void write_command(client_t *client);
+
+/**
+ * @brief free the client
+ *
+ * @param data Client to free
+*/
+void free_client(void *data);
+
+/**
+ * @brief Check if the data is a client
+ *
+ * @param ref Reference client
+ * @param data Data to compare
+ * @return bool True if the data is a client, false otherwise
+*/
+bool is_client(void *ref, void *data);
+
+/**
+ * @brief Check if the AI is in a valid team and add it to the server
+ *
+ * @param client Client trying to authenticate
+ * @param data Team name
+*/
+void handle_new_ai(client_t *client, const char *data);
+
+/**
+ * @brief Authenticate a GUI client
+ *
+ * @param client Client trying to authenticate
+*/
+void handle_new_gui(client_t *client);
 
 /**
   * @brief Entry point for the processing of GUI's commands
