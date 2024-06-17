@@ -6,6 +6,7 @@
 */
 
 #include "ai.h"
+#include "gui.h"
 
 void command_fork(UNUSED char **args, client_t *client)
 {
@@ -25,4 +26,6 @@ void command_fork(UNUSED char **args, client_t *client)
     strdup("EGG HAS BEEN PLANTED"));
     dl_push_back(&client->to_send, strdup("ok"));
     client->next_action_time = get_server()->global_time_stamp + 42;
+    command_pfk(client->fd);
+    // command_enw(EGG_ID,client->fd); TODO(FoxOne) : Implement eggs_id
 }

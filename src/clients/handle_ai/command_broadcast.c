@@ -6,6 +6,7 @@
 */
 
 #include "ai.h"
+#include "gui.h"
 
 static int get_dist(int a, int b, int max, bool *used_round)
 {
@@ -87,7 +88,8 @@ void command_broadcast(char **args, client_t *client)
     free(yell_infos);
     LOG(LOG_LEVEL_INFO, "Client of team %s yelled: %s", client->team_name,
         message);
-    free(message);
     client->next_action_time = get_server()->global_time_stamp + 7;
     dl_push_back(&client->to_send, strdup("ok"));
+    command_pbc(client->fd, message);
+    free(message);
 }
