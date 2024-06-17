@@ -5,15 +5,16 @@
 ** enw
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_enw(int egg, client_t *client)
 {
     lnode_t *clients = get_server()->clients;
     client_t *tmp;
     char *buffer = NULL;
+    UNUSED int _;
 
-    asprintf(&buffer, "enw %i %i %i %i",
+    _ = asprintf(&buffer, "enw %i %i %i %i",
     egg, client->fd, client->x, client->y);
     for (; clients; clients = clients->next) {
         tmp = (client_t *)clients->data;

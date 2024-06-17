@@ -5,7 +5,7 @@
 ** suc
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_suc(client_t *client)
 {

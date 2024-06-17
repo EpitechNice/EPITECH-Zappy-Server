@@ -14,33 +14,37 @@
 /* ---------MACROS--------- */
 
     #define GUI_CONNECT "GRAPHIC"
+    #define ABS(alpha) ((alpha) >= 0 ? (alpha) : -(alpha))
 
 /* ---------STRUCTS--------- */
 
-enum direction {
+typedef enum {
     UP,
     RIGHT,
     DOWN,
     LEFT
-};
+} direction_t;
 
-enum items {
-    FOOD,
-    LINEMATE,
-    DERAUMERE,
-    SIBUR,
-    MENDIANE,
-    PHIRAS,
-    THYSTAME
-};
+typedef enum {
+    FOOD = 0,
+    LINEMATE = 1,
+    DERAUMERE = 2,
+    SIBUR = 3,
+    MENDIANE = 4,
+    PHIRAS = 5,
+    THYSTAME = 6
+} items_t;
 
-enum status {
+typedef enum {
     WAITING,
     AI,
     GUI
-};
+} status_t;
 
-typedef struct client_structure_infos {
+typedef struct {
+    bool started_an_incantation;
+    short ttl;
+    int time_before_action;
     int fd;
     int x;
     int y;
@@ -48,9 +52,14 @@ typedef struct client_structure_infos {
     int direction;
     int inventory[7];
     char *team_name;
-    enum status status;
+    status_t status;
     lnode_t *to_send;
 } client_t;
+
+typedef struct {
+    char *message;
+    client_t *source;
+} yell_infos_t;
 
 typedef void(*command_func_t) (char **, client_t *);
 
@@ -63,31 +72,27 @@ void free_client(void *);
 bool is_client(void *, void *);
 void handle_new_ai(client_t *, const char *);
 void handle_new_gui(client_t *);
-void handle_gui_command(client_t *, const char *);
-void command_smg(char **);
-void command_pnw(const char *);
-void command_seg(const char *);
-void command_pdi(int);
-void command_pex(int);
-void command_pfk(int);
-void command_ebo(int);
-void command_edi(int);
-void command_pdr(int, int);
-void command_pgt(int, int);
-void command_pie(int, int, bool);
-void command_pbc(int, const char *);
-void command_enw(int, client_t *);
-void command_pic(client_t *, int *, int);
-void command_msz(char **, client_t *);
-void command_bct(char **, client_t *);
-void command_mct(char **, client_t *);
-void command_tna(char **, client_t *);
-void command_ppo(char **, client_t *);
-void command_plv(char **, client_t *);
-void command_pin(char **, client_t *);
-void command_sgt(char **, client_t *);
-void command_sst(char **, client_t *);
-void command_suc(client_t *);
-void send_to_gui(client_t *client);
+
+/**
+  * @brief Entry point for the processing of GUI's commands
+  *
+  * @param client Client that sent the command
+  * @param buffer Command sent by the client
+*/
+void handle_gui_command(client_t *client, const char *buffer);
+
+void command_forward(char **args, client_t *client);
+void command_right(char **args, client_t *client);
+void command_left(char **args, client_t *client);
+void command_look(char **args, client_t *client);
+void command_inventory(char **args, client_t *client);
+void command_broadcast(char **args, client_t *client);
+void command_co_nbr(char **args, client_t *client);
+void command_fork(char **args, client_t *client);
+void command_eject(char **args, client_t *client);
+void command_take(char **args, client_t *client);
+void command_set(char **args, client_t *client);
+void command_incantation(char **args, client_t *client);
+void handle_ai_command(client_t *client, const char *buffer);
 
 #endif /* !CLIENTS_H_ */

@@ -44,9 +44,3 @@ void destroy_server(void)
         destroy_game(server->game);
     server->initialized = false;
 }
-
-void destroy_server_exit(int exit_code)
-{
-    destroy_server();
-    exit(exit_code);
-}

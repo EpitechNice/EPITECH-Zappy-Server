@@ -5,15 +5,17 @@
 ** pie
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_pie(int x, int y, bool success)
 {
     lnode_t *clients = get_server()->clients;
     client_t *tmp;
     char *buffer = NULL;
+    UNUSED int _;
 
-    asprintf(&buffer, "pie %i %i %s", x, y, success ? "success" : "failure");
+    _ = asprintf(&buffer, "pie %i %i %s", x, y,
+    success ? "success" : "failure");
     for (; clients; clients = clients->next) {
         tmp = (client_t *)clients->data;
         if (tmp->status == GUI)

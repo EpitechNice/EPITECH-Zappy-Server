@@ -10,6 +10,7 @@
 void sig_handler(int sig)
 {
     if (sig == SIGINT) {
-        destroy_server_exit(sig);
+        LOG(LOG_LEVEL_WARNING, "SIGINT handled, closing server...");
+        exit(0);
     }
 }

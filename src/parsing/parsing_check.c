@@ -93,11 +93,11 @@ void is_parsing_ok(parsing_t *p)
 {
     if (p->help) {
         destroy_parsing(p);
-        destroy_server_exit(0);
+        exit(0);
     }
     if (!p->ok) {
         destroy_parsing(p);
         LOG(LOG_LEVEL_INFO, ">> Have a look at the -help.\n");
-        destroy_server_exit(84);
+        exit(84);
     }
 }

@@ -5,15 +5,16 @@
 ** pgt
 */
 
-#include "zappy_server.h"
+#include "gui.h"
 
 void command_pgt(int ai_id, int resource_id)
 {
     lnode_t *clients = get_server()->clients;
     client_t *tmp;
     char *buffer = NULL;
+    UNUSED int _;
 
-    asprintf(&buffer, "pgt %i %i", ai_id, resource_id);
+    _ = asprintf(&buffer, "pgt %i %i", ai_id, resource_id);
     for (; clients; clients = clients->next) {
         tmp = (client_t *)clients->data;
         if (tmp->status == GUI)

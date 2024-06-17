@@ -16,15 +16,15 @@ static void manage(server_t *server)
         return;
     }
     for (; cli; cli = cli->next) {
-        if (((client_t *)(cli->data))->status == GUI)
-            send_to_gui(((client_t *)(cli->data)));
+        // if (((client_t *)(cli->data))->status == GUI)
+        //     send_to_gui(((client_t *)(cli->data)));
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->error_fds)) {
             dl_erase(&server->clients, (void *)cli, &is_client, &free_client);
             return;
         }
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->read_fds)) {
             handle_client(((client_t *)(cli->data)));
-            continue;
+            break;
         }
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->write_fds))
             write_command(((client_t *)(cli->data)));
@@ -48,16 +48,14 @@ static void clear_server(server_t *server)
 
 static void loop(server_t *server)
 {
-    struct timeval tv;
-
     clear_server(server);
-    tv.tv_sec = 0;
-    tv.tv_usec = 0;
     if (select(MAX_CLIENTS, &server->read_fds,
-    &server->write_fds, &server->error_fds, &tv) < 0) {
-        perror("Select failed\n");
-        destroy_server_exit(84);
+    &server->write_fds, &server->error_fds, &get_server()->time_val) < 0) {
+        toggle_log_on_stderr(true);
+        LOG(LOG_LEVEL_CRITICAL, "Select failed");
+        exit(84);
     }
+    server->global_time_stamp++;
     manage(server);
 }
 
