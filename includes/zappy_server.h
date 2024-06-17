@@ -143,6 +143,16 @@ char init(void);
 /**
   * @ingroup server
   *
+  * @brief Init the time_val with the parsing value
+  *
+  * @param server Server to modify
+  * @param p Parsing structure
+*/
+void init_timeval(server_t *server, parsing_t *p);
+
+/**
+  * @ingroup server
+  *
   * @brief Append data to origin, by re allocating
   *
   * @param origin Adress of the origin data, might get changed by realloc
@@ -170,5 +180,28 @@ void ressource_from_index(items_t index, char *out);
   * @brief Make x and y valid coordinates
 */
 void round_world(int *x, int *y);
+
+/**
+  * @ingroup server
+  *
+  * @brief Completly remove a client of the server.
+  *
+  * @param client Pointer to the client to remove
+  *
+  * @note
+  * This function will also remove the client from the tile it was on
+*/
+void delete_client(client_t *client);
+
+/**
+  * @ingroup server
+  *
+  * @brief Move the client from it's tile to the x y tile.
+  *
+  * @param client Client to move
+  * @param x X of the new tile
+  * @param y Y of the new tile
+*/
+void move_client(client_t *client, int x, int y);
 
 #endif /* !ZAPPY_SERVER_H_ */

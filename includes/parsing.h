@@ -43,7 +43,6 @@ void destroy_parsing(parsing_t *parsing);
 */
 parsing_t *init_parsing(void);
 
-
 /**
  * @brief Parse the arguments and return a parsing structure.
  *

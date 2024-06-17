@@ -45,6 +45,7 @@ void command_take(char **args, client_t *client)
         [client->x].ressources[ressource];
     get_server()->game->map[client->y][client->x].ressources[ressource] = 0;
     dl_push_back(&client->to_send, strdup("ok"));
+    client->next_action_time = get_server()->global_time_stamp + 7;
     LOG(LOG_LEVEL_INFO, "Client of team %s took every %s on it's tile",
         client->team_name, args[1]);
 }

@@ -60,9 +60,10 @@ static void listen_socket(connect_t *connect)
 connect_t *init_connection(parsing_t *p)
 {
     connect_t *connect = (connect_t *)malloc(sizeof(connect_t));
+    unsigned milisec = 1000 / p->freq;
 
-    get_server()->time_val.tv_sec = 0;
-    get_server()->time_val.tv_usec = 1000 / p->freq;
+    get_server()->time_val.tv_sec = milisec / 1000;
+    get_server()->time_val.tv_usec = milisec % 1000;
     connect->port = p->port;
     connect->socket = -1;
     connect->address = NULL;
@@ -71,4 +72,10 @@ connect_t *init_connection(parsing_t *p)
     port_socket(connect);
     listen_socket(connect);
     return connect;
+}
+
+void init_timeval(server_t *server, parsing_t *p)
+{
+    server->time_val.tv_sec = 1000 % p->freq;
+    server->time_val.tv_usec = 1000 / p->freq;
 }

@@ -36,6 +36,10 @@
     #define MAX_COMMAND_SIZE 256
     #define MAX_WORD_SIZE 80
 
+    #define MAX_FILLED_MESSAGE_SIZE 1024
+    #define MAX_LOG_SIZE 1200
+    #define MAX_LOG_DISPLAY_SIZE 1300
+
     #define LOG(l, m, ...) log_data(gci(_F, _L, _U), l, m, ##__VA_ARGS__)
 
     #define UNUSED __attribute__((unused))

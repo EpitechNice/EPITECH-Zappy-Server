@@ -24,4 +24,5 @@ void command_fork(UNUSED char **args, client_t *client)
     dl_push_back(&game->map[client->y][client->x].eggs,
     strdup("EGG HAS BEEN PLANTED"));
     dl_push_back(&client->to_send, strdup("ok"));
+    client->next_action_time = get_server()->global_time_stamp + 42;
 }

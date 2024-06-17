@@ -50,15 +50,12 @@ static void handle_commands(client_t *client, char *buffer)
 static int read_client(client_t *client, char *buffer)
 {
     int value = -1;
-    server_t *server = get_server();
 
     value = read(client->fd, buffer, LENGTH_COMMAND);
     if (value <= 0) {
         LOG(LOG_LEVEL_WARNING, "Invalid read on fd %i. Closing connection",
         client->fd);
-        dl_erase(&server->game->map[client->y][client->x].players,
-            (void *)client, &is_client, &free_client);
-        dl_erase(&server->clients, (void *)client, &is_client, &free_client);
+        delete_client(client);
         return 1;
     }
     for (int i = 0; i < value; i++) {

@@ -31,9 +31,15 @@ void handle_ai_command(client_t *client, const char *buffer)
 {
     char **args = stowa(buffer, " \t\n");
     long unsigned int i;
+    server_t *server = get_server();
 
     if (!args)
         return;
+    if (client->next_action_time > server->global_time_stamp) {
+        free_tab(args);
+        dl_push_back(&client->to_send, strdup("ko"));
+        return;
+    }
     to_lower(args[0]);
     for (i = 0; i < sizeof(ai_func) / sizeof(ai_func[0]); i++) {
         if (!strncmp(args[0], ai_cmd[i], strlen(ai_cmd[i]))) {
@@ -44,14 +50,6 @@ void handle_ai_command(client_t *client, const char *buffer)
     }
     dl_push_back(&client->to_send, strdup("ko"));
     free_tab(args);
-}
-
-static void delete_client(client_t *client, const char *buffer)
-{
-    server_t *server = get_server();
-
-    dl_erase(&server->clients, client, is_client, free_client);
-    LOG(LOG_LEVEL_WARNING, "Player in team %s left", buffer);
 }
 
 static void send_infos(client_t *client, int nb_clients, int height, int width)
@@ -90,5 +88,5 @@ void handle_new_ai(client_t *client, const char *buffer)
         free(out);
         return;
     }
-    delete_client(client, buffer);
+    delete_client(client);
 }

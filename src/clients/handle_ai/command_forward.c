@@ -14,7 +14,7 @@ bool remove_client(void *ref, void *client)
     return false;
 }
 
-static void move_client(char *direction, client_t *client)
+static void _move_client(char *direction, client_t *client)
 {
     switch (client->direction) {
         case UP:
@@ -45,11 +45,12 @@ void command_forward(UNUSED char **args, client_t *client)
 
     dl_erase(&get_server()->game->map[client->y][client->x].players, client,
         &remove_client, NULL);
-    move_client(direction, client);
+    _move_client(direction, client);
     dl_push_back(&get_server()->game->map[client->y][client->x].players,
         client);
     LOG(LOG_LEVEL_DEBUG, "Client of team %s moved forward facing %s",
         client->team_name, direction);
     round_world(&client->x, &client->y);
+    client->next_action_time = get_server()->global_time_stamp + 7;
     dl_push_back(&client->to_send, strdup("ok"));
 }

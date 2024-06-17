@@ -52,19 +52,18 @@ void toggle_log_on_stderr(bool value)
 void log_data(call_infos_t *pos, log_level_t level, const char *message, ...)
 {
     va_list list;
-    char *filled_message = NULL;
-    char *out = NULL;
+    char filled_message[MAX_FILLED_MESSAGE_SIZE + 1];
+    char out[MAX_LOG_SIZE + 1];
     char llevel[20];
+    UNUSED int _;
 
     va_start(list, message);
     get_log_level_str(llevel, level);
-    vasprintf(&filled_message, message, list);
-    asprintf(&out, "[%s] %s:%lu (in %s) - %s", llevel, pos->file, pos->line,
+    vsnprintf(filled_message, MAX_FILLED_MESSAGE_SIZE, message, list);
+    snprintf(out, MAX_LOG_SIZE, "[%s] %s:%lu (in %s) - %s", llevel, pos->file, pos->line,
         pos->func, filled_message);
-    free(filled_message);
     free(pos->file);
     free(pos->func);
     free(pos);
     run_log(out, (level >= get_log_level()), log_on_stderr);
-    free(out);
 }

@@ -28,13 +28,13 @@ void run_log(const char *data, bool display, bool log_on_stderr)
 {
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    char *out = NULL;
+    char out[MAX_LOG_DISPLAY_SIZE + 1];
 
-    asprintf(&out, "[%02i:%02i:%02i %02i/%02i/%i] %s", tm.tm_sec, tm.tm_min,
-        tm.tm_hour, tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, data);
+    snprintf(out, MAX_LOG_DISPLAY_SIZE, "[%02i:%02i:%02i %02i/%02i/%i] %s",
+        tm.tm_sec, tm.tm_min, tm.tm_hour, tm.tm_mday, tm.tm_mon + 1, tm.tm_year
+            + 1900, data);
     if (display)
         fprintf((log_on_stderr ? stderr : stdout), "\r%s\n", out);
     if (get_log_file())
         fprintf(get_log_file(), "%s\n", out);
-    free(out);
 }

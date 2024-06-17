@@ -57,7 +57,8 @@ void command_incantation(UNUSED char **args, client_t *client)
     }
     LOG(LOG_LEVEL_INFO, "Client of team %s is starting a level %i ritual",
         client->team_name, client->level);
-    // Start the incantation
     _ = asprintf(&out, "Elevation underway\nCurrent level: %i", client->level);
     dl_push_back(&client->to_send, out);
+    client->started_an_incantation = true;
+    client->next_action_time = get_server()->global_time_stamp + 300;
 }

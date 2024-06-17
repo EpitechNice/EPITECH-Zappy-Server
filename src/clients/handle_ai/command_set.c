@@ -45,6 +45,7 @@ void command_set(char **args, client_t *client)
         client->inventory[ressource];
     client->inventory[ressource] = 0;
     dl_push_back(&client->to_send, strdup("ok"));
+    client->next_action_time = get_server()->global_time_stamp + 7;
     LOG(LOG_LEVEL_INFO, "Client of team %s set it's %s", client->team_name,
         args[1]);
 }
