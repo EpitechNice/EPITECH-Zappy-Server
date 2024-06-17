@@ -6,6 +6,7 @@
 */
 
 #include "zappy_server.h"
+#include "gui.h"
 
 void command_fork(UNUSED char **args, client_t *client)
 {
@@ -24,4 +25,6 @@ void command_fork(UNUSED char **args, client_t *client)
     dl_push_back(&game->map[client->y][client->x].eggs,
     strdup("EGG HAS BEEN PLANTED"));
     dl_push_back(&client->to_send, strdup("ok"));
+    command_pfk(client->fd);
+    // command_enw(EGG_ID,client->fd); TODO(FoxOne) : Implement eggs_id
 }
