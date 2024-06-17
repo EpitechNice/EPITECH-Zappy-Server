@@ -5,7 +5,7 @@
 ** command_co_nbr
 */
 
-#include "zappy_server.h"
+#include "ai.h"
 
 void command_co_nbr(UNUSED char **args, client_t *client)
 {

@@ -5,7 +5,7 @@
 ** command_incantation
 */
 
-#include "zappy_server.h"
+#include "ai.h"
 
 // level - 1 to get the index
 const int infos_rits[][7] = {

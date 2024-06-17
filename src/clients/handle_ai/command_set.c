@@ -5,7 +5,7 @@
 ** command_set
 */
 
-#include "zappy_server.h"
+#include "ai.h"
 
 static void to_lower(char *arg)
 {

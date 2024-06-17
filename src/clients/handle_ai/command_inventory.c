@@ -5,7 +5,7 @@
 ** command_inventory
 */
 
-#include "zappy_server.h"
+#include "ai.h"
 
 void command_inventory(UNUSED char **args, client_t *client)
 {

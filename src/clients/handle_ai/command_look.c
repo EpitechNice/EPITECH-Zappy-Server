@@ -5,7 +5,7 @@
 ** command_look
 */
 
-#include "zappy_server.h"
+#include "ai.h"
 
 static void add_tile(char **out, int x, int y)
 {

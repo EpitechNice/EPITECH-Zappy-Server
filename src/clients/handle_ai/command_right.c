@@ -5,7 +5,7 @@
 ** command_right
 */
 
-#include "zappy_server.h"
+#include "ai.h"
 
 void command_right(UNUSED char **args, client_t *client)
 {
