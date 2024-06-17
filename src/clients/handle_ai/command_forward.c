@@ -5,7 +5,7 @@
 ** command_forward
 */
 
-#include "zappy_server.h"
+#include "ai.h"
 
 bool remove_client(void *ref, void *client)
 {

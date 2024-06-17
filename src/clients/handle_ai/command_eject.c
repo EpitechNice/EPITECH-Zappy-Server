@@ -5,7 +5,7 @@
 ** command_eject
 */
 
-#include "zappy_server.h"
+#include "ai.h"
 
 static void free_egg(void *egg)
 {

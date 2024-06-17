@@ -81,18 +81,12 @@ void handle_new_gui(client_t *);
 */
 void handle_gui_command(client_t *client, const char *buffer);
 
-void command_forward(char **args, client_t *client);
-void command_right(char **args, client_t *client);
-void command_left(char **args, client_t *client);
-void command_look(char **args, client_t *client);
-void command_inventory(char **args, client_t *client);
-void command_broadcast(char **args, client_t *client);
-void command_co_nbr(char **args, client_t *client);
-void command_fork(char **args, client_t *client);
-void command_eject(char **args, client_t *client);
-void command_take(char **args, client_t *client);
-void command_set(char **args, client_t *client);
-void command_incantation(char **args, client_t *client);
+/**
+  * @brief Entry point for the processing of AI's commands
+  *
+  * @param client Client that sent the command
+  * @param buffer Command sent by the client
+*/
 void handle_ai_command(client_t *client, const char *buffer);
 
 #endif /* !CLIENTS_H_ */

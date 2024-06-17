@@ -5,7 +5,7 @@
 ** command_broadcast
 */
 
-#include "zappy_server.h"
+#include "ai.h"
 
 static int get_dist(int a, int b, int max, bool *used_round)
 {
