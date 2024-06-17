@@ -5,7 +5,7 @@
 ** command_incantation
 */
 
-#include "zappy_server.h"
+#include "ai.h"
 #include "gui.h"
 
 // level - 1 to get the index

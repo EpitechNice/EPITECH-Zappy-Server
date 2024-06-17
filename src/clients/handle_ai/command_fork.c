@@ -5,7 +5,7 @@
 ** command_fork
 */
 
-#include "zappy_server.h"
+#include "ai.h"
 #include "gui.h"
 
 void command_fork(UNUSED char **args, client_t *client)
