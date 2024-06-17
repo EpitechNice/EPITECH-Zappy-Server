@@ -6,6 +6,7 @@
 */
 
 #include "zappy_server.h"
+#include "gui.h"
 
 static void to_lower(char *arg)
 {
@@ -33,18 +34,15 @@ void command_take(char **args, client_t *client)
 {
     int ressource = get_ressource_index(args[1]);
 
-    if (ressource == -1) {
-        dl_push_back(&client->to_send, strdup("ko"));
-        return;
-    }
-    if (!get_server()->game->map[client->y][client->x].ressources[ressource]) {
-        dl_push_back(&client->to_send, strdup("ko"));
-        return;
-    }
+    if (ressource == -1)
+        return dl_push_back(&client->to_send, strdup("ko"));
+    if (!get_server()->game->map[client->y][client->x].ressources[ressource])
+        return dl_push_back(&client->to_send, strdup("ko"));
     client->inventory[ressource] += get_server()->game->map[client->y]
         [client->x].ressources[ressource];
     get_server()->game->map[client->y][client->x].ressources[ressource] = 0;
     dl_push_back(&client->to_send, strdup("ok"));
     LOG(LOG_LEVEL_INFO, "Client of team %s took every %s on it's tile",
         client->team_name, args[1]);
+    command_pgt(client->fd, ressource);
 }
