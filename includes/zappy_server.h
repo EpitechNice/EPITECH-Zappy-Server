@@ -56,6 +56,7 @@ typedef struct all_game_infos_s {
     map_t **map;
     lnode_t *teams;
     lnode_t *eggs;
+    unsigned long global_egg_id;
 } game_t;
 
 typedef struct all_server_infos_s {
@@ -71,6 +72,13 @@ typedef struct all_server_infos_s {
     struct timeval time_val;
     unsigned long long global_time_stamp;
 } server_t;
+
+typedef struct {
+    unsigned long id;
+    char *team_name;
+    int x;
+    int y;
+} egg_t;
 
 /* ---------PROTOTYPES--------- */
 

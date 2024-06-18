@@ -7,13 +7,37 @@
 
 #include "zappy_server.h"
 
+static bool is_egg(void *_ref, void *_obj)
+{
+    egg_t *ref = (egg_t *)_ref;
+    egg_t *obj = (egg_t *)_obj;
+
+    return ref->id == obj->id;
+}
+
+static void free_egg(void *_egg)
+{
+    egg_t *egg = (egg_t *)_egg;
+
+    free(egg->team_name);
+    free(egg);
+}
+
+void delete_egg(egg_t *egg)
+{
+    server_t *server = get_server();
+
+    dl_erase(&server->game->eggs, egg, &is_egg, NULL);
+    dl_erase(&server->game->map[egg->y][egg->x].eggs, egg, &is_egg, &free_egg);
+}
+
 void delete_client(client_t *client)
 {
     server_t *server = get_server();
 
+    dl_erase(&server->clients, client, &is_client, NULL);
     dl_erase(&server->game->map[client->y][client->x].players, client,
         &is_client, &free_client);
-    dl_erase(&server->clients, client, &is_client, &free_client);
 
     LOG(LOG_LEVEL_WARNING, "Client of team %s left", client->team_name);
 }
