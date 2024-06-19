@@ -6,6 +6,7 @@
 */
 
 #include "ai.h"
+#include "gui.h"
 
 bool remove_client(void *ref, void *client)
 {
@@ -38,6 +39,8 @@ static void move_a_client(char *direction, client_t *client)
 void command_forward(UNUSED char **args, client_t *client)
 {
     char direction[6] = {0};
+    char *fd = NULL;
+    UNUSED int _ = asprintf(&fd, "%d", client->fd);
 
     dl_erase(&get_server()->game->map[client->y][client->x].players, client,
         &remove_client, NULL);
@@ -49,4 +52,9 @@ void command_forward(UNUSED char **args, client_t *client)
     round_world(&client->x, &client->y);
     client->next_action_time = get_server()->global_time_stamp + 7;
     dl_push_back(&client->to_send, strdup("ok"));
+    for (lnode_t *tmp = get_server()->clients; tmp != NULL; tmp = tmp->next)
+        if (((client_t *)(tmp->data))->status == GUI)
+            command_ppo((char *[]){"ppo", fd, NULL},
+                (client_t *)(tmp->data));
+    free(fd);
 }
