@@ -20,16 +20,6 @@
     #define MAX_CLIENTS 1024
     #define LENGTH_COMMAND 4096
 
-typedef enum {
-    FOOD_DENSITY = 50,
-    LINEMATE_DENSITY = 30,
-    DERAUMERE_DENSITY = 15,
-    SIBUR_DENSITY = 10,
-    MENDIANE_DENSITY = 10,
-    PHIRAS_DENSITY = 8,
-    THYSTAME_DENSITY = 5
-} density_t;
-
 /* ---------TYPEDEFS--------- */
 
 typedef struct connection_information {

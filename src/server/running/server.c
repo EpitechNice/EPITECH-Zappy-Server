@@ -16,15 +16,12 @@ static void manage(server_t *server)
         return;
     }
     for (; cli; cli = cli->next) {
-        // if (((client_t *)(cli->data))->status == GUI)
-        //     send_to_gui(((client_t *)(cli->data)));
-        if (FD_ISSET(((client_t *)(cli->data))->fd, &server->error_fds)) {
-            dl_erase(&server->clients, (void *)cli, &is_client, &free_client);
-            return;
-        }
-        if (FD_ISSET(((client_t *)(cli->data))->fd, &server->read_fds)) {
+        if (FD_ISSET(((client_t *)(cli->data))->fd, &server->read_fds))
             handle_client(((client_t *)(cli->data)));
-            break;
+        if (FD_ISSET(((client_t *)(cli->data))->fd, &server->error_fds)) {
+            LOG(LOG_LEVEL_WARNING, "Client %i disconnected",
+                ((client_t *)(cli->data))->fd);
+            return delete_client(cli->data);
         }
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->write_fds))
             write_command(((client_t *)(cli->data)));

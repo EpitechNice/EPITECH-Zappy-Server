@@ -55,7 +55,7 @@ static int read_client(client_t *client, char *buffer)
     if (value <= 0) {
         LOG(LOG_LEVEL_WARNING, "Invalid read on fd %i. Closing connection",
         client->fd);
-        delete_client(client);
+        FD_SET(client->fd, &get_server()->error_fds);
         return 1;
     }
     for (int i = 0; i < value; i++) {

@@ -88,5 +88,5 @@ void handle_new_ai(client_t *client, const char *buffer)
         free(out);
         return;
     }
-    delete_client(client);
+    FD_SET(client->fd, &get_server()->error_fds);
 }
