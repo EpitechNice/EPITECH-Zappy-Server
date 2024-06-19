@@ -132,7 +132,7 @@ static int parse_loop(int argc, char **argv, int i, parsing_t *p)
     int (*parse[])(parsing_t *, int, char **, int) = {
         parse_port, parse_width, parse_height, parse_names,
         parse_clients_nb, parse_freq, parse_log, parse_help, NULL };
-    char *flags[] = { "-p", "-x", "-y", "-n", "-c", "-f", "-l", "-help", NULL};
+    char *flags[] = {"-p", "-x", "-y", "-n", "-c", "-f", "-l", "-help", NULL};
 
     for (int j = 0; flags[j] != NULL; j++)
         if (strcmp(argv[i], flags[j]) == 0)
