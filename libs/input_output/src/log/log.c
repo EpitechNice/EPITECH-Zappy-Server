@@ -60,8 +60,8 @@ void log_data(call_infos_t *pos, log_level_t level, const char *message, ...)
     va_start(list, message);
     get_log_level_str(llevel, level);
     vsnprintf(filled_message, MAX_FILLED_MESSAGE_SIZE, message, list);
-    snprintf(out, MAX_LOG_SIZE, "[%s] %s:%lu (in %s) - %s", llevel, pos->file, pos->line,
-        pos->func, filled_message);
+    snprintf(out, MAX_LOG_SIZE, "[%s] %s:%lu (in %s) - %s", llevel, pos->file,
+        pos->line, pos->func, filled_message);
     free(pos->file);
     free(pos->func);
     free(pos);

@@ -22,6 +22,8 @@ void opcl_log_file(const char *filename)
     if (!filename)
         return;
     logfile = fopen(filename, "a+");
+    if (!logfile)
+        LOG(LOG_LEVEL_ERROR, "Could not open file \"%s\"", filename);
 }
 
 void run_log(const char *data, bool display, bool log_on_stderr)

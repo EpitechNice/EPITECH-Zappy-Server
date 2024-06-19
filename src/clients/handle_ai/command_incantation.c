@@ -49,6 +49,15 @@ static void event_incantation(client_t *client, int size)
     free(ai);
 }
 
+static void end_command_inc(client_t *client, char *out,
+    int nb_of_players_of_level_x)
+{
+    dl_push_back(&client->to_send, out);
+    client->started_an_incantation = true;
+    client->next_action_time = get_server()->global_time_stamp + 300;
+    event_incantation(client, nb_of_players_of_level_x);
+}
+
 void command_incantation(UNUSED char **args, client_t *client)
 {
     int nb_of_players_of_level_x = 1;
@@ -69,8 +78,5 @@ void command_incantation(UNUSED char **args, client_t *client)
     LOG(LOG_LEVEL_INFO, "Client of team %s is starting a level %i ritual",
         client->team_name, client->level);
     _ = asprintf(&out, "Elevation underway\nCurrent level: %i", client->level);
-    dl_push_back(&client->to_send, out);
-    client->started_an_incantation = true;
-    client->next_action_time = get_server()->global_time_stamp + 300;
-    event_incantation(client, nb_of_players_of_level_x);
+    end_command_inc(client, out, nb_of_players_of_level_x);
 }

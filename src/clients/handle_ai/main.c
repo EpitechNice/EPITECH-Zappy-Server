@@ -31,7 +31,6 @@ static void to_lower(char *buffer)
 void handle_ai_command(client_t *client, const char *buffer)
 {
     char **args = stowa(buffer, " \t\n");
-    long unsigned int i;
     server_t *server = get_server();
 
     if (!args)
@@ -42,7 +41,7 @@ void handle_ai_command(client_t *client, const char *buffer)
         return;
     }
     to_lower(args[0]);
-    for (i = 0; i < sizeof(ai_func) / sizeof(ai_func[0]); i++) {
+    for (size_t i = 0; i < sizeof(ai_func) / sizeof(ai_func[0]); i++) {
         if (!strncmp(args[0], ai_cmd[i], strlen(ai_cmd[i]))) {
             ai_func[i](args, client);
             free_tab(args);

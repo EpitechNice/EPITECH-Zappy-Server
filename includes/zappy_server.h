@@ -212,4 +212,17 @@ void delete_client(client_t *client);
 */
 void move_client(client_t *client, int x, int y);
 
+/**
+  * @ingroup server
+  *
+  * @brief Spread ressources all over the map
+  *
+  * @param game Game ptr to use
+  *
+  * @note
+  * You can't controle how / where ressources will go.
+  * This will be pure rand() on where will ressources go.
+*/
+void spread_ressources(game_t *game);
+
 #endif /* !ZAPPY_SERVER_H_ */

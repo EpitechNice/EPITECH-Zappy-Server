@@ -7,6 +7,30 @@
 
 #include "zappy_server.h"
 
+static void free_teams(void *data)
+{
+    team_t *team = (team_t *)data;
+
+    free(team->name);
+    free(team);
+}
+
+static void free_egg(void *data)
+{
+    egg_t *egg = (egg_t *)data;
+
+    free(egg->team_name);
+    free(egg);
+}
+
+static void free_map(void *data)
+{
+    map_t *map = (map_t *)data;
+
+    dl_clear(&map->players, NULL);
+    dl_clear(&map->eggs, NULL);
+}
+
 void destroy_connection(connect_t *connect)
 {
     if (connect->socket != -1)
@@ -16,19 +40,16 @@ void destroy_connection(connect_t *connect)
     free(connect);
 }
 
-static void free_teams(void *data)
-{
-    team_t *team = (team_t *)data;
-
-    free(team->name);
-    free(team);
-}
-
 static void destroy_game(game_t *game)
 {
     dl_clear(&game->teams, free_teams);
-    for (int i = 0; i < game->height; i++)
+    dl_clear(&game->eggs, free_egg);
+    dl_clear(&get_server()->clients, free_client);
+    for (int i = 0; i < game->height; ++i) {
+        for (int j = 0; j < game->width; ++j)
+            free_map(&game->map[i][j]);
         free(game->map[i]);
+    }
     free(game->map);
     free(game);
 }

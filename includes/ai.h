@@ -12,6 +12,8 @@
     #include "clients.h"
 
 /**
+ * @ingroup ai
+ *
  * @brief AI is moving in the current direction
  *
  * @param args Arguments of the command
@@ -20,6 +22,8 @@
 void command_forward(char **args, client_t *client);
 
 /**
+ * @ingroup ai
+ *
  * @brief AI changing his direction to the right
  *
  * @param args Arguments of the command
@@ -28,6 +32,8 @@ void command_forward(char **args, client_t *client);
 void command_right(char **args, client_t *client);
 
 /**
+ * @ingroup ai
+ *
  * @brief AI changing his direction to the left
  *
  * @param args Arguments of the command
@@ -36,6 +42,8 @@ void command_right(char **args, client_t *client);
 void command_left(char **args, client_t *client);
 
 /**
+ * @ingroup ai
+ *
  * @brief AI is looking in the current direction
  *
  * @param args Arguments of the command
@@ -44,6 +52,8 @@ void command_left(char **args, client_t *client);
 void command_look(char **args, client_t *client);
 
 /**
+ * @ingroup ai
+ *
  * @brief AI is looking in his inventory
  *
  * @param args Arguments of the command
@@ -52,6 +62,8 @@ void command_look(char **args, client_t *client);
 void command_inventory(char **args, client_t *client);
 
 /**
+ * @ingroup ai
+ *
  * @brief AI is broadcasting a message
  *
  * @param args Arguments of the command
@@ -60,6 +72,8 @@ void command_inventory(char **args, client_t *client);
 void command_broadcast(char **args, client_t *client);
 
 /**
+ * @ingroup ai
+ *
  * @brief AI is checking how many clients can connect to his team
  *
  * @param args Arguments of the command
@@ -68,6 +82,8 @@ void command_broadcast(char **args, client_t *client);
 void command_co_nbr(char **args, client_t *client);
 
 /**
+ * @ingroup ai
+ *
  * @brief AI is forking a new client and laying an egg
  *
  * @param args Arguments of the command
@@ -76,6 +92,8 @@ void command_co_nbr(char **args, client_t *client);
 void command_fork(char **args, client_t *client);
 
 /**
+ * @ingroup ai
+ *
  * @brief AI is ejecting a client from his tile
  *
  * @param args Arguments of the command
@@ -84,6 +102,8 @@ void command_fork(char **args, client_t *client);
 void command_eject(char **args, client_t *client);
 
 /**
+ * @ingroup ai
+ *
  * @brief AI is taking an item from the tile
  *
  * @param args Arguments of the command
@@ -92,6 +112,8 @@ void command_eject(char **args, client_t *client);
 void command_take(char **args, client_t *client);
 
 /**
+ * @ingroup ai
+ *
  * @brief AI is setting an item on the tile
  *
  * @param args Arguments of the command
@@ -100,6 +122,8 @@ void command_take(char **args, client_t *client);
 void command_set(char **args, client_t *client);
 
 /**
+ * @ingroup ai
+ *
  * @brief AI is starting an incantation
  *
  * @param args Arguments of the command

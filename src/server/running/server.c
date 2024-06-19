@@ -56,7 +56,6 @@ static void loop(server_t *server)
         exit(84);
     }
     server->global_time_stamp++;
-    LOG(LOG_LEVEL_DEBUG, "Current timestamp: %llu", server->global_time_stamp);
     manage(server);
 }
 

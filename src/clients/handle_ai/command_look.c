@@ -28,25 +28,21 @@ static void add_tile(char **out, int x, int y)
 
 static void new_line(int *x, int *y, client_t *client)
 {
-    switch (client->direction) {
-        case UP:
-            (*x)--;
-            (*y)--;
-            break;
-        case RIGHT:
-            (*x)++;
-            (*y)--;
-            break;
-        case DOWN:
-            (*x)++;
-            (*y)++;
-            break;
-        case LEFT:
-            (*x)--;
-            (*y)++;
-            break;
-        default:
-            break;
+    if (client->direction == UP) {
+        (*x)--;
+        (*y)--;
+    }
+    if (client->direction == RIGHT) {
+        (*x)++;
+        (*y)--;
+    }
+    if (client->direction == DOWN) {
+        (*x)++;
+        (*y)++;
+    }
+    if (client->direction == LEFT) {
+        (*x)--;
+        (*y)++;
     }
     round_world(x, y);
 }

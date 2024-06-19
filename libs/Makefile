@@ -17,7 +17,6 @@ clean:
 	@make --no-print-directory makeClean
 
 fclean: clean	makeFclean
-	# @make --no-print-direcctory makeFclean
 
 re: fclean all
 
