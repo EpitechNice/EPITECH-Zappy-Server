@@ -77,4 +77,11 @@ char **stowa(const char *, const char *);
 */
 int tab_len(char **);
 
+/**
+ * @brief Get the time
+ *
+ * @return the time in milliseconds
+*/
+size_t get_time(void);
+
 #endif /* !UTILS_H_ */

@@ -53,7 +53,6 @@ typedef struct {
     char *team_name;
     status_t status;
     lnode_t *to_send;
-    unsigned long long next_action_time;
 } client_t;
 
 typedef struct {

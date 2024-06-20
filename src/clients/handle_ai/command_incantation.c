@@ -54,7 +54,6 @@ static void end_command_inc(client_t *client, char *out,
 {
     dl_push_back(&client->to_send, out);
     client->started_an_incantation = true;
-    client->next_action_time = get_server()->global_time_stamp + 300;
     event_incantation(client, nb_of_players_of_level_x);
 }
 

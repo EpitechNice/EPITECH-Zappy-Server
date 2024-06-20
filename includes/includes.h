@@ -26,6 +26,8 @@
     #include <errno.h>
     #include <fcntl.h>
     #include <netinet/in.h>
+    #include <sys/time.h>
+    #include <time.h>
 
     #include "dlist.h"
     #include "input_output.h"

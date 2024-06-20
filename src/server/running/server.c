@@ -52,7 +52,6 @@ static void loop(server_t *server)
         LOG(LOG_LEVEL_CRITICAL, "Select failed");
         exit(84);
     }
-    server->global_time_stamp++;
     manage(server);
 }
 

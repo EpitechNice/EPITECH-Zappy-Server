@@ -25,7 +25,6 @@ static void end_command_fork(game_t *game, client_t *client, egg_t *egg)
     dl_push_back(&game->map[client->y][client->x].eggs,
     egg);
     dl_push_back(&client->to_send, strdup("ok"));
-    client->next_action_time = get_server()->global_time_stamp + 42;
     command_pfk(client->fd);
     command_enw(egg->id, client);
 }

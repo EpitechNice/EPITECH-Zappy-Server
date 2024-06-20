@@ -60,7 +60,6 @@ typedef struct all_server_infos_s {
     connect_t *info;
     game_t *game;
     struct timeval time_val;
-    unsigned long long global_time_stamp;
 } server_t;
 
 typedef struct {
@@ -137,16 +136,6 @@ void run(server_t *server);
   * @return 0, just to be able to call at the beggining of main
 */
 char init(void);
-
-/**
-  * @ingroup server
-  *
-  * @brief Init the time_val with the parsing value
-  *
-  * @param server Server to modify
-  * @param p Parsing structure
-*/
-void init_timeval(server_t *server, parsing_t *p);
 
 /**
   * @ingroup server
