@@ -54,6 +54,7 @@ typedef struct {
     status_t status;
     lnode_t *to_send;
     size_t last_meal;
+    size_t next_action;
 } client_t;
 
 typedef struct {
