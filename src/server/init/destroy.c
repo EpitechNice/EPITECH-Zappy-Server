@@ -15,7 +15,7 @@ static void free_teams(void *data)
     free(team);
 }
 
-static void free_egg(void *data)
+void free_egg(void *data)
 {
     egg_t *egg = (egg_t *)data;
 

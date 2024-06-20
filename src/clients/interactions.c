@@ -15,14 +15,6 @@ static bool is_egg(void *_ref, void *_obj)
     return ref->id == obj->id;
 }
 
-static void free_egg(void *_egg)
-{
-    egg_t *egg = (egg_t *)_egg;
-
-    free(egg->team_name);
-    free(egg);
-}
-
 void delete_egg(egg_t *egg)
 {
     server_t *server = get_server();

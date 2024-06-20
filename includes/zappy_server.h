@@ -194,6 +194,15 @@ void delete_client(client_t *client);
 /**
   * @ingroup server
   *
+  * @brief Free an egg
+  *
+  * @param data egg to be freed
+*/
+void free_egg(void *data);
+
+/**
+  * @ingroup server
+  *
   * @brief Move the client from it's tile to the x y tile.
   *
   * @param client Client to move

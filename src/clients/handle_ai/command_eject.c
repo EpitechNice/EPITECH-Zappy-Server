@@ -6,21 +6,7 @@
 */
 
 #include "ai.h"
-
-static void free_egg(void *egg)
-{
-    free(egg);
-}
-
-static bool cmp_eggs(void *ref, void *egg)
-{
-    return ref == egg;
-}
-
-static void delete_eggs(void *egg)
-{
-    dl_erase(&get_server()->game->eggs, egg, cmp_eggs, free_egg);
-}
+#include "gui.h"
 
 static direction_t invert_direction(direction_t direction)
 {
@@ -103,12 +89,22 @@ static void move_him(void *_target, void *_origin)
     dl_push_back(&target->to_send, out);
 }
 
+bool egg_cmp(void *ref, void *data)
+{
+    if (((egg_t *)data)->id == ((egg_t *)ref)->id)
+        return true;
+    return false;
+}
+
 void command_eject(UNUSED char **args, client_t *client)
 {
     dl_apply_data_param(get_server()->game->map[client->y][client->x].players,
         &move_him, client);
-    dl_apply_data(get_server()->game->map[client->y][client->x].eggs,
-    delete_eggs);
+    for (lnode_t *tmp = get_server()->game->map[client->y][client->x].eggs;
+    tmp != NULL; tmp = tmp->next) {
+        command_edi(((egg_t *)(tmp->data))->id);
+    }
+    dl_clear(&get_server()->game->map[client->y][client->x].eggs, NULL);
     LOG(LOG_LEVEL_INFO, "Client of team %s pushed everyone in direction %i",
         client->team_name, client->direction);
     client->next_action_time = get_server()->global_time_stamp + 7;
