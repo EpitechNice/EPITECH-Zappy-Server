@@ -45,4 +45,5 @@ void command_set(char **args, client_t *client)
     LOG(LOG_LEVEL_INFO, "Client of team %s set it's %s", client->team_name,
         args[1]);
     command_pdr(client->fd, ressource);
+    client->next_action = get_time() + 7 * 1000 / get_server()->game->freq;
 }
