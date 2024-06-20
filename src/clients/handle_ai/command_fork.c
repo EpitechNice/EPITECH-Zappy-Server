@@ -27,6 +27,7 @@ static void end_command_fork(game_t *game, client_t *client, egg_t *egg)
     dl_push_back(&client->to_send, strdup("ok"));
     command_pfk(client->fd);
     command_enw(egg->id, client);
+    client->next_action = get_time() + 42 * 1000 / game->freq;
 }
 
 void command_fork(UNUSED char **args, client_t *client)
