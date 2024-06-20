@@ -11,10 +11,8 @@ static void manage(server_t *server)
 {
     lnode_t *cli = server->clients;
 
-    if (FD_ISSET(server->info->socket, &server->read_fds)) {
-        accept_new_connection(server);
-        return;
-    }
+    if (FD_ISSET(server->info->socket, &server->read_fds))
+        return accept_new_connection(server);
     for (; cli; cli = cli->next) {
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->read_fds))
             handle_client(((client_t *)(cli->data)));
