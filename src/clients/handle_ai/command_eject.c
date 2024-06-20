@@ -107,4 +107,5 @@ void command_eject(UNUSED char **args, client_t *client)
     dl_clear(&get_server()->game->map[client->y][client->x].eggs, NULL);
     LOG(LOG_LEVEL_INFO, "Client of team %s pushed everyone in direction %i",
         client->team_name, client->direction);
+    client->next_action = get_time() + 7 * 1000 / get_server()->game->freq;
 }
