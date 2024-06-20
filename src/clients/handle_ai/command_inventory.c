@@ -19,4 +19,5 @@ void command_inventory(UNUSED char **args, client_t *client)
     LOG(LOG_LEVEL_INFO, "Player of team %s asked for inventory: %s",
         client->team_name, out);
     dl_push_back(&client->to_send, out);
+    client->next_action = get_time() + 1 * 1000 / get_server()->game->freq;
 }
