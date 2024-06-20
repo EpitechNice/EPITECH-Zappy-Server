@@ -78,4 +78,5 @@ void command_incantation(UNUSED char **args, client_t *client)
         client->team_name, client->level);
     _ = asprintf(&out, "Elevation underway\nCurrent level: %i", client->level);
     end_command_inc(client, out, nb_of_players_of_level_x);
+    client->next_action = get_time() + 300 * 1000 / get_server()->game->freq;
 }
