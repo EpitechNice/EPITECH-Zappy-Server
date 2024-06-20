@@ -53,6 +53,7 @@ typedef struct {
     char *team_name;
     status_t status;
     lnode_t *to_send;
+    size_t last_meal;
 } client_t;
 
 typedef struct {

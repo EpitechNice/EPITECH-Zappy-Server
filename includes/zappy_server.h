@@ -60,6 +60,7 @@ typedef struct all_server_infos_s {
     connect_t *info;
     game_t *game;
     struct timeval time_val;
+    size_t time;
 } server_t;
 
 typedef struct {
@@ -212,5 +213,7 @@ void move_client(client_t *client, int x, int y);
   * This will be pure rand() on where will ressources go.
 */
 void spread_ressources(game_t *game);
+
+int check_ai(client_t *client, server_t *server);
 
 #endif /* !ZAPPY_SERVER_H_ */

@@ -89,3 +89,17 @@ void handle_new_ai(client_t *client, const char *buffer)
     }
     FD_SET(client->fd, &get_server()->error_fds);
 }
+
+int check_ai(client_t *client, server_t *server)
+{
+    if ((get_time() - client->last_meal) < (126.0 / (float)server->game->freq) * 1000)
+        return 0;
+    if (client->inventory[FOOD] == 0) {
+        LOG(LOG_LEVEL_INFO, "Client %i died of hunger", client->fd);
+        FD_SET(client->fd, &server->error_fds);
+        return 1;
+    }
+    client->inventory[FOOD]--;
+    client->last_meal = get_time();
+    return 0;
+}

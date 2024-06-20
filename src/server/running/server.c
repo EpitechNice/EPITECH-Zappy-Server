@@ -6,6 +6,19 @@
 */
 
 #include "zappy_server.h"
+#include "gui.h"
+
+static void fill_map(server_t *server)
+{
+    if (get_time() - server->time < (20.0 / (float)server->game->freq) * 1000)
+        return;
+    spread_ressources(server->game);
+    server->time = get_time();
+    for (lnode_t *tmp = server->clients; tmp; tmp = tmp->next) {
+        if (((client_t *)tmp->data)->status == GUI)
+            command_mct((char *[2]){"mct", NULL}, tmp->data);
+    }
+}
 
 static void manage(server_t *server)
 {
@@ -13,7 +26,10 @@ static void manage(server_t *server)
 
     if (FD_ISSET(server->info->socket, &server->read_fds))
         return accept_new_connection(server);
+    fill_map(server);
     for (; cli; cli = cli->next) {
+        if (((client_t *)(cli->data))->status == AI)
+            check_ai(((client_t *)(cli->data)), server);
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->read_fds))
             handle_client(((client_t *)(cli->data)));
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->error_fds)) {
