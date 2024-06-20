@@ -45,4 +45,5 @@ void command_take(char **args, client_t *client)
     LOG(LOG_LEVEL_INFO, "Client of team %s took every %s on it's tile",
         client->team_name, args[1]);
     command_pgt(client->fd, ressource);
+    client->next_action = get_time() + 7 * 1000 / get_server()->game->freq;
 }
