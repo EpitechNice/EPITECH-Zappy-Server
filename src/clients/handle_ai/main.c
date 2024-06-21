@@ -112,8 +112,9 @@ static int death(client_t *client)
 static void incantation_end(client_t *client)
 {
     char *fd = NULL;
-
     UNUSED int _ = asprintf(&fd, "%d", client->fd);
+    char *arg[2] = {"plv", fd, NULL};
+
     client->level++;
     client->is_elevating = false;
     client->incant_time = 0;
@@ -122,7 +123,7 @@ static void incantation_end(client_t *client)
     command_pie(client->x, client->y, 1);
     for (lnode_t *gui = get_server()->clients; gui; gui = gui->next) {
         if (((client_t *)gui->data)->status == GUI)
-            command_plv((char *[]){"plv",fd, NULL}, gui->data);
+            command_plv(arg, gui->data);
     }
 }
 
@@ -152,7 +153,8 @@ static void check_incantation(client_t *client)
 int check_ai(client_t *client, server_t *server)
 {
     check_incantation(client);
-    if ((get_time() - client->last_meal) < (126.0 / (float)server->game->freq) * 1000)
+    if ((get_time() - client->last_meal) <
+    (126.0 / (float)server->game->freq) * 1000)
         return 0;
     if (client->inventory[FOOD] == 0)
         return death(client);

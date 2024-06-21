@@ -26,7 +26,7 @@ static void check_end(server_t *server, team_t *team)
 
     for (lnode_t *list = server->clients; list != NULL; list = list->next)
         if (((client_t *)list->data)->level == 8 &&
-        strcmp(((client_t *)list->data)->team_name, team->name) == 0 ) {
+        strcmp(((client_t *)list->data)->team_name, team->name) == 0) {
             nb++;
         }
     if (nb >= 6) {
