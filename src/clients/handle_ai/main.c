@@ -113,7 +113,7 @@ static void incantation_end(client_t *client)
 {
     char *fd = NULL;
     UNUSED int _ = asprintf(&fd, "%d", client->fd);
-    char *arg[2] = {"plv", fd, NULL};
+    char *arg[2] = {"plv", fd};
 
     client->level++;
     client->is_elevating = false;
