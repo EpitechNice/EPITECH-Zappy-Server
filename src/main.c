@@ -19,7 +19,6 @@ int main(int argc, char **argv)
     is_parsing_ok(p);
     LOG(LOG_LEVEL_INFO, "Server has now started...");
     server->info = init_connection(p);
-    init_timeval(server, p);
     server->game = init_game(p);
     destroy_parsing(p);
     run(server);

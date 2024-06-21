@@ -57,20 +57,6 @@ static map_t **make_map(int width, int height)
     return map;
 }
 
-// FOR TESTING PURPOSES
-//
-// static map_t **make_map(int width, int height)
-// {
-//     map_t **map = malloc(sizeof(map_t *) * height);
-
-//     for (int i = 0; i < height; i++) {
-//         map[i] = malloc(sizeof(map_t) * width);
-//         for (int j = 0; j < width; j++)
-//             map[i][j] = (map_t){NULL, NULL, {1, 2, 3, 4, 5, 6, 7}};
-//     }
-//     return map;
-// }
-
 game_t *init_game(parsing_t *p)
 {
     game_t *game = malloc(sizeof(game_t));

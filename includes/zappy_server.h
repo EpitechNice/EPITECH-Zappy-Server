@@ -60,7 +60,7 @@ typedef struct all_server_infos_s {
     connect_t *info;
     game_t *game;
     struct timeval time_val;
-    unsigned long long global_time_stamp;
+    size_t time;
 } server_t;
 
 typedef struct {
@@ -141,16 +141,6 @@ char init(void);
 /**
   * @ingroup server
   *
-  * @brief Init the time_val with the parsing value
-  *
-  * @param server Server to modify
-  * @param p Parsing structure
-*/
-void init_timeval(server_t *server, parsing_t *p);
-
-/**
-  * @ingroup server
-  *
   * @brief Append data to origin, by re allocating
   *
   * @param origin Adress of the origin data, might get changed by realloc
@@ -223,5 +213,7 @@ void move_client(client_t *client, int x, int y);
   * This will be pure rand() on where will ressources go.
 */
 void spread_ressources(game_t *game);
+
+int check_ai(client_t *client, server_t *server);
 
 #endif /* !ZAPPY_SERVER_H_ */

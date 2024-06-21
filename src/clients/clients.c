@@ -34,5 +34,6 @@ client_t *init_client(int fd)
     memset(clients, 0, sizeof(client_t));
     clients->fd = fd;
     clients->level = 1;
+    clients->inventory[FOOD] = 10;
     return (clients);
 }

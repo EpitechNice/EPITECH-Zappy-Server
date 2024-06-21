@@ -42,7 +42,7 @@ typedef enum {
 } status_t;
 
 typedef struct {
-    bool started_an_incantation;
+    bool is_elevating;
     short ttl;
     int fd;
     int x;
@@ -53,7 +53,9 @@ typedef struct {
     char *team_name;
     status_t status;
     lnode_t *to_send;
-    unsigned long long next_action_time;
+    size_t last_meal;
+    size_t next_action;
+    size_t incant_time;
 } client_t;
 
 typedef struct {

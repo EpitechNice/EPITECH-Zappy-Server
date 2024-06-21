@@ -30,7 +30,6 @@ void delete_client(client_t *client)
     dl_erase(&server->clients, client, &is_client, NULL);
     dl_erase(&server->game->map[client->y][client->x].players, client,
         &is_client, &free_client);
-    LOG(LOG_LEVEL_WARNING, "Client of team %s left", client->team_name);
 }
 
 void move_client(client_t *client, int x, int y)

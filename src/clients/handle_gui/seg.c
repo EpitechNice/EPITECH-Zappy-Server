@@ -14,7 +14,10 @@ void command_seg(const char *team)
     char *buffer = NULL;
     UNUSED int _;
 
-    _ = asprintf(&buffer, "seg %s", team);
+    if (!team)
+        _ = asprintf(&buffer, "seg");
+    else
+        _ = asprintf(&buffer, "seg %s", team);
     for (; clients; clients = clients->next) {
         tmp = (client_t *)clients->data;
         if (tmp->status == GUI)

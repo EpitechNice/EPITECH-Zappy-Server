@@ -6,16 +6,48 @@
 */
 
 #include "zappy_server.h"
+#include "gui.h"
+
+static void fill_map(server_t *server)
+{
+    if (get_time() - server->time < (20.0 / (float)server->game->freq) * 1000)
+        return;
+    spread_ressources(server->game);
+    server->time = get_time();
+    for (lnode_t *tmp = server->clients; tmp; tmp = tmp->next) {
+        if (((client_t *)tmp->data)->status == GUI)
+            command_mct((char *[2]){"mct", NULL}, tmp->data);
+    }
+}
+
+static void check_end(server_t *server, team_t *team)
+{
+    int nb = 0;
+
+    for (lnode_t *list = server->clients; list != NULL; list = list->next)
+        if (((client_t *)list->data)->level == 8 &&
+        strcmp(((client_t *)list->data)->team_name, team->name) == 0) {
+            nb++;
+        }
+    if (nb >= 6) {
+        LOG(LOG_LEVEL_INFO, "Game has been won by team %s", team->name);
+        server->running = false;
+        command_seg(team->name);
+    }
+}
 
 static void manage(server_t *server)
 {
     lnode_t *cli = server->clients;
 
-    if (FD_ISSET(server->info->socket, &server->read_fds)) {
-        accept_new_connection(server);
-        return;
-    }
+    if (FD_ISSET(server->info->socket, &server->read_fds))
+        return accept_new_connection(server);
+    fill_map(server);
+    for (lnode_t *tmp = server->game->teams; tmp; tmp = tmp->next)
+        check_end(server, tmp->data);
     for (; cli; cli = cli->next) {
+        if (((client_t *)(cli->data))->status == AI)
+            check_ai(((client_t *)(cli->data)), server);
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->read_fds))
             handle_client(((client_t *)(cli->data)));
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->error_fds)) {
@@ -52,7 +84,6 @@ static void loop(server_t *server)
         LOG(LOG_LEVEL_CRITICAL, "Select failed");
         exit(84);
     }
-    server->global_time_stamp++;
     manage(server);
 }
 

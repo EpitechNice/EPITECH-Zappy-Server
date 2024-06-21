@@ -86,6 +86,6 @@ void command_look(UNUSED char **args, UNUSED client_t *client)
         to_display += 2;
     }
     str_append(&out, "]");
-    client->next_action_time = get_server()->global_time_stamp + 7;
     dl_push_back(&client->to_send, out);
+    client->next_action = get_time() + 7 * 1000 / get_server()->game->freq;
 }
