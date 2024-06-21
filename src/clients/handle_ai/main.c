@@ -99,8 +99,14 @@ static int death(client_t *client)
     return 1;
 }
 
+static void check_incantation(UNUSED client_t *client, UNUSED server_t *server)
+{
+    return;
+}
+
 int check_ai(client_t *client, server_t *server)
 {
+    check_incantation(client, server);
     if ((get_time() - client->last_meal) < (126.0 / (float)server->game->freq) * 1000)
         return 0;
     if (client->inventory[FOOD] == 0)

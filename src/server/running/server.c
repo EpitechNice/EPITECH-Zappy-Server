@@ -20,6 +20,22 @@ static void fill_map(server_t *server)
     }
 }
 
+static void check_end(server_t *server, team_t *team)
+{
+    int nb = 0;
+
+    for (lnode_t *list = server->clients; list != NULL; list = list->next)
+        if (((client_t *)list->data)->level == 8 &&
+        strcmp(((client_t *)list->data)->team_name, team->name) == 0 ) {
+            nb++;
+        }
+    if (nb >= 6) {
+        LOG(LOG_LEVEL_INFO, "Game has been won by team %s", team->name);
+        server->running = false;
+        command_seg(team->name);
+    }
+}
+
 static void manage(server_t *server)
 {
     lnode_t *cli = server->clients;
@@ -27,6 +43,8 @@ static void manage(server_t *server)
     if (FD_ISSET(server->info->socket, &server->read_fds))
         return accept_new_connection(server);
     fill_map(server);
+    for (lnode_t *tmp = server->game->teams; tmp; tmp = tmp->next)
+        check_end(server, tmp->data);
     for (; cli; cli = cli->next) {
         if (((client_t *)(cli->data))->status == AI)
             check_ai(((client_t *)(cli->data)), server);
