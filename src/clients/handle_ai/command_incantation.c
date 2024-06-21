@@ -22,7 +22,7 @@ const int max_level = 7;
 
 static int target_level;
 
-static void check_level(void *_client, void *_nb)
+void check_level(void *_client, void *_nb)
 {
     client_t *client = (client_t *)_client;
     int *nb = (int *)_nb;
@@ -49,19 +49,17 @@ static void event_incantation(client_t *client, int size)
     free(ai);
 }
 
-static void end_command_inc(client_t *client, char *out,
-    int nb_of_players_of_level_x)
+static void end_command_inc(client_t *client, int nb_of_players_of_level_x)
 {
-    dl_push_back(&client->to_send, out);
-    client->started_an_incantation = true;
+    client->is_elevating = true;
     event_incantation(client, nb_of_players_of_level_x);
+    client->next_action = get_time() + 300 * 1000 / get_server()->game->freq;
+    client->incant_time = get_time() + 300 * 1000 / get_server()->game->freq;
 }
 
 void command_incantation(UNUSED char **args, client_t *client)
 {
     int nb_of_players_of_level_x = 1;
-    char *out = NULL;
-    UNUSED int _;
 
     if (client->level >= max_level)
         return dl_push_back(&client->to_send, strdup("ko"));
@@ -76,7 +74,5 @@ void command_incantation(UNUSED char **args, client_t *client)
                 return dl_push_back(&client->to_send, strdup("ko"));
     LOG(LOG_LEVEL_INFO, "Client of team %s is starting a level %i ritual",
         client->team_name, client->level);
-    _ = asprintf(&out, "Elevation underway\nCurrent level: %i", client->level);
-    end_command_inc(client, out, nb_of_players_of_level_x);
-    client->next_action = get_time() + 300 * 1000 / get_server()->game->freq;
+    end_command_inc(client, nb_of_players_of_level_x);
 }

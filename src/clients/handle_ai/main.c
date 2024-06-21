@@ -9,6 +9,16 @@
 #include "gui.h"
 #include "ai.h"
 
+const int infos_rit[][7] = {
+    {1, 1, 0, 0, 0, 0, 0},
+    {2, 1, 1, 1, 0, 0, 0},
+    {2, 2, 0, 1, 0, 2, 0},
+    {4, 1, 1, 2, 0, 1, 0},
+    {4, 1, 2, 1, 3, 0, 0},
+    {6, 1, 2, 3, 0, 1, 0},
+    {6, 2, 2, 2, 2, 2, 1},
+};
+
 const char *ai_cmd[] = {
     "forward", "right", "left", "look", "inventory", "broadcast",
     "connect_nbr", "fork", "eject", "take", "set", "incantation"
@@ -99,14 +109,49 @@ static int death(client_t *client)
     return 1;
 }
 
-static void check_incantation(UNUSED client_t *client, UNUSED server_t *server)
+static void incantation_end(client_t *client)
 {
-    return;
+    char *fd = NULL;
+
+    UNUSED int _ = asprintf(&fd, "%d", client->fd);
+    client->level++;
+    client->is_elevating = false;
+    client->incant_time = 0;
+    LOG(LOG_LEVEL_INFO, "Incantation success for client %i", client->fd);
+    LOG(LOG_LEVEL_INFO, "Client %i is level %i", client->fd, client->level);
+    command_pie(client->x, client->y, 1);
+    for (lnode_t *gui = get_server()->clients; gui; gui = gui->next) {
+        if (((client_t *)gui->data)->status == GUI)
+            command_plv((char *[]){"plv",fd, NULL}, gui->data);
+    }
+}
+
+static void check_incantation(client_t *client)
+{
+    int nb_of_players_of_level_x = 1;
+
+    if (!client->is_elevating)
+        return;
+    if (client->incant_time > get_time())
+        return;
+    dl_apply_data_param(get_server()->game->map[client->y][client->x].players,
+        check_level, &nb_of_players_of_level_x);
+    if (nb_of_players_of_level_x < infos_rit[client->level - 1][0]) {
+        client->is_elevating = false;
+        return;
+    }
+    for (int i = 1; i < 7; ++i)
+        if (get_server()->game->map[client->y][client->x].ressources[i] <
+            infos_rit[client->level - 1][i]) {
+            client->is_elevating = false;
+            return;
+        }
+    incantation_end(client);
 }
 
 int check_ai(client_t *client, server_t *server)
 {
-    check_incantation(client, server);
+    check_incantation(client);
     if ((get_time() - client->last_meal) < (126.0 / (float)server->game->freq) * 1000)
         return 0;
     if (client->inventory[FOOD] == 0)

@@ -131,4 +131,14 @@ void command_set(char **args, client_t *client);
 */
 void command_incantation(char **args, client_t *client);
 
+/**
+ * @ingroup ai
+ *
+ * @brief AI is checking if he can level up
+ *
+ * @param _client Client who is checking
+ * @param _nb Number of players of the same level
+*/
+void check_level(void *_client, void *_nb);
+
 #endif /* !AI_H_ */
