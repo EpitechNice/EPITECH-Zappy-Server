@@ -16,7 +16,20 @@ SRC		=   $(wildcard src/*.c)			\
 			$(wildcard src/clients/handle_gui/*.c)	\
 			$(wildcard src/utils/*.c)	\
 
-OBJ 	= 	$(patsubst src/%.c,obj/%.o,$(SRC))
+TEST_SRC		=	$(wildcard src/utils/*.c)	\
+					$(wildcard src/parsing/*.c)	\
+					$(wildcard src/server/*.c)	\
+					$(wildcard src/server/init/*.c)	\
+					$(wildcard src/server/running/*.c)	\
+					$(wildcard src/clients/*.c)	\
+					$(wildcard src/clients/handle_ai/*.c)	\
+					$(wildcard src/clients/handle_gui/*.c)	\
+					$(wildcard tests/*.c)	\
+					$(wildcard tests/utils/*.c)	\
+
+OBJ 		= 	$(patsubst src/%.c,obj/%.o,$(SRC))
+
+TEST_OBJ 	= 	$(patsubst src/%.c,obj/%.o,$(TEST_SRC))
 
 ifeq ($(COLOR), yes)
 	RESET		= "\033[0m"
@@ -46,6 +59,8 @@ endif
 
 BIN	=	"zappy_server"
 
+TEST_BIN	=	"unit_tests"
+
 FLAGS	=	-Wall 				\
 			-Wextra				\
 			-Werror				\
@@ -55,8 +70,11 @@ FLAGS	=	-Wall 				\
 			-Wshadow			\
 			-Wlogical-op		\
 			-Wredundant-decls	\
-			-g3\
+			-g3					\
 			-O2
+
+TEST_FLAGS	=	--coverage 			\
+				-lcriterion
 
 INCLUDES	=	-I./libs/includes	\
 				-I./includes		\
@@ -73,7 +91,13 @@ all:	$(BIN)
 $(BIN):	libs $(OBJ)
 	@echo $(BOLD)$(GREEN)"Objects Done"$(RESET)
 	@echo $(BOLD)$(PURPLE)"Compiling $(BIN)..."$(RESET)
-	@$(COMP) -o $(BIN) $(OBJ) $(FLAGS) $(INCLUDES) $(LIBS)
+	@$(COMP) -o $(BIN) $(OBJ) $(TEST_FLAGS) $(INCLUDES) $(LIBS)
+	@make ascii
+
+$(TEST_BIN):	libs $(TEST_OBJ)
+	@echo $(BOLD)$(GREEN)"Objects Done"$(RESET)
+	@echo $(BOLD)$(PURPLE)"Compiling $(TEST_BIN)..."$(RESET)
+	@$(COMP) -o $(TEST_BIN) $(TEST_OBJ) $(TEST_FLAGS) $(INCLUDES) $(LIBS)
 	@make ascii
 
 .PHONY:	libs
@@ -97,6 +121,8 @@ fclean: clean
 		make --no-print-directory -C libs fclean; \
 	fi
 	@rm -rf $(BIN)
+	@rm -rf $(TEST_BIN)
+	@rm -rf *.gcda *.gcno
 
 re: fclean all
 
@@ -107,6 +133,10 @@ obj/%.o: src/%.c
 
 cs:	fclean
 	./tests/run_coding_style.sh
+
+tests_run: $(TEST_BIN)
+	@./$(TEST_BIN)
+	@make fclean
 
 ascii:
 	@echo $(BOLD)$(PURPLE)
