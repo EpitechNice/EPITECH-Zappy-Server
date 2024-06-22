@@ -118,6 +118,27 @@ static int parse_log(parsing_t *p, int argc, char **argv, int i)
     return i + 1;
 }
 
+static int parse_debug(parsing_t *p, int argc, char **argv, int i)
+{
+    char *values[] = {"debug", "info", "warning", "error", "critical", NULL};
+    int index;
+
+    if (i + 1 >= argc) {
+        p->ok = false;
+        LOG(LOG_LEVEL_ERROR, "Invalid argument for \"-d\". Expect a value.");
+        return -1;
+    }
+    to_lower(argv[i + 1]);
+    index = get_str_index(values, argv[i + 1]);
+    if (index == -1) {
+        p->ok = false;
+        LOG(LOG_LEVEL_CRITICAL, "Invalid argument for \"-d\". See -help.");
+        return -1;
+    }
+    set_log_level(index);
+    return i + 1;
+}
+
 static int parse_help(parsing_t *p, int argc, char **argv, int i)
 {
     (void) argc;
@@ -127,12 +148,13 @@ static int parse_help(parsing_t *p, int argc, char **argv, int i)
     return i + 1;
 }
 
-static int parse_loop(int argc, char **argv, int i, parsing_t *p)
+int parse_loop(int argc, char **argv, int i, parsing_t *p)
 {
     int (*parse[])(parsing_t *, int, char **, int) = {
-        parse_port, parse_width, parse_height, parse_names,
-        parse_clients_nb, parse_freq, parse_log, parse_help, NULL };
-    char *flags[] = {"-p", "-x", "-y", "-n", "-c", "-f", "-l", "-help", NULL};
+        parse_port, parse_width, parse_height, parse_names, parse_clients_nb,
+        parse_freq, parse_log, parse_debug, parse_help, NULL};
+    char *flags[] = {"-p", "-x", "-y", "-n", "-c", "-f", "-l", "-d",
+        "-help", NULL};
 
     for (int j = 0; flags[j] != NULL; j++)
         if (strcmp(argv[i], flags[j]) == 0)
@@ -142,15 +164,3 @@ static int parse_loop(int argc, char **argv, int i, parsing_t *p)
     return -1;
 }
 
-parsing_t *parse(int argc, char **argv)
-{
-    parsing_t *p = init_parsing();
-
-    for (int i = 1; i < argc; i++) {
-        if (!p->ok || p->help)
-            break;
-        i = parse_loop(argc, argv, i, p);
-    }
-    p = (p->ok) ? parsing_check(p) : p;
-    return p;
-}

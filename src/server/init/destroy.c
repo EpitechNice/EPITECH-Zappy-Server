@@ -65,3 +65,17 @@ void destroy_server(void)
         destroy_game(server->game);
     server->initialized = false;
 }
+
+static bool is_egg(void *ref, void *egg)
+{
+    egg_t *egg_ref = (egg_t *)ref;
+    egg_t *egg_egg = (egg_t *)egg;
+
+    return egg_ref->id == egg_egg->id;
+}
+
+void destroy_egg(egg_t *egg)
+{
+    dl_erase(&get_server()->game->eggs, egg, is_egg, NULL);
+    dl_erase(&get_server()->game->map[egg->y][egg->x].eggs, egg, is_egg, free_egg);
+}

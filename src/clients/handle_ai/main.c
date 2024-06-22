@@ -31,13 +31,6 @@ const command_func_t ai_func[] = {
     command_incantation
 };
 
-static void to_lower(char *buffer)
-{
-    for (int i = 0; buffer[i]; ++i)
-        buffer[i] = ((buffer[i] >= 65 && buffer[i] <= 90) ?
-            buffer[i] + 32 : buffer[i]);
-}
-
 void handle_ai_command(client_t *client, const char *buffer)
 {
     char **args = stowa(buffer, " \t\n");
@@ -76,28 +69,58 @@ static void send_infos(client_t *client, int nb_clients, int height, int width)
     free(out);
 }
 
-void handle_new_ai(client_t *client, const char *buffer)
+static bool get_egg_pos(client_t *client, char *team_name)
+{
+    egg_t *tmp;
+
+    for (lnode_t *egg = get_server()->game->eggs; egg; egg = egg->next) {
+        tmp = (egg_t *)egg->data;
+        if (strcmp(tmp->team_name, team_name))
+            continue;
+        client->x = tmp->x;
+        client->y = tmp->y;
+        destroy_egg(tmp);
+        return true;
+    }
+    client->x = -1;
+    client->y = -1;
+    return false;
+}
+
+static void get_pos(client_t *client, const char *buffer)
 {
     game_t *game = get_server()->game;
     lnode_t *teams = game->teams;
-    team_t *tmp;
-    char *out = NULL;
-    UNUSED int _;
 
-    for (; teams; teams = teams->next) {
+    for (team_t *tmp; teams; teams = teams->next) {
         tmp = (team_t *)teams->data;
         if (strcmp(tmp->name, buffer) || !tmp->clients_nb)
             continue;
-        send_infos(client, tmp->clients_nb, game->height, game->width);
-        tmp->clients_nb--;
-        client->team_name = strdup(tmp->name);
-        _ = asprintf(&out, "pnw %i %i %i %i %i %s", client->fd, client->x,
-            client->y, client->direction, client->level, client->team_name);
-        command_pnw(out);
-        free(out);
+        if (get_egg_pos(client, tmp->name)) {
+            client->team_name = strdup(tmp->name);
+            tmp->clients_nb--;
+            send_infos(client, tmp->clients_nb, game->height, game->width);
+        }
         return;
     }
-    FD_SET(client->fd, &get_server()->error_fds);
+    client->x = -1;
+    client->y = -1;
+}
+
+void handle_new_ai(client_t *client, const char *buffer)
+{
+    char *out = NULL;
+    UNUSED int _;
+
+    get_pos(client, buffer);
+    if (client->x == -1) {
+        FD_SET(client->fd, &get_server()->error_fds);
+        return;
+    }
+    _ = asprintf(&out, "pnw %i %i %i %i %i %s", client->fd, client->x,
+        client->y, client->direction, client->level, client->team_name);
+    command_pnw(out);
+    free(out);
 }
 
 static int death(client_t *client)

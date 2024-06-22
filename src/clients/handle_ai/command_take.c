@@ -8,12 +8,6 @@
 #include "ai.h"
 #include "gui.h"
 
-static void to_lower(char *arg)
-{
-    for (unsigned i = 0; arg[i]; ++i)
-        arg[i] = (arg[i] > 0x40 && arg[i] < 0x5b) ? (arg[i] - 0x20) : (arg[i]);
-}
-
 static int get_ressource_index(const char *ressource)
 {
     char *lressource;

@@ -121,6 +121,15 @@ game_t *init_game(parsing_t *p);
 void destroy_server(void);
 
 /**
+  * @ingroup server
+  *
+  * @brief Destroy a given egg
+  *
+  * @param egg Egg to be destroyed from tiles, game...
+*/
+void destroy_egg(egg_t *egg);
+
+/**
  * @ingroup server
  *
  * @brief run the server
@@ -141,6 +150,15 @@ char init(void);
 /**
   * @ingroup server
   *
+  * @brief Lower given string
+  *
+  * @param str String to be lowered
+*/
+void to_lower(char *str);
+
+/**
+  * @ingroup server
+  *
   * @brief Append data to origin, by re allocating
   *
   * @param origin Adress of the origin data, might get changed by realloc
@@ -151,6 +169,18 @@ char init(void);
   * read how it works first
 */
 void str_append(char **origin, const char *data);
+
+/**
+  * @ingroup server
+  *
+  * @brief Get index of string in string array
+  *
+  * @param str_array String array
+  * @param str String to search
+  *
+  * @return Index of the string, or -1
+*/
+int get_str_index(char **str_array, const char *str);
 
 /**
   * @ingroup server
@@ -200,6 +230,20 @@ void free_egg(void *data);
   * @param y Y of the new tile
 */
 void move_client(client_t *client, int x, int y);
+
+/**
+  * @ingroup server
+  *
+  * @brief Parse each flag of the cli interface
+  *
+  * @param argc Nb of args
+  * @param argv Args as string array
+  * @param i Index of current argument
+  * @param p Parsing structure
+  *
+  * @return Index of next param / -1
+*/
+int parse_loop(int argc, char **argv, int i, parsing_t *p);
 
 /**
   * @ingroup server
