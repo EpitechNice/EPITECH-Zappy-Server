@@ -44,7 +44,6 @@ static void destroy_game(game_t *game)
 {
     dl_clear(&game->teams, free_teams);
     dl_clear(&game->eggs, free_egg);
-    dl_clear(&get_server()->clients, free_client);
     for (int i = 0; i < game->height; ++i) {
         for (int j = 0; j < game->width; ++j)
             free_map(&game->map[i][j]);

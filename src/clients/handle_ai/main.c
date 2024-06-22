@@ -117,6 +117,7 @@ void handle_new_ai(client_t *client, const char *buffer)
         FD_SET(client->fd, &get_server()->error_fds);
         return;
     }
+    client->status = AI;
     _ = asprintf(&out, "pnw %i %i %i %i %i %s", client->fd, client->x,
         client->y, client->direction, client->level, client->team_name);
     command_pnw(out);
