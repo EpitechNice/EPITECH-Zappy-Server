@@ -51,10 +51,20 @@ static void event_incantation(client_t *client, int size)
 
 static void end_command_inc(client_t *client, int nb_of_players_of_level_x)
 {
+    client_t *player;
+
     client->is_elevating = true;
     event_incantation(client, nb_of_players_of_level_x);
-    client->next_action = get_time() + 300 * 1000 / get_server()->game->freq;
-    client->incant_time = get_time() + 300 * 1000 / get_server()->game->freq;
+    for (lnode_t *players = get_server()->game->map[client->y][client->x]
+    .players; players; players = players->next) {
+        player = players->data;
+        if (player->level != client->level)
+            continue;
+        player->next_action = get_time() + 300 * 1000 / get_server()->game->freq;
+        player->incant_time = get_time() + 300 * 1000 / get_server()->game->freq;
+        player->is_elevating = true;
+        dl_push_back(&player->to_send, strdup("Elevation underway\n"));
+    }
 }
 
 void command_incantation(UNUSED char **args, client_t *client)

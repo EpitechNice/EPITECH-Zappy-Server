@@ -25,11 +25,11 @@ static void move_a_client(char *direction, client_t *client)
         client->y++;
         strcpy(direction, "right");
     }
-    if (client->direction == RIGHT) {
+    if (client->direction == DOWN) {
         client->x++;
         strcpy(direction, "down");
     }
-    if (client->direction == RIGHT) {
+    if (client->direction == LEFT) {
         client->y--;
         strcpy(direction, "left");
     }

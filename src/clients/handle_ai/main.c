@@ -66,8 +66,9 @@ static int death(client_t *client)
 static void incantation_end(client_t *client)
 {
     char *fd = NULL;
+    char *out = NULL;
     UNUSED int _ = asprintf(&fd, "%d", client->fd);
-    char *arg[2] = {"plv", fd};
+    char *arg[3] = {"plv", fd, NULL};
 
     client->level++;
     client->is_elevating = false;
@@ -79,6 +80,10 @@ static void incantation_end(client_t *client)
         if (((client_t *)gui->data)->status == GUI)
             command_plv(arg, gui->data);
     }
+    _ = asprintf(&out, "Current level: %d\n", client->level);
+    dl_push_back(&client->to_send, strdup(out));
+    free(fd);
+    free(out);
 }
 
 static void check_incantation(client_t *client)

@@ -19,8 +19,11 @@ static int get_ressource_index(const char *ressource)
     lressource = strdup(ressource);
     to_lower(lressource);
     for (int i = 0; ressource[i]; ++i)
-        if (!strcmp(lressource, ressources[i]))
+        if (!strcmp(lressource, ressources[i])) {
+            free(lressource);
             return i;
+        }
+    free(lressource);
     return -1;
 }
 
