@@ -1,8 +1,0 @@
-./src/clients/ai_connection.c:91: MAJOR:C-F3
-./src/clients/ai_connection.c:95: INFO:C-A3
-./src/parsing/parsing.c:167: MINOR:C-G8
-./src/parsing/parsing_gestion.c:42: INFO:C-A3
-./src/server/init/destroy.c:79: MAJOR:C-F3
-./src/server/init/destroy.c:80: INFO:C-A3
-./src/server/running/server.c:61: MAJOR:C-F4
-./src/server/running/server.c:62: MAJOR:C-F4

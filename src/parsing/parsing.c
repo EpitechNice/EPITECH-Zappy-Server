@@ -163,4 +163,3 @@ int parse_loop(int argc, char **argv, int i, parsing_t *p)
     p->ok = false;
     return -1;
 }
-
