@@ -7,6 +7,12 @@
 
 #include "zappy_server.h"
 
+void to_lower(char *str)
+{
+    for (int i = 0; str[i]; ++i)
+        str[i] = (str[i] >= 65 && str[i] <= 90) ? (str[i] + 32) : str[i];
+}
+
 void str_append(char **origin, const char *data)
 {
     size_t origin_len;

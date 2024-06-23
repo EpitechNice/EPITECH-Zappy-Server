@@ -27,9 +27,10 @@ void delete_client(client_t *client)
 {
     server_t *server = get_server();
 
-    dl_erase(&server->clients, client, &is_client, NULL);
-    dl_erase(&server->game->map[client->y][client->x].players, client,
-        &is_client, &free_client);
+    if (client->x != -1)
+        dl_erase(&server->game->map[client->y][client->x].players, client,
+            &is_client, NULL);
+    dl_erase(&server->clients, client, &is_client, &free_client);
 }
 
 void move_client(client_t *client, int x, int y)

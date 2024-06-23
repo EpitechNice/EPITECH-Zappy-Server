@@ -53,6 +53,14 @@ static int find_pos_of(const char *str, const char *sub)
     return -1;
 }
 
+int get_str_index(char **str_array, const char *str)
+{
+    for (int i = 0; str_array[i]; ++i)
+        if (!strcmp(str_array[i], str))
+            return i;
+    return -1;
+}
+
 char **stowa(const char *str, const char *sub)
 {
     size_t nb_sub = get_nb_subs(str, sub);

@@ -36,18 +36,25 @@ static void check_end(server_t *server, team_t *team)
     }
 }
 
-static void manage(server_t *server)
+static void manage_game(server_t *server)
 {
-    lnode_t *cli = server->clients;
-
     if (FD_ISSET(server->info->socket, &server->read_fds))
         return accept_new_connection(server);
     fill_map(server);
     for (lnode_t *tmp = server->game->teams; tmp; tmp = tmp->next)
         check_end(server, tmp->data);
+}
+
+static void manage(server_t *server)
+{
+    lnode_t *cli = server->clients;
+
+    manage_game(server);
     for (; cli; cli = cli->next) {
         if (((client_t *)(cli->data))->status == AI)
             check_ai(((client_t *)(cli->data)), server);
+        if (((client_t *)(cli->data))->status == WAITING)
+            check_free_eggs(((client_t *)(cli->data)));
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->read_fds))
             handle_client(((client_t *)(cli->data)));
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->error_fds)) {

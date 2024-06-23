@@ -44,7 +44,6 @@ static void destroy_game(game_t *game)
 {
     dl_clear(&game->teams, free_teams);
     dl_clear(&game->eggs, free_egg);
-    dl_clear(&get_server()->clients, free_client);
     for (int i = 0; i < game->height; ++i) {
         for (int j = 0; j < game->width; ++j)
             free_map(&game->map[i][j]);
@@ -64,4 +63,19 @@ void destroy_server(void)
     if (server->game)
         destroy_game(server->game);
     server->initialized = false;
+}
+
+static bool is_egg(void *ref, void *egg)
+{
+    egg_t *egg_ref = (egg_t *)ref;
+    egg_t *egg_egg = (egg_t *)egg;
+
+    return egg_ref->id == egg_egg->id;
+}
+
+void destroy_egg(egg_t *egg)
+{
+    dl_erase(&get_server()->game->eggs, egg, is_egg, NULL);
+    dl_erase(&get_server()->game->map[egg->y][egg->x].eggs,
+    egg, is_egg, free_egg);
 }

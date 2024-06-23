@@ -42,10 +42,10 @@ void command_fork(UNUSED char **args, client_t *client)
         client->team_name, client->x, client->y);
     for (lnode_t *node = game->teams; node; node = node->next) {
         team = node->data;
-        if (!strcmp(team->name, client->team_name)) {
-            team->clients_nb++;
-            break;
-        }
+        if (strcmp(team->name, client->team_name))
+            continue;
+        team->clients_nb++;
+        break;
     }
     end_command_fork(game, client, egg);
 }

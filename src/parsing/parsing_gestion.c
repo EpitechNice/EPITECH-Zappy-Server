@@ -27,3 +27,16 @@ parsing_t *init_parsing(void)
     p->help = false;
     return p;
 }
+
+parsing_t *parse(int argc, char **argv)
+{
+    parsing_t *p = init_parsing();
+
+    for (int i = 1; i < argc; i++) {
+        if (!p->ok || p->help)
+            break;
+        i = parse_loop(argc, argv, i, p);
+    }
+    p = (p->ok) ? parsing_check(p) : p;
+    return p;
+}
