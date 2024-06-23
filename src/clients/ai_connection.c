@@ -25,12 +25,22 @@ bool get_egg_pos(client_t *client, char *team_name)
     return false;
 }
 
-void get_pos(client_t *client, const char *buffer)
+static void send_cmds(client_t *client, team_t *tmp, game_t *game)
+{
+    char *out = NULL;
+    UNUSED int _;
+
+    _ = asprintf(&out, "pnw %i %i %i %i %i %s", client->fd, client->x,
+        client->y, client->direction, client->level, client->team_name);
+    command_pnw(out);
+    free(out);
+    send_infos(client, tmp->clients_nb, game->height, game->width);
+}
+
+void handle_new_ai(client_t *client, const char *buffer)
 {
     game_t *game = get_server()->game;
     lnode_t *teams = game->teams;
-    char *out = NULL;
-    UNUSED int _;
 
     client->team_name = strdup(buffer);
     for (team_t *tmp; teams; teams = teams->next) {
@@ -39,12 +49,7 @@ void get_pos(client_t *client, const char *buffer)
             continue;
         if (get_egg_pos(client, tmp->name)) {
             tmp->clients_nb--;
-            _ = asprintf(&out, "pnw %i %i %i %i %i %s", client->fd, client->x,
-                client->y, client->direction, client->level, client->team_name);
-            command_pnw(out);
-            free(out);
-            send_infos(client, tmp->clients_nb, game->height, game->width);
-            return;
+            return send_cmds(client, tmp, game);
         }
         client->status = WAITING;
         return;
@@ -67,4 +72,24 @@ void send_infos(client_t *client, int nb_clients, int height, int width)
     dl_push_back(&client->to_send, strdup(out));
     client->status = AI;
     free(out);
+}
+
+void check_free_eggs(client_t *client)
+{
+    char *out = NULL;
+    UNUSED int _;
+
+    if (!get_egg_pos(client, client->team_name))
+        return;
+    client->status = AI;
+    for (lnode_t *tmp = get_server()->game->teams; tmp; tmp = tmp->next)
+        if (strcmp(((team_t *)tmp->data)->name, client->team_name) == 0) {
+            ((team_t *)tmp->data)->clients_nb--;
+            send_infos(client, ((team_t *)tmp->data)->clients_nb,
+                get_server()->game->height, get_server()->game->width);
+            _ = asprintf(&out, "pnw %i %i %i %i %i %s", client->fd, client->x,
+                client->y, client->direction, client->level, client->team_name);
+            command_pnw(out);
+            free(out);
+        }
 }

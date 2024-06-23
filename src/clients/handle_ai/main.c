@@ -54,11 +54,6 @@ void handle_ai_command(client_t *client, const char *buffer)
     free_tab(args);
 }
 
-void handle_new_ai(client_t *client, const char *buffer)
-{
-    get_pos(client, buffer);
-}
-
 static int death(client_t *client)
 {
     LOG(LOG_LEVEL_INFO, "Client %i died of hunger", client->fd);

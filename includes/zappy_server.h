@@ -262,6 +262,6 @@ int check_ai(client_t *client, server_t *server);
 
 bool get_egg_pos(client_t *client, char *team_name);
 
-void get_pos(client_t *client, const char *buffer);
+void check_free_eggs(client_t *client);
 
 #endif /* !ZAPPY_SERVER_H_ */
