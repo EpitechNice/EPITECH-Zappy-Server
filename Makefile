@@ -26,6 +26,7 @@ TEST_SRC		=	$(wildcard src/utils/*.c)	\
 					$(wildcard src/clients/handle_gui/*.c)	\
 					$(wildcard tests/*.c)	\
 					$(wildcard tests/utils/*.c)	\
+					$(wildcard tests/server_init/*.c)	\
 
 OBJ 		= 	$(patsubst src/%.c,obj/%.o,$(SRC))
 
