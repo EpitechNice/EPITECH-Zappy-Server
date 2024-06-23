@@ -39,7 +39,7 @@ static void waiting_client_command(client_t *client, char *buffer)
 
 static void handle_commands(client_t *client, char *buffer)
 {
-    if (client->status == WAITING)
+    if (client->status == NONE)
         return waiting_client_command(client, buffer);
     if (client->status == AI)
         return handle_ai_command(client, buffer);

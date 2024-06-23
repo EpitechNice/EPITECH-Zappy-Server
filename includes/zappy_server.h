@@ -260,4 +260,8 @@ void spread_ressources(game_t *game);
 
 int check_ai(client_t *client, server_t *server);
 
+bool get_egg_pos(client_t *client, char *team_name);
+
+void get_pos(client_t *client, const char *buffer);
+
 #endif /* !ZAPPY_SERVER_H_ */

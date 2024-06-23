@@ -54,74 +54,9 @@ void handle_ai_command(client_t *client, const char *buffer)
     free_tab(args);
 }
 
-static void send_infos(client_t *client, int nb_clients, int height, int width)
-{
-    char *out = NULL;
-    UNUSED int _;
-
-    _ = asprintf(&out, "%i", nb_clients);
-    dl_push_back(&client->to_send, strdup(out));
-    free(out);
-    out = NULL;
-    _ = asprintf(&out, "%i %i", height, width);
-    dl_push_back(&client->to_send, strdup(out));
-    client->status = AI;
-    free(out);
-}
-
-static bool get_egg_pos(client_t *client, char *team_name)
-{
-    egg_t *tmp;
-
-    for (lnode_t *egg = get_server()->game->eggs; egg; egg = egg->next) {
-        tmp = (egg_t *)egg->data;
-        if (strcmp(tmp->team_name, team_name))
-            continue;
-        client->x = tmp->x;
-        client->y = tmp->y;
-        destroy_egg(tmp);
-        return true;
-    }
-    client->x = -1;
-    client->y = -1;
-    return false;
-}
-
-static void get_pos(client_t *client, const char *buffer)
-{
-    game_t *game = get_server()->game;
-    lnode_t *teams = game->teams;
-
-    for (team_t *tmp; teams; teams = teams->next) {
-        tmp = (team_t *)teams->data;
-        if (strcmp(tmp->name, buffer) || !tmp->clients_nb)
-            continue;
-        if (get_egg_pos(client, tmp->name)) {
-            client->team_name = strdup(tmp->name);
-            tmp->clients_nb--;
-            send_infos(client, tmp->clients_nb, game->height, game->width);
-        }
-        return;
-    }
-    client->x = -1;
-    client->y = -1;
-}
-
 void handle_new_ai(client_t *client, const char *buffer)
 {
-    char *out = NULL;
-    UNUSED int _;
-
     get_pos(client, buffer);
-    if (client->x == -1) {
-        FD_SET(client->fd, &get_server()->error_fds);
-        return;
-    }
-    client->status = AI;
-    _ = asprintf(&out, "pnw %i %i %i %i %i %s", client->fd, client->x,
-        client->y, client->direction, client->level, client->team_name);
-    command_pnw(out);
-    free(out);
 }
 
 static int death(client_t *client)

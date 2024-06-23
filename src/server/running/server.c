@@ -36,6 +36,26 @@ static void check_end(server_t *server, team_t *team)
     }
 }
 
+static void check_free_eggs(client_t *client)
+{
+    char *out = NULL;
+    UNUSED int _;
+
+    if (!get_egg_pos(client, client->team_name))
+        return;
+    client->status = AI;
+    for (lnode_t *tmp = get_server()->game->teams; tmp; tmp = tmp->next)
+        if (strcmp(((team_t *)tmp->data)->name, client->team_name) == 0) {
+            ((team_t *)tmp->data)->clients_nb--;
+            send_infos(client, ((team_t *)tmp->data)->clients_nb,
+                get_server()->game->height, get_server()->game->width);
+            _ = asprintf(&out, "pnw %i %i %i %i %i %s", client->fd, client->x,
+                client->y, client->direction, client->level, client->team_name);
+            command_pnw(out);
+            free(out);
+        }
+}
+
 static void manage(server_t *server)
 {
     lnode_t *cli = server->clients;
@@ -48,6 +68,8 @@ static void manage(server_t *server)
     for (; cli; cli = cli->next) {
         if (((client_t *)(cli->data))->status == AI)
             check_ai(((client_t *)(cli->data)), server);
+        if (((client_t *)(cli->data))->status == WAITING)
+            check_free_eggs(((client_t *)(cli->data)));
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->read_fds))
             handle_client(((client_t *)(cli->data)));
         if (FD_ISSET(((client_t *)(cli->data))->fd, &server->error_fds)) {

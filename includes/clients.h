@@ -36,9 +36,11 @@ typedef enum {
 } items_t;
 
 typedef enum {
+    NONE,
     WAITING,
     AI,
-    GUI
+    GUI,
+    ERROR
 } status_t;
 
 typedef struct {
@@ -136,5 +138,7 @@ void handle_gui_command(client_t *client, const char *buffer);
   * @param buffer Command sent by the client
 */
 void handle_ai_command(client_t *client, const char *buffer);
+
+void send_infos(client_t *client, int nb_clients, int height, int width);
 
 #endif /* !CLIENTS_H_ */
