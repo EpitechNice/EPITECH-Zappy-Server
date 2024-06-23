@@ -87,6 +87,7 @@ static void move_him(void *_target, void *_origin)
     final %= LEFT + 1;
     _ = asprintf(&out, "eject: %i", get_pos_from_direction(final));
     dl_push_back(&target->to_send, out);
+    command_pex(target->fd);
 }
 
 bool egg_cmp(void *ref, void *data)
