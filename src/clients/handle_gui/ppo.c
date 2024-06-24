@@ -22,7 +22,7 @@ void command_ppo(char **args, client_t *client)
         return dl_push_back(&client->to_send, strdup("sbp"));
     _ = asprintf(&str, "ppo %d %d %d %d",
     ((client_t *)(tmp->data))->fd, ((client_t *)(tmp->data))->x,
-    ((client_t *)(tmp->data))->y, ((client_t *)(tmp->data))->direction);
+    ((client_t *)(tmp->data))->y, ((client_t *)(tmp->data))->direction + 1);
     dl_push_back(&client->to_send, strdup(str));
     free(str);
 }

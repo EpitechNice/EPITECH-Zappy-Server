@@ -31,7 +31,7 @@ static void send_cmds(client_t *client, team_t *tmp, game_t *game)
     UNUSED int _;
 
     _ = asprintf(&out, "pnw %i %i %i %i %i %s", client->fd, client->x,
-        client->y, client->direction, client->level, client->team_name);
+        client->y, client->direction + 1, client->level, client->team_name);
     command_pnw(out);
     free(out);
     send_infos(client, tmp->clients_nb, game->height, game->width);
@@ -88,7 +88,7 @@ void check_free_eggs(client_t *client)
             send_infos(client, ((team_t *)tmp->data)->clients_nb,
                 get_server()->game->height, get_server()->game->width);
             _ = asprintf(&out, "pnw %i %i %i %i %i %s", client->fd, client->x,
-            client->y, client->direction, client->level, client->team_name);
+            client->y, client->direction + 1, client->level, client->team_name);
             command_pnw(out);
             free(out);
         }
