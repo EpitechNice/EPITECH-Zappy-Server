@@ -54,12 +54,17 @@ static char get_direction(client_t *origin, client_t *recv)
 
 static char *build_message(char **args)
 {
-    char *out = strdup(args[0]);
+    char *rest = NULL;
+    char *out = NULL;
     UNUSED int _;
 
-    for (int i = 1; i < tab_len(args); ++i) {
-        _ = asprintf(&out, "%s %s ", out, args[i]);
-    }
+    if (!args || !args[0])
+        return NULL;
+    rest = build_message(&args[1]);
+    if (!rest)
+        return strdup(args[0]);
+    _ = asprintf(&out, "%s %s", args[0], rest);
+    free(rest);
     return out;
 }
 
@@ -79,9 +84,14 @@ static void send_message(void *client, void *infos)
 
 void command_broadcast(char **args, client_t *client)
 {
-    char *message = build_message(args);
+    char *message = build_message(&args[1]);
     yell_infos_t *yell_infos = (yell_infos_t *)malloc(sizeof(yell_infos_t));
 
+    if (!message) {
+        dl_push_back(&client->to_send, strdup("ko"));
+        free(yell_infos);
+        return;
+    }
     yell_infos->message = message;
     yell_infos->source = client;
     dl_apply_data_param(get_server()->clients, send_message, yell_infos);

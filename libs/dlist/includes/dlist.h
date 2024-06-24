@@ -269,5 +269,8 @@ void dl_push_back(lnode_t **head, void *data);
  */
 void dl_push_front(lnode_t **head, void *data);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MY_FTP_H_ */
