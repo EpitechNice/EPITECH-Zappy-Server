@@ -49,6 +49,7 @@ void handle_new_gui(client_t *client)
             ((client_t *)tmp->data)->y, ((client_t *)tmp->data)->direction + 1,
             ((client_t *)tmp->data)->level,
             ((client_t *)tmp->data)->team_name);
+            comman
             command_pnw(out);
             free(out);
             out = NULL;

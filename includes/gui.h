@@ -244,13 +244,4 @@ void command_sst(char **cmd, client_t *client);
 */
 void command_suc(client_t *);
 
-/**
- * @ingroup gui
- *
-  * @brief Periodically sends data to the GUI
-  *
-  * @param client Client that connected
-*/
-void send_to_gui(client_t *client);
-
 #endif /* !GUI_H_ */
