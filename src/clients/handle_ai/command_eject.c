@@ -76,8 +76,9 @@ static void move_him(void *_target, void *_origin)
     client_t *target = (client_t *)_target;
     client_t *origin = (client_t *)_origin;
     direction_t final = invert_direction(origin->direction);
+    char *out2[3] = {"ppo", NULL, NULL};
+    UNUSED int _ = asprintf(&out2[1], "%d", target->fd);
     char *out = NULL;
-    UNUSED int _;
 
     if (target == origin)
         return;
@@ -88,6 +89,9 @@ static void move_him(void *_target, void *_origin)
     _ = asprintf(&out, "eject: %i", get_pos_from_direction(final));
     dl_push_back(&target->to_send, out);
     command_pex(target->fd);
+    for (lnode_t *tmp = get_server()->clients; tmp; tmp = tmp->next)
+        if (((client_t *)tmp->data)->status == GUI)
+            command_ppo(out2, target);
 }
 
 bool egg_cmp(void *ref, void *data)
