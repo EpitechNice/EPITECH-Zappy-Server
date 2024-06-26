@@ -38,7 +38,7 @@ void command_set(char **args, client_t *client)
         return dl_push_back(&client->to_send, strdup("ko"));
     if (!client->inventory[ressource])
         return dl_push_back(&client->to_send, strdup("ko"));
-    get_server()->game->map[client->y][client->x].ressources[ressource] +=
+    get_server()->game->map[client->x][client->y].ressources[ressource] +=
         client->inventory[ressource];
     client->inventory[ressource] = 0;
     dl_push_back(&client->to_send, strdup("ok"));

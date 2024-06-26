@@ -36,11 +36,11 @@ void command_take(char **args, client_t *client)
 
     if (ressource == -1)
         return dl_push_back(&client->to_send, strdup("ko"));
-    if (!get_server()->game->map[client->y][client->x].ressources[ressource])
+    if (!get_server()->game->map[client->x][client->y].ressources[ressource])
         return dl_push_back(&client->to_send, strdup("ko"));
     client->inventory[ressource] += get_server()->game->map[client->x]
         [client->y].ressources[ressource];
-    get_server()->game->map[client->y][client->x].ressources[ressource] = 0;
+    get_server()->game->map[client->x][client->y].ressources[ressource] = 0;
     dl_push_back(&client->to_send, strdup("ok"));
     LOG(LOG_LEVEL_INFO, "Client %d took %s at pos %d %d ",
         client->fd, args[1], client->x, client->y);

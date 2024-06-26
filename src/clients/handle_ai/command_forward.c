@@ -42,10 +42,10 @@ void command_forward(UNUSED char **args, client_t *client)
     char *fd = NULL;
     UNUSED int _ = asprintf(&fd, "%d", client->fd);
 
-    dl_erase(&get_server()->game->map[client->y][client->x].players, client,
+    dl_erase(&get_server()->game->map[client->x][client->y].players, client,
         &remove_client, NULL);
     move_a_client(direction, client);
-    dl_push_back(&get_server()->game->map[client->y][client->x].players,
+    dl_push_back(&get_server()->game->map[client->x][client->y].players,
         client);
     LOG(LOG_LEVEL_DEBUG, "Client of team %s moved forward facing %s",
         client->team_name, direction);

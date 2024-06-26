@@ -36,11 +36,11 @@ static void init_teams(lnode_t *p, game_t *game, parsing_t *parse)
     while (p) {
         dl_push_back(&game->teams, (team_t *)make_teams(p, parse->clients_nb));
         for (int i = 0; i < parse->clients_nb; ++i) {
-            y = 0;// rand() % game->height;         // DEBUG
-            x = 0;// rand() % game->width;          // DEBUG
+            y = rand() % game->height;
+            x = rand() % game->width;
             egg = build_egg(game->global_egg_id, p->data,
                 x, y);
-            dl_push_back(&game->map[y][x].eggs, egg);
+            dl_push_back(&game->map[x][y].eggs, egg);
             dl_push_back(&game->eggs, egg);
             game->global_egg_id++;
         }

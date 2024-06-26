@@ -8,9 +8,7 @@
 #ifndef INCLUDED_DISPLAY_H
     #define INCLUDED_DISPLAY_H
 
-#ifndef _GNU_SOURCE
     #define _GNU_SOURCE
-#endif
 
     #include <stdarg.h>
     #include <stddef.h>

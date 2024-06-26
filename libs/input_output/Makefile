@@ -5,11 +5,12 @@
 ## makefile
 ##
 
-SRC	=	$(wildcard src/*.c)
+SRC	=	$(wildcard src/input/*.c)	\
+		$(wildcard src/log/*.c)
 
 OBJ	=	$(SRC:%.c=%.o)
 
-BIN	=	liblogging.a
+BIN	=	libinput_output.a
 
 ifeq ($(COLOR), yes)
 	RESET		= "\033[0m"

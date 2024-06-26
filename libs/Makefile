@@ -6,7 +6,7 @@
 ##
 
 LIBS	=	dlist	\
-			logging	\
+			input_output	\
 
 all:
 	@make --no-print-directory makeAll

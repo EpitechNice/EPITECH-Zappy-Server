@@ -20,12 +20,8 @@ void dl_apply_data_param(lnode_t *head,
 {
     if (head == NULL || func == NULL)
         return;
-    while (head) {
+    for (; head != NULL; head = head->next)
         func(head->data, param);
-        head = head->next;
-    }
-    // for (; head; head = head->next)
-    //     func(head->data, param);
 }
 
 void dl_apply_node(lnode_t *head, void func(lnode_t *))

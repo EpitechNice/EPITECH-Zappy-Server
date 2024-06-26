@@ -22,7 +22,7 @@ static egg_t *build_egg(unsigned long id, const char *team, int x, int y)
 static void end_command_fork(game_t *game, client_t *client, egg_t *egg)
 {
     dl_push_back(&game->eggs, egg);
-    dl_push_back(&game->map[client->y][client->x].eggs,
+    dl_push_back(&game->map[client->x][client->y].eggs,
     egg);
     dl_push_back(&client->to_send, strdup("ok"));
     command_pfk(client->fd);

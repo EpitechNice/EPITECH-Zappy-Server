@@ -5,7 +5,7 @@
 ** log_file
 */
 
-#include "logging.h"
+#include "input_output.h"
 
 static FILE *logfile;
 

@@ -5,7 +5,7 @@
 ** log
 */
 
-#include "logging.h"
+#include "input_output.h"
 
 static log_level_t log_level;
 static bool log_on_stderr;

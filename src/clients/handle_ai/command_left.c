@@ -13,9 +13,8 @@ void command_left(UNUSED char **args, client_t *client)
     char *fd = NULL;
     UNUSED int _ = asprintf(&fd, "%d", client->fd);
 
-    client->direction--;
-    if (client->direction < 0)
-        client->direction = LEFT;
+    client->direction++;
+    client->direction %= LEFT + 1;
     LOG(LOG_LEVEL_DEBUG, "Client of team %s turned left", client->team_name);
     dl_push_back(&client->to_send, strdup("ok"));
     for (lnode_t *tmp = get_server()->clients; tmp != NULL; tmp = tmp->next)
