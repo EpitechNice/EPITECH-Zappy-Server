@@ -35,6 +35,23 @@ void handle_gui_command(client_t *client, const char *buffer)
     return;
 }
 
+static void send_eggs(client_t *client)
+{
+    char *out = NULL;
+    UNUSED int _;
+    game_t *game = get_server()->game;
+
+    for (lnode_t *tmp = game->eggs; tmp; tmp = tmp->next) {
+        _ = asprintf(&out, "enw %lu %i %i %i",
+        ((egg_t *)tmp->data)->id, 0,
+        ((egg_t *)tmp->data)->x,
+        ((egg_t *)tmp->data)->y);
+        dl_push_back(&client->to_send, strdup(out));
+        free(out);
+        out = NULL;
+    }
+}
+
 void handle_new_gui(client_t *client)
 {
     char *out = NULL;
@@ -54,5 +71,6 @@ void handle_new_gui(client_t *client)
             out = NULL;
         }
     }
+    send_eggs(client);
     return;
 }
