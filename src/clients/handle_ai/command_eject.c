@@ -42,13 +42,6 @@ static char get_pos_from_direction(direction_t direction)
     return 0;
 }
 
-static bool remove_client(void *ref, void *client)
-{
-    if (ref == client)
-        return true;
-    return false;
-}
-
 static void physic_move(client_t *target, direction_t direction)
 {
     int x = target->x;
@@ -62,13 +55,20 @@ static void physic_move(client_t *target, direction_t direction)
         y++;
     if (direction == LEFT)
         x--;
-    dl_erase(&get_server()->game->map[target->x][target->y].players, target,
-        &remove_client, NULL);
+    dl_erase(&get_server()->game->map[target->y][target->x].players, target,
+        &is_client, NULL);
     target->x = x;
     target->y = y;
     round_world(&target->x, &target->y);
-    dl_push_back(&get_server()->game->map[target->x][target->y].players,
+    dl_push_back(&get_server()->game->map[target->y][target->x].players,
         target);
+}
+
+static void rotate_list(client_t *tgt)
+{
+    UNUSED void *_ = dl_extract(&get_server()->game->map[tgt->x][tgt->y].
+        players, tgt, is_client);
+    dl_push_back(&get_server()->game->map[tgt->x][tgt->y].players, tgt);
 }
 
 static void move_him(client_t *target, client_t *origin)
@@ -78,8 +78,10 @@ static void move_him(client_t *target, client_t *origin)
     UNUSED int _ = asprintf(&out2[1], "%d", target->fd);
     char *out = NULL;
 
-    if (target == origin)
+    if (target->fd == origin->fd) {
+        rotate_list(origin);
         return;
+    }
     physic_move(target, origin->direction);
     final -= target->direction;
     final += LEFT + 1;
@@ -90,25 +92,23 @@ static void move_him(client_t *target, client_t *origin)
     for (lnode_t *tmp = get_server()->clients; tmp; tmp = tmp->next)
         if (((client_t *)tmp->data)->status == GUI)
             command_ppo(out2, target);
+    free(out2[1]);
 }
 
-bool egg_cmp(void *ref, void *data)
+static void clear_eggs(void *egg)
 {
-    if (((egg_t *)data)->id == ((egg_t *)ref)->id)
-        return true;
-    return false;
+    command_edi(((egg_t *)egg)->id);
+    destroy_egg((egg_t *)egg);
 }
 
 void command_eject(UNUSED char **args, client_t *client)
 {
-    for (lnode_t *tmp = get_server()->game->map[client->x][client->y].players;
-    tmp; tmp = tmp->next)
-        move_him(tmp->data, client);
-    for (lnode_t *tmp = get_server()->game->map[client->x][client->y].eggs;
-    tmp != NULL; tmp = tmp->next) {
-        command_edi(((egg_t *)(tmp->data))->id);
+    while (dl_length(get_server()->game->map[client->x][client->y].players) > 1
+        ) {
+        move_him((client_t *)get_server()->game->map[client->x][client->y].
+            players->data, client);
     }
-    dl_clear(&get_server()->game->map[client->x][client->y].eggs, NULL);
+    dl_clear(&get_server()->game->map[client->x][client->y].eggs, &clear_eggs);
     LOG(LOG_LEVEL_INFO, "Client of team %s pushed everyone in direction %i",
         client->team_name, client->direction);
     client->next_action = get_time();
