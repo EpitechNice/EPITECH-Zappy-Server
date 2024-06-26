@@ -60,8 +60,10 @@ static void end_command_inc(client_t *client, int nb_of_players_of_level_x)
         player = players->data;
         if (player->level != client->level)
             continue;
-        player->next_action = get_time() + 300 * 1000 / get_server()->game->freq;
-        player->incant_time = get_time() + 300 * 1000 / get_server()->game->freq;
+        player->next_action =
+            get_time() + 300 * 1000 / get_server()->game->freq;
+        player->incant_time =
+            get_time() + 300 * 1000 / get_server()->game->freq;
         player->is_elevating = true;
         dl_push_back(&player->to_send, strdup("Elevation underway\n"));
     }
