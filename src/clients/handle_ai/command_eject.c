@@ -71,10 +71,8 @@ static void physic_move(client_t *target, direction_t direction)
         target);
 }
 
-static void move_him(void *_target, void *_origin)
+static void move_him(client_t *target, client_t *origin)
 {
-    client_t *target = (client_t *)_target;
-    client_t *origin = (client_t *)_origin;
     direction_t final = invert_direction(origin->direction);
     char *out2[3] = {"ppo", NULL, NULL};
     UNUSED int _ = asprintf(&out2[1], "%d", target->fd);
@@ -103,8 +101,9 @@ bool egg_cmp(void *ref, void *data)
 
 void command_eject(UNUSED char **args, client_t *client)
 {
-    dl_apply_data_param(get_server()->game->map[client->y][client->x].players,
-        &move_him, client);
+    for (lnode_t *tmp = get_server()->game->map[client->y][client->x].players;
+    tmp; tmp = tmp->next)
+        move_him(tmp->data, client);
     for (lnode_t *tmp = get_server()->game->map[client->y][client->x].eggs;
     tmp != NULL; tmp = tmp->next) {
         command_edi(((egg_t *)(tmp->data))->id);
