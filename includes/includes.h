@@ -8,7 +8,9 @@
 #ifndef INCLUDES_H_
     #define INCLUDES_H_
 
+#ifndef _GNU_SOURCE
     #define _GNU_SOURCE
+#endif
 
     #include <fcntl.h>
     #include <string.h>
@@ -30,6 +32,6 @@
     #include <time.h>
 
     #include "dlist.h"
-    #include "input_output.h"
+    #include "logging.h"
 
 #endif /* !INCLUDES_H_ */

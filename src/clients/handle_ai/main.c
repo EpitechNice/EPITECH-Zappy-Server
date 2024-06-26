@@ -96,7 +96,7 @@ static void check_incantation(client_t *client)
     if ((get_time() - client->incant_time) <
     (300.0 / (float)get_server()->game->freq) * 1000)
         return;
-    dl_apply_data_param(get_server()->game->map[client->x][client->y].players,
+    dl_apply_data_param(get_server()->game->map[client->y][client->x].players,
         check_level, &nb_of_players_of_level_x);
     if (nb_of_players_of_level_x < infos_rit[client->level - 1][0]) {
         command_pie(client->x, client->y, false);
@@ -105,7 +105,7 @@ static void check_incantation(client_t *client)
         return;
     }
     for (int i = 1; i < 7; ++i)
-        if (get_server()->game->map[client->x][client->y].ressources[i] <
+        if (get_server()->game->map[client->y][client->x].ressources[i] <
             infos_rit[client->level - 1][i]) {
             command_pie(client->x, client->y, false);
             dl_push_back(&client->to_send, strdup("ko"));

@@ -36,7 +36,7 @@ static void event_incantation(client_t *client, int size)
 {
     int i = 1;
     int *ai = malloc(sizeof(int) * size + 1);
-    lnode_t *players = get_server()->game->map[client->x][client->y].players;
+    lnode_t *players = get_server()->game->map[client->y][client->x].players;
 
     ai[0] = client->fd;
     for (; players; players = players->next) {
@@ -55,7 +55,7 @@ static void end_command_inc(client_t *client, int nb_of_players_of_level_x)
 
     client->is_elevating = true;
     event_incantation(client, nb_of_players_of_level_x);
-    for (lnode_t *players = get_server()->game->map[client->x][client->y]
+    for (lnode_t *players = get_server()->game->map[client->y][client->x]
     .players; players; players = players->next) {
         player = players->data;
         if (player->level != client->level)
@@ -75,12 +75,12 @@ void command_incantation(UNUSED char **args, client_t *client)
     if (client->level >= max_level)
         return dl_push_back(&client->to_send, strdup("ko"));
     target_level = client->level;
-    dl_apply_data_param(get_server()->game->map[client->x][client->y].players,
+    dl_apply_data_param(get_server()->game->map[client->y][client->x].players,
         check_level, &nb_of_players_of_level_x);
     if (nb_of_players_of_level_x < infos_rits[client->level - 1][0])
         return dl_push_back(&client->to_send, strdup("ko"));
     for (int i = 1; i < 7; ++i)
-        if (get_server()->game->map[client->x][client->y].ressources[i] <
+        if (get_server()->game->map[client->y][client->x].ressources[i] <
             infos_rits[client->level - 1][i])
                 return dl_push_back(&client->to_send, strdup("ko"));
     LOG(LOG_LEVEL_INFO, "Client of team %s is starting a level %i ritual",

@@ -23,6 +23,17 @@ enable_testing()
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+add_custom_target(
+    build_project
+)
+
+add_custom_command(
+    TARGET build_project
+    PRE_BUILD
+    COMMAND echo "Cleaning project"
+    COMMAND make -C ${PROJECT_SOURCE_DIR}/../
+)
+
 add_executable(zappy-test
     ../libs/dlist/src/dl_apply.c
     ../libs/dlist/src/dl_clear.c
@@ -37,9 +48,12 @@ add_executable(zappy-test
     tests.cpp
 )
 
+add_dependencies(
+    zappy-test build_project
+)
+
 target_include_directories(zappy-test PUBLIC
-    ../libs/dlist/includes/
-    ../libs/input_output/includes/
+    ../libs/includes/
     ../includes/
 )
 

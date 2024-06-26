@@ -63,7 +63,7 @@ INCLUDES	=	-I./libs/includes	\
 
 LIBS	=	-L./libs		\
 			-ldlist	\
-			-linput_output	\
+			-llogging	\
 
 COMP	=	gcc
 
