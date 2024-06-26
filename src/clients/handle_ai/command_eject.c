@@ -55,12 +55,12 @@ static void physic_move(client_t *target, direction_t direction)
         y++;
     if (direction == LEFT)
         x--;
-    dl_erase(&get_server()->game->map[target->y][target->x].players, target,
+    dl_erase(&get_server()->game->map[target->x][target->y].players, target,
         &is_client, NULL);
     target->x = x;
     target->y = y;
     round_world(&target->x, &target->y);
-    dl_push_back(&get_server()->game->map[target->y][target->x].players,
+    dl_push_back(&get_server()->game->map[target->x][target->y].players,
         target);
 }
 
