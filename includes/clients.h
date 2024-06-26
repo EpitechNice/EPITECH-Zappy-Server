@@ -45,7 +45,6 @@ typedef enum {
 
 typedef struct {
     bool is_elevating;
-    short ttl;
     int fd;
     int x;
     int y;
