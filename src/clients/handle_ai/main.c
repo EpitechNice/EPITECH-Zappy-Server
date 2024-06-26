@@ -37,7 +37,8 @@ void handle_ai_command(client_t *client, const char *buffer)
 
     if (!args)
         return;
-    if (client->next_action > get_time()) {
+    if (get_time() - client->next_action <
+    (client->cooldown / (float)get_server()->game->freq) * 1000) {
         free_tab(args);
         dl_push_back(&client->to_send, strdup("ko"));
         return;

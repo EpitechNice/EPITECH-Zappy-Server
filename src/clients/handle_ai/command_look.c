@@ -87,5 +87,6 @@ void command_look(UNUSED char **args, UNUSED client_t *client)
     }
     str_append(&out, "]");
     dl_push_back(&client->to_send, out);
-    client->next_action = get_time() + 7 * 1000 / get_server()->game->freq;
+    client->next_action = get_time();
+    client->cooldown = 7.0;
 }

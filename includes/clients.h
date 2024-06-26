@@ -55,6 +55,7 @@ typedef struct {
     char *team_name;
     status_t status;
     lnode_t *to_send;
+    float cooldown;
     size_t last_meal;
     size_t next_action;
     size_t incant_time;

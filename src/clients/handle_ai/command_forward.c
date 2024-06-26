@@ -56,5 +56,6 @@ void command_forward(UNUSED char **args, client_t *client)
             command_ppo((char *[]){"ppo", fd, NULL},
                 (client_t *)(tmp->data));
     free(fd);
-    client->next_action = get_time() + 7 * 1000 / get_server()->game->freq;
+    client->next_action = get_time();
+    client->cooldown = 7.0;
 }

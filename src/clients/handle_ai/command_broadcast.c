@@ -101,5 +101,6 @@ void command_broadcast(char **args, client_t *client)
     dl_push_back(&client->to_send, strdup("ok"));
     command_pbc(client->fd, message);
     free(message);
-    client->next_action = get_time() + 7 * 1000 / get_server()->game->freq;
+    client->next_action = get_time();
+    client->cooldown = 7.0;
 }

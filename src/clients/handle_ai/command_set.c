@@ -50,5 +50,6 @@ void command_set(char **args, client_t *client)
             command_mct(tile_event, tmp->data);
             command_pin(player_event, tmp->data);
         }
-    client->next_action = get_time() + 7 * 1000 / get_server()->game->freq;
+    client->next_action = get_time();
+    client->cooldown = 7.0;
 }
