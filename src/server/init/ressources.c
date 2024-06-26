@@ -18,7 +18,7 @@ void spread_ressources(game_t *game)
     for (int i = 0; i < nb_ressources; ++i) {
         cross = densities[i] * size / 100;
         cross = (cross <= 0 ? 1 : cross);
-        for (int _ = game->ressources[i] ; _ < cross; ++_) {
+        for (int _ = game->ressources[i]; _ < cross; ++_) {
             game->map[rand() % game->height][rand() % game->width]
                 .ressources[i]++;
             game->ressources[i]++;

@@ -27,6 +27,19 @@ static int get_ressource_index(const char *ressource)
     return -1;
 }
 
+static void send_set(client_t *client, int ressource, char *tile_event[],
+    char *player_event[])
+{
+    command_pdr(client->fd, ressource);
+    for (lnode_t *tmp = get_server()->clients; tmp; tmp = tmp->next)
+        if (((client_t *)tmp->data)->status == GUI) {
+            command_mct(tile_event, tmp->data);
+            command_pin(player_event, tmp->data);
+        }
+    client->next_action = get_time();
+    client->cooldown = 7.0;
+}
+
 void command_set(char **args, client_t *client)
 {
     int ressource = get_ressource_index(args[1]);
@@ -45,12 +58,5 @@ void command_set(char **args, client_t *client)
     dl_push_back(&client->to_send, strdup("ok"));
     LOG(LOG_LEVEL_INFO, "Client %d set %s at pos %d %d ",
         client->fd, args[1], client->x, client->y);
-    command_pdr(client->fd, ressource);
-    for (lnode_t *tmp = get_server()->clients; tmp; tmp = tmp->next)
-        if (((client_t *)tmp->data)->status == GUI) {
-            command_mct(tile_event, tmp->data);
-            command_pin(player_event, tmp->data);
-        }
-    client->next_action = get_time();
-    client->cooldown = 7.0;
+    send_set(client, ressource, tile_event, player_event);
 }

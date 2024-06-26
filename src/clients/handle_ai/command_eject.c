@@ -68,6 +68,7 @@ static void rotate_list(client_t *tgt)
 {
     UNUSED void *_ = dl_extract(&get_server()->game->map[tgt->x][tgt->y].
         players, tgt, is_client);
+
     dl_push_back(&get_server()->game->map[tgt->x][tgt->y].players, tgt);
 }
 

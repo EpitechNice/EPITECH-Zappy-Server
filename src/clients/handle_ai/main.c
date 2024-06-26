@@ -87,6 +87,19 @@ static void incantation_end(client_t *client)
     free(out);
 }
 
+static void check_ressources(client_t *client)
+{
+    for (int i = 1; i < 7; ++i) {
+        if (get_server()->game->map[client->x][client->y].ressources[i] <
+            infos_rit[client->level - 1][i]) {
+            command_pie(client->x, client->y, false);
+            dl_push_back(&client->to_send, strdup("ko"));
+            client->is_elevating = false;
+            return;
+        }
+    }
+}
+
 static void check_incantation(client_t *client)
 {
     int nb_of_players_of_level_x = 0;
@@ -104,14 +117,7 @@ static void check_incantation(client_t *client)
         client->is_elevating = false;
         return;
     }
-    for (int i = 1; i < 7; ++i)
-        if (get_server()->game->map[client->x][client->y].ressources[i] <
-            infos_rit[client->level - 1][i]) {
-            command_pie(client->x, client->y, false);
-            dl_push_back(&client->to_send, strdup("ko"));
-            client->is_elevating = false;
-            return;
-        }
+    check_ressources(client);
     incantation_end(client);
 }
 
