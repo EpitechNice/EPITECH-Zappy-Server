@@ -40,7 +40,7 @@ static void init_teams(lnode_t *p, game_t *game, parsing_t *parse)
             x = rand() % game->width;
             egg = build_egg(game->global_egg_id, p->data,
                 x, y);
-            dl_push_back(&game->map[y][x].eggs, egg);
+            dl_push_back(&game->map[x][y].eggs, egg);
             dl_push_back(&game->eggs, egg);
             game->global_egg_id++;
         }

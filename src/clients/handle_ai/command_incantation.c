@@ -35,7 +35,7 @@ void check_level(void *_client, void *_nb)
 static void event_incantation(client_t *client, int size)
 {
     int i = 1;
-    int *ai = malloc(sizeof(int) * size);
+    int *ai = malloc(sizeof(int) * size + 1);
     lnode_t *players = get_server()->game->map[client->x][client->y].players;
 
     ai[0] = client->fd;
@@ -62,8 +62,7 @@ static void end_command_inc(client_t *client, int nb_of_players_of_level_x)
             continue;
         player->next_action =
             get_time() + 300 * 1000 / get_server()->game->freq;
-        player->incant_time =
-            get_time() + 300 * 1000 / get_server()->game->freq;
+        player->incant_time = get_time();
         player->is_elevating = true;
         dl_push_back(&player->to_send, strdup("Elevation underway\n"));
     }
