@@ -49,8 +49,8 @@ void command_set(char **args, client_t *client)
     command_pdr(client->fd, ressource);
     for (lnode_t *tmp = get_server()->clients; tmp; tmp = tmp->next)
         if (((client_t *)tmp->data)->status == GUI) {
-            command_bct(tile_event, tmp);
-            command_pin(player_event, tmp);
+            command_bct(tile_event, tmp->data);
+            command_pin(player_event, tmp->data);
         }
     client->next_action = get_time() + 7 * 1000 / get_server()->game->freq;
 }
