@@ -92,7 +92,7 @@ static void move_him(client_t *target, client_t *origin)
     command_pex(target->fd);
     for (lnode_t *tmp = get_server()->clients; tmp; tmp = tmp->next)
         if (((client_t *)tmp->data)->status == GUI)
-            command_ppo(out2, target);
+            command_ppo(out2, (client_t *)tmp->data);
     free(out2[1]);
 }
 
@@ -114,4 +114,5 @@ void command_eject(UNUSED char **args, client_t *client)
         client->team_name, client->direction);
     client->next_action = get_time();
     client->cooldown = 7.0;
+    dl_push_back(&client->to_send, strdup("ok"));
 }
