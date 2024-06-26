@@ -15,12 +15,12 @@ void round_world(int *x, int *y)
         return;
     if (x) {
         while ((*x) < 0)
-            (*x) += game->width;
-        (*x) %= game->width;
+            (*x) += game->height;
+        (*x) %= game->height;
     }
     if (y) {
         while ((*y) < 0)
-            (*y) += game->height;
-        (*y) %= game->height;
+            (*y) += game->width;
+        (*y) %= game->width;
     }
 }

@@ -9,7 +9,7 @@
 
 static void add_tile(char **out, int x, int y)
 {
-    map_t *tile = &(get_server()->game->map[y][x]);
+    map_t *tile = &(get_server()->game->map[x][y]);
     char ressource[11];
 
     str_append(out, ",");

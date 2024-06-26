@@ -30,26 +30,24 @@ static int get_ressource_index(const char *ressource)
 void command_set(char **args, client_t *client)
 {
     int ressource = get_ressource_index(args[1]);
-    char *tile_event[4] = {"bct", NULL, NULL, NULL};
+    char *tile_event[2] = {"mct", NULL};
     char *player_event[3] = {"pin", NULL, NULL};
-    UNUSED int _ = asprintf(&tile_event[1], "%d", client->x);
+    UNUSED int _ = asprintf(&player_event[1], "%d", client->fd);
 
-    _ = asprintf(&tile_event[2], "%d", client->y);
-    _ = asprintf(&player_event[1], "%d", client->fd);
     if (ressource == -1)
         return dl_push_back(&client->to_send, strdup("ko"));
     if (!client->inventory[ressource])
         return dl_push_back(&client->to_send, strdup("ko"));
-    get_server()->game->map[client->y][client->x].ressources[ressource] +=
+    get_server()->game->map[client->x][client->y].ressources[ressource] +=
         client->inventory[ressource];
     client->inventory[ressource] = 0;
     dl_push_back(&client->to_send, strdup("ok"));
-    LOG(LOG_LEVEL_INFO, "Client of team %s set it's %s", client->team_name,
-        args[1]);
+    LOG(LOG_LEVEL_INFO, "Client %d set %s at pos %d %d ",
+        client->fd, args[1], client->x, client->y);
     command_pdr(client->fd, ressource);
     for (lnode_t *tmp = get_server()->clients; tmp; tmp = tmp->next)
         if (((client_t *)tmp->data)->status == GUI) {
-            command_bct(tile_event, tmp->data);
+            command_mct(tile_event, tmp->data);
             command_pin(player_event, tmp->data);
         }
     client->next_action = get_time() + 7 * 1000 / get_server()->game->freq;

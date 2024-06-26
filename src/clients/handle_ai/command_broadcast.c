@@ -42,9 +42,9 @@ static char get_direction(client_t *origin, client_t *recv)
 {
     bool used_round_x;
     bool used_round_y;
-    int x = get_dist(recv->x, origin->x, get_server()->game->width,
+    int x = get_dist(recv->x, origin->x, get_server()->game->height,
         &used_round_x);
-    int y = get_dist(recv->y, origin->y, get_server()->game->height,
+    int y = get_dist(recv->y, origin->y, get_server()->game->width,
         &used_round_y);
     char c = get_char_from_dir(x, y);
 
