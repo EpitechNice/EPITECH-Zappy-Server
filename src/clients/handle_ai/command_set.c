@@ -40,6 +40,7 @@ void command_set(char **args, client_t *client)
         return dl_push_back(&client->to_send, strdup("ko"));
     get_server()->game->map[client->x][client->y].ressources[ressource] +=
         client->inventory[ressource];
+    get_server()->game->ressources[ressource] += client->inventory[ressource];
     client->inventory[ressource] = 0;
     dl_push_back(&client->to_send, strdup("ok"));
     LOG(LOG_LEVEL_INFO, "Client %d set %s at pos %d %d ",
