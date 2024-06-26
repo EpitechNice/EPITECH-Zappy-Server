@@ -88,7 +88,7 @@ static void incantation_end(client_t *client)
 
 static void check_incantation(client_t *client)
 {
-    int nb_of_players_of_level_x = 1;
+    int nb_of_players_of_level_x = 0;
 
     if (!client->is_elevating)
         return;

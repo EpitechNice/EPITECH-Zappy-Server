@@ -18,6 +18,7 @@ bool get_egg_pos(client_t *client, char *team_name)
             continue;
         client->x = tmp->x;
         client->y = tmp->y;
+        dl_push_back(&get_server()->game->map[tmp->y][tmp->x].players, client);
         command_ebo(tmp->id);
         destroy_egg(tmp);
         return true;

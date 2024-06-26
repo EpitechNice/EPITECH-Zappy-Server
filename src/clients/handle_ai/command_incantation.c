@@ -71,7 +71,7 @@ static void end_command_inc(client_t *client, int nb_of_players_of_level_x)
 
 void command_incantation(UNUSED char **args, client_t *client)
 {
-    int nb_of_players_of_level_x = 1;
+    int nb_of_players_of_level_x = 0;
 
     if (client->level >= max_level)
         return dl_push_back(&client->to_send, strdup("ko"));
