@@ -47,6 +47,7 @@ typedef struct all_game_infos_s {
     lnode_t *teams;
     lnode_t *eggs;
     unsigned long global_egg_id;
+    int ressources[7];
 } game_t;
 
 typedef struct all_server_infos_s {
