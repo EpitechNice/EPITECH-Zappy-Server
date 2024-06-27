@@ -8,7 +8,9 @@
 #ifndef INCLUDES_H_
     #define INCLUDES_H_
 
+#ifndef _GNU_SOURCE
     #define _GNU_SOURCE
+#endif
 
     #include <fcntl.h>
     #include <string.h>

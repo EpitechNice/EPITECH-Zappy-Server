@@ -8,7 +8,9 @@
 #ifndef MY_FTP_H_
     #define MY_FTP_H_
 
+#ifndef _GNU_SOURCE
     #define _GNU_SOURCE
+#endif
 
     /*  ---- INCLUDE ----*/
 
@@ -268,9 +270,5 @@ void dl_push_back(lnode_t **head, void *data);
  * at the end. If this is not the case, the behavior is undefined.
  */
 void dl_push_front(lnode_t **head, void *data);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* MY_FTP_H_ */

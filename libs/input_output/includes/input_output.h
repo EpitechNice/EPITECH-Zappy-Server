@@ -8,7 +8,9 @@
 #ifndef INCLUDED_DISPLAY_H
     #define INCLUDED_DISPLAY_H
 
+#ifndef _GNU_SOURCE
     #define _GNU_SOURCE
+#endif
 
     #include <stdarg.h>
     #include <stddef.h>
@@ -175,18 +177,5 @@ void opcl_log_file(const char *filename);
   * format and more.
 */
 void run_log(const char *out, bool display, bool log_on_stderr);
-
-// ===== buffer.c =====
-
-/**
-  * @ingroup io
-  *
-  * @brief Display the buffer.
-  *
-  * @note
-  * This function is usefull when displaying other infos at the same time
-  * (like logs :thumbsup:)
-*/
-void display_buffer(void);
 
 #endif
