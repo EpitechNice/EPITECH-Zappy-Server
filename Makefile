@@ -92,7 +92,7 @@ all:	$(BIN)
 $(BIN):	libs $(OBJ)
 	@echo $(BOLD)$(GREEN)"Objects Done"$(RESET)
 	@echo $(BOLD)$(PURPLE)"Compiling $(BIN)..."$(RESET)
-	@$(COMP) -o $(BIN) $(OBJ) $(TEST_FLAGS) $(INCLUDES) $(LIBS)
+	@$(COMP) -o $(BIN) $(OBJ) $(FLAGS) $(INCLUDES) $(LIBS)
 	@make ascii
 
 $(TEST_BIN):	libs $(TEST_OBJ)
