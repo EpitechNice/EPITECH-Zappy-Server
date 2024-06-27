@@ -92,11 +92,25 @@ static void check_ressources(client_t *client)
     for (int i = 1; i < 7; ++i) {
         if (get_server()->game->map[client->x][client->y].ressources[i] <
             infos_rit[client->level - 1][i]) {
-            command_pie(client->x, client->y, false);
+            command_pie(client->x, client->y, 0);
             dl_push_back(&client->to_send, strdup("ko"));
             client->is_elevating = false;
             return;
         }
+    }
+}
+
+static void delete_ressources(client_t *client)
+{
+    char *mct[2] = {"mct", NULL};
+
+    for (int i = 1; i < 7; ++i) {
+        get_server()->game->map[client->x][client->y].ressources[i] -=
+        infos_rit[client->level - 2][i];
+    }
+    for (lnode_t *tmp = get_server()->clients; tmp; tmp = tmp->next) {
+        if (((client_t *)(tmp->data))->status == GUI)
+            command_mct(mct, tmp->data);
     }
 }
 
@@ -112,13 +126,14 @@ static void check_incantation(client_t *client)
     dl_apply_data_param(get_server()->game->map[client->x][client->y].players,
         check_level, &nb_of_players_of_level_x);
     if (nb_of_players_of_level_x < infos_rit[client->level - 1][0]) {
-        command_pie(client->x, client->y, false);
+        command_pie(client->x, client->y, 0);
         dl_push_back(&client->to_send, strdup("ko"));
         client->is_elevating = false;
         return;
     }
     check_ressources(client);
     incantation_end(client);
+    delete_ressources(client);
 }
 
 int check_ai(client_t *client, server_t *server)

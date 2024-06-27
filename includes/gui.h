@@ -110,9 +110,9 @@ void command_pgt(int id, int ressource);
  *
  * @param x X position of the incantation
  * @param y Y position of the incantation
- * @param success If the incantation was successful
+ * @param success If the incantation was successful 1 else 0
 */
-void command_pie(int x, int y, bool success);
+void command_pie(int x, int y, int success);
 
 /**
  * @ingroup gui
