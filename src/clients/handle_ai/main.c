@@ -31,18 +31,26 @@ const command_func_t ai_func[] = {
     command_incantation
 };
 
+void handle_cooldown(client_t *client)
+{
+    char *to_send = NULL;
+
+    while (client->command_list != NULL) {
+        if (get_time() - client->next_action <
+        (client->cooldown / (float)get_server()->game->freq) * 1000)
+            return;
+        to_send = (char *)dl_pop_front(&client->command_list);
+        handle_ai_command(client, to_send);
+        free(to_send);
+    }
+}
+
 void handle_ai_command(client_t *client, const char *buffer)
 {
     char **args = stowa(buffer, " \t\n");
 
     if (!args)
         return;
-    if (get_time() - client->next_action <
-    (client->cooldown / (float)get_server()->game->freq) * 1000) {
-        free_tab(args);
-        dl_push_back(&client->to_send, strdup("ko"));
-        return;
-    }
     to_lower(args[0]);
     for (size_t i = 0; i < sizeof(ai_func) / sizeof(ai_func[0]); i++) {
         if (!strncmp(args[0], ai_cmd[i], strlen(ai_cmd[i]))) {
@@ -138,6 +146,7 @@ static void check_incantation(client_t *client)
 
 int check_ai(client_t *client, server_t *server)
 {
+    handle_cooldown(client);
     check_incantation(client);
     if ((get_time() - client->last_meal) <
     (126.0 / (float)server->game->freq) * 1000)

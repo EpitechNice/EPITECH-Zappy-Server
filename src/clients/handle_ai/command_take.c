@@ -59,4 +59,5 @@ void command_take(char **args, client_t *client)
     LOG(LOG_LEVEL_INFO, "Client %d took %s at pos %d %d ",
         client->fd, args[1], client->x, client->y);
     send_take(client, ressource, tile_event, player_event);
+    free(player_event[1]);
 }

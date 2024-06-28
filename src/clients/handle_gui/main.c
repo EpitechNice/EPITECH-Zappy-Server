@@ -19,8 +19,9 @@ command_func_t _func[] = {
     command_sst
 };
 
-void handle_gui_command(client_t *client, const char *buffer)
+void handle_gui_command(client_t *client)
 {
+    char *buffer = dl_pop_front(&client->command_list);
     char **args = stowa(buffer, " \t\n");
     long unsigned int i;
 

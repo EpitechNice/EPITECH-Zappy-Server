@@ -54,6 +54,7 @@ typedef struct {
     char *team_name;
     status_t status;
     lnode_t *to_send;
+    lnode_t *command_list;
     float cooldown;
     size_t last_meal;
     size_t next_action;
@@ -129,7 +130,7 @@ void handle_new_gui(client_t *client);
   * @param client Client that sent the command
   * @param buffer Command sent by the client
 */
-void handle_gui_command(client_t *client, const char *buffer);
+void handle_gui_command(client_t *client);
 
 /**
   * @brief Entry point for the processing of AI's commands
@@ -140,5 +141,6 @@ void handle_gui_command(client_t *client, const char *buffer);
 void handle_ai_command(client_t *client, const char *buffer);
 
 void send_infos(client_t *client, int nb_clients, int height, int width);
+void handle_cooldown(client_t *client);
 
 #endif /* !CLIENTS_H_ */

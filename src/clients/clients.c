@@ -14,6 +14,8 @@ void free_client(void *data)
     close(client->fd);
     if (!dl_empty(client->to_send))
         dl_clear(&client->to_send, free);
+    if (!dl_empty(client->command_list))
+        dl_clear(&client->command_list, free);
     if (client->status != WAITING)
         free(client->team_name);
     free(client);

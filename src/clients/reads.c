@@ -29,27 +29,28 @@ void accept_new_connection(server_t *server)
     return;
 }
 
-static void waiting_client_command(client_t *client, char *buffer)
+static void waiting_client_command(client_t *client)
 {
+    char *buffer = dl_pop_front(&client->command_list);
+
     if (strcmp(buffer, GUI_CONNECT) == 0)
         handle_new_gui(client);
     else
         handle_new_ai(client, buffer);
 }
 
-static void handle_commands(client_t *client, char *buffer)
+static void handle_commands(client_t *client)
 {
     if (client->status == NONE)
-        return waiting_client_command(client, buffer);
-    if (client->status == AI)
-        return handle_ai_command(client, buffer);
+        return waiting_client_command(client);
     if (client->status == GUI)
-        return handle_gui_command(client, buffer);
+        return handle_gui_command(client);
 }
 
 static int read_client(client_t *client, char *buffer)
 {
     int value = -1;
+    char **commands;
 
     value = read(client->fd, buffer, LENGTH_COMMAND);
     if (value <= 0) {
@@ -58,12 +59,11 @@ static int read_client(client_t *client, char *buffer)
         FD_SET(client->fd, &get_server()->error_fds);
         return 1;
     }
-    for (int i = 0; i < value; i++) {
-        if (buffer[i] == '\r' || buffer[i] == '\n') {
-            buffer[i] = '\0';
-            break;
-        }
-    }
+    buffer[value] = '\0';
+    commands = stowa(buffer, "\n");
+    for (int i = 0; commands[i]; i++)
+        dl_push_back(&client->command_list, strdup(commands[i]));
+    free_tab(commands);
     return 0;
 }
 
@@ -72,5 +72,5 @@ void handle_client(client_t *client)
     char buffer[LENGTH_COMMAND + 1];
 
     if (!read_client(client, buffer))
-        handle_commands(client, buffer);
+        handle_commands(client);
 }
