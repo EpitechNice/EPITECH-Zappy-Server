@@ -17,10 +17,7 @@ static void free_teams(void *data)
 
 void free_egg(void *data)
 {
-    egg_t *egg = (egg_t *)data;
-
-    free(egg->team_name);
-    free(egg);
+    UNUSED egg_t *egg = (egg_t *)data;
 }
 
 static void free_map(void *data)
